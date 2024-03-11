@@ -1,0 +1,16 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+}
+
+.right-align {
+  display: flex;
+  align-items: center;
+}
+
+.header .right-align span {
+  margin-right: 10px; /* 로그인과 회원가입 사이의 간격 조절 */
+}

@@ -1,0 +1,119 @@
+/* Home.css */
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 25px;
+    margin-bottom: 40px;
+  }
+  
+  .menu {
+    position: relative;
+    display: inline-block;
+    
+  }
+  
+  .menu-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  .menu:hover .menu-content {
+    display: block;
+  }
+  
+  .item {
+    font-weight: bold;
+    font-size: 25px;
+    margin-right: 20px; /* 간격 설정 */
+    margin-left: 20px;
+  }
+  
+  .sub-item {
+    font-weight: bold;
+    font-size: 16px;
+    padding: 10px;
+    transition: background-color 0.3s; /* 변화 효과를 위한 트랜지션 설정 */
+  }
+  
+  .sub-item a {
+    text-decoration: none;
+    color: #333;
+  }
+  
+  .sub-item:hover {
+    background-color: #f0f0f0; /* 마우스를 올렸을 때의 배경색 */
+  }
+
+  .main-image {
+    display: block;
+    margin: 0 auto; /* 가운데 정렬 */
+  }
+
+  .images-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .images-container img {
+    margin-right: 10px; /* 이미지 간격 조정 */
+    width: 100px;
+    height: 100px;
+  }
+
+  .image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; /* 요소들을 세로로 정렬 */
+    margin:20px;
+  }
+  
+  .image-container img, .image-container p {
+    text-align: center; /* 텍스트 가운데 정렬 */
+    margin: 0; /* 기본 마진 제거 */
+    margin-top: 10px; /* 위쪽 마진 추가 */
+    font-weight: bold; /* 폰트 굵게 설정 */
+  }
+
+  .bottom-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 50px; /* 하단 여백 추가 */
+    border-bottom: 1px solid black; /* 하단에 선 그리기 */
+  }
+
+  .image-bottom1, .image-bottom2 {
+    height: 150px; /* 높이 설정 */
+    width: auto; /* 너비를 자동으로 설정하여 원래 크기 유지 */
+  }
+  .image-bottom3 {
+    height: 150px; /* 높이 설정 */
+    width: auto; /* 너비를 자동으로 설정하여 원래 크기 유지 */
+    padding-left: 130px;
+  }
+
+  .end-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+
+  .end-container > * + * {
+    margin-left: 20px; /* 첫 번째 자식 요소를 제외한 모든 자식 요소에 왼쪽 여백을 추가 */
+  }
+
+  .image-end {
+    height: 50px; /* 이미지 높이 설정 */
+    width: auto; /* 너비는 자동으로 설정됩니다. */
+  }
+  
