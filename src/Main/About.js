@@ -1,7 +1,7 @@
 const About = () => (
-    <div>
+  <div>
     <h1>About</h1>
     <p>About, indroducing page.</p>
-    </div>
-    );
-    export default About;
+  </div>
+);
+export default About;
