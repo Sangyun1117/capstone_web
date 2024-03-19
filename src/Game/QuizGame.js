@@ -6,68 +6,74 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 const Container = styled.div`
-flex: 1,
-padding: 10,
-backgroundColor: '#bbd2ec',
+  display: flex; 
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 60vw;
+  background-color: #bbd2ec;
+  margin: 0 auto;
+  gap: 30px;
 `;
 const Timer = styled.div`
-position: 'absolute',
-top: 10,
-left: 10,
-padding: 10,
-borderRadius: 10,
-backgroundColor: 'white',
+  top: 10px;
+  left: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: white;
 `;
+
 const Score = styled.div`
-position: 'absolute',
-top: 10,
-right: 10,
-padding: 10,
-borderRadius: 10,
-backgroundColor: 'white',
+  top: 10px;
+  right: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: white;
 `;
+
 const Guess = styled.div`
-flex: 2,
-justifyContent: 'center',
-alignItems: 'center',
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 const Explanation = styled.div`
-flex: 1.2,
-justifyContent: 'center',
-alignItems: 'center',
+  flex: 1.2;
+  justify-content: center;
+  align-items: center;
 `;
 const Keypad = styled.div`
-flex: 3,
-    justifyContent: 'center',
-    alignItems: 'center',
+  flex: 3;
+  justify-content: center;
+  alignItems: center;
 `;
 const Button = styled.button`
-margin: 5,
-    padding: 20,
-    width: '17%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderColor: 'black',
-    borderWidth: 1,
-    borderRadius: 5,
+  margin: 5;
+  padding: 20;
+  width: 17vw;
+  justify-content: center;
+  align-items: center;
+  border-color: black;
+  border-width: 1;
+  border-radius: 5;
 `;
 const ButtonText = styled.span`
-fontSize: 30,
-textAlign: 'center',
+fontSize: 30;
+text-align: center;
 `;
 const Line = styled.div`
-borderBottomColor: '#838abd',
-borderBottomWidth: 5,
-borderRadius: 5,
-marginBottom: 5,
+border-bottom-color: #838abd;
+border-bottom-width: 5;
+border-radius: 5;
+margin-bottom: 5;
 `;
 const NextButton = styled.button`
-position: 'absolute',
-top: 60,
-right: 10,
-padding: 10,
-borderRadius: 10,
-backgroundColor: 'red',
+position: absolute;
+top: 60;
+right: 10;
+padding: 10;
+border-radius: 10;
+background-color: red;
 `;
 
 const QuizGame = () => {
@@ -299,12 +305,12 @@ const QuizGame = () => {
         return (
           <Button
             key={index}
-            style={[
+            style={
               selectedButtons[index]
                 ? { backgroundColor: '#7bb4e3' }
-                : { backgroundColor: '#dfe9f5' },
-            ]}
-            onPress={() => handleSelect(keypadKeywords[index], index)}
+                : { backgroundColor: '#dfe9f5' }
+            }
+            onClick={() => handleSelect(keypadKeywords[index], index)}
           >
             <ButtonText>{keypadKeywords[index]}</ButtonText>
           </Button>
@@ -319,9 +325,7 @@ const QuizGame = () => {
         <HashLoader />
       ) : (
         <>
-          <Guess>
-            <span style={{ fontSize: 30 }}>{guess}</span>
-          </Guess>
+        <div style={{ position: 'flex', display: 'flex', justifyContent: 'space-between', width: '90%', }}>
           <Timer>
             <span style={timer <= 10 ? { color: 'red' } : { color: 'black' }}>
               {timer > 60
@@ -332,7 +336,11 @@ const QuizGame = () => {
           <Score>
             <span>점수: {score}</span>
           </Score>
-          <NextButton onPress={() => handleNextButton()}>
+        </div>
+          <Guess>
+            <span style={{ fontSize: '5em' }}>{guess}</span>
+          </Guess>
+          <NextButton onClick={() => handleNextButton()}>
             <span style={{ color: 'white' }}>문제 넘기기</span>
           </NextButton>
 

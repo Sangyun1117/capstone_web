@@ -1,5 +1,5 @@
 // redux 로그인 상태 관리 파일입니다.
-import { legacy_createStore as createStore } from 'redux';
+import { createStore } from 'redux';
 
 // 초기 상태 정의
 const initialState = {
@@ -42,6 +42,6 @@ const reducer = (state = initialState, action) => {
 };
 
 // 스토어 생성
-const store = legacy_createStore(reducer);
+const store = createStore(reducer);
 
 export default store;
