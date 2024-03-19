@@ -1,8 +1,13 @@
+* {
+  /*스크롤바 안나타나게 하기 위함.*/
+  margin: 0;
+  padding: 0;
+}
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
+  height: 7%;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
 }
 
@@ -12,5 +17,5 @@
 }
 
 .header .right-align span {
-  margin-right: 10px; /* 로그인과 회원가입 사이의 간격 조절 */
+  margin-right: 1em; /* 로그인과 회원가입 사이의 간격 조절 */
 }

@@ -1,10 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import '../css/Home.css'; // Home.css 파일을 import
-
 const MainImage =
-  'https://firebasestorage.googleapis.com/v0/b/capstone-ac206.appspot.com/o/%EC%9B%B9%EB%B0%B0%EA%B2%BD.jpg?alt=media&token=ecd1f36d-ecc3-4a81-a159-1e2f002a8a87';
-
+  'https://firebasestorage.googleapis.com/v0/b/capstone-ac206.appspot.com/o/%EC%9B%B9%EB%B0%B0%EA%B2%BD.png?alt=media&token=f474dc62-3b03-45d1-a206-3aec90b3338a';
 //기출, 시대별, 유형별, 오답노트, 역사이야기 순서
 const Imageicon1 =
   'https://firebasestorage.googleapis.com/v0/b/capstone-ac206.appspot.com/o/%EC%9D%B4%EB%AF%B8%EC%A7%80%2F%EC%95%84%EC%9D%B4%EC%BD%98%EA%B8%B0%EC%B6%9C1.png?alt=media&token=45fa3185-dbe2-4106-ad10-95899931e22c';

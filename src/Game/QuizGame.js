@@ -4,76 +4,99 @@ import { firestore } from '../firebaseConfig';
 import { HashLoader } from 'react-spinners';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import swal from 'sweetalert';
 
 const Container = styled.div`
-  display: flex; 
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  height: 100vh;
   width: 60vw;
   background-color: #bbd2ec;
   margin: 0 auto;
-  gap: 30px;
+  position: relative;
 `;
+
+const TopBar = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 58vw;
+  height: 4.5vh;
+  position: absolute;
+  top: 1vh;
+`;
+
 const Timer = styled.div`
-  top: 10px;
-  left: 10px;
-  padding: 10px;
-  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  padding: 1em;
+  border-radius: 1em;
   background-color: white;
 `;
 
 const Score = styled.div`
-  top: 10px;
-  right: 10px;
-  padding: 10px;
-  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  padding: 1em;
+  border-radius: 1em;
   background-color: white;
+`;
+
+const BodyContainer = styled.div`
+  position: relative;
+  height: 80vh;
+  top: 4.5vh;
 `;
 
 const Guess = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 5vh;
 `;
 const Explanation = styled.div`
   flex: 1.2;
+  padding: 3em;
   justify-content: center;
   align-items: center;
+  text-align: center;
 `;
 const Keypad = styled.div`
   flex: 3;
+  display: flex;
+  height: 55vh;
   justify-content: center;
-  alignItems: center;
+  align-items: center;
 `;
 const Button = styled.button`
-  margin: 5;
-  padding: 20;
+  margin: 0.7em;
+  padding: 0.2em;
   width: 17vw;
+  display: flex;
   justify-content: center;
   align-items: center;
   border-color: black;
-  border-width: 1;
-  border-radius: 5;
-`;
-const ButtonText = styled.span`
-fontSize: 30;
-text-align: center;
+  border-width: 0.1em;
+  border-radius: 0.5em;
+  font-size: 2em;
 `;
 const Line = styled.div`
-border-bottom-color: #838abd;
-border-bottom-width: 5;
-border-radius: 5;
-margin-bottom: 5;
+  background-color: #838abd;
+  border-width: 1em;
+  border-radius: 0.5em;
+  margin-bottom: 0.1em;
 `;
 const NextButton = styled.button`
-position: absolute;
-top: 60;
-right: 10;
-padding: 10;
-border-radius: 10;
-background-color: red;
+  display: flex;
+  padding: 1em;
+  border-radius: 1em;
+  background-color: red;
+  position: absolute;
+  right: 1.5em;
+  top: 6em;
+  z-index: 2;
 `;
 
 const QuizGame = () => {
@@ -88,13 +111,13 @@ const QuizGame = () => {
   const [timer, setTimer] = useState(120); // 타이머. 2분 제한
   const countdownRef = useRef(null); // 타이머 id를 저장할 ref
   const [score, setScore] = useState(0); // 스코어
+  const navigate = useNavigate();
   const [selectedButtons, setSelectedButtons] = useState(
     // 15개의 키패드 선택 여부 상태
     new Array(15).fill(false)
   );
   const [unsolved, setUnsolved] = useState([]); // 넘긴 문제 저장
   const [solveCount, setSolveCount] = useState(0); // 문제 수 카운트
-  const isWeb = useSelector((state) => state.isWeb);
 
   // 키워드 가져오기
   useEffect(() => {
@@ -145,7 +168,7 @@ const QuizGame = () => {
       // 랜덤 키워드 5개 뽑기
       let selectedKeywords = [...keywords]
         .sort(() => 0.5 - Math.random())
-        .slice(0, 5);
+        .slice(0, 8);
 
       // currentKeyword를 제외
       selectedKeywords = selectedKeywords.filter(
@@ -201,47 +224,56 @@ const QuizGame = () => {
   }, [guessCount]);
 
   useEffect(() => {
-    // solveCount == 문제 수일 때 문제 소진으로 인한 종료 처리
-    if (solveCount != 0 && solveCount == keywords.length) {
-      const buttons = [
-        {
-          text: '나가기',
-          //onPress: () => navigation.navigate('Sidebar'),
-        },
-      ];
-
-      if (unsolved.length > 0) {
-        buttons.push({
-          text: '넘긴 문제 보기',
-          // onPress: () => navigation.navigate('UnsolvedScreen', { unsolved }),
-        });
-      }
-
+    if (solveCount !== 0 && solveCount === keywords.length) {
       setSolveCount(0);
       stopTimer();
 
-      const userConfirmed = window.confirm(
-        '문제가 소진되었습니다. 최종 점수: ' + score
-      );
-      if (userConfirmed) {
-        //navigation.navigate('Home');
-      }
+      const buttons =
+        unsolved.length > 0
+          ? {
+              cancel: '나가기',
+              catch: {
+                text: '넘긴 문제 보기',
+                value: 'catch',
+              },
+            }
+          : {};
+
+      swal({
+        title: '문제가 소진되었습니다.',
+        text: '최종 점수: ' + score,
+        icon: 'info',
+        buttons: buttons,
+        dangerMode: true,
+      }).then((value) => {
+        switch (value) {
+          case 'catch':
+            navigate('/unsolvedScreen', { unsolved: { unsolved } });
+            break;
+
+          default:
+            navigate('/');
+        }
+      });
     }
   }, [solveCount, unsolved]);
 
   // 타이머 시작
-  useEffect(
-    React.useCallback(() => {
-      // 타이머 초기화
-      setTimer(120);
+  useEffect(() => {
+    setTimer(120); // 타이머 초기화
 
-      countdownRef.current = setInterval(() => {
-        if (timer > 0) setTimer((timer) => timer - 1);
-      }, 1000);
+    // 타이머 시작
+    countdownRef.current = setInterval(() => {
+      setTimer((prevTimer) => {
+        if (prevTimer > 0) return prevTimer - 1;
+        clearInterval(countdownRef.current); // 타이머가 0이 되면 자동으로 정지
+        return 0; // 타이머가 0이 되면 상태를 0으로 설정
+      });
+    }, 1000);
 
-      return () => clearInterval(countdownRef.current);
-    }, [])
-  );
+    // 컴포넌트 언마운트 시 타이머 정리
+    return () => clearInterval(countdownRef.current);
+  }, []);
 
   // 타이머 중지 함수
   const stopTimer = () => {
@@ -256,17 +288,16 @@ const QuizGame = () => {
         const userConfirmed = window.confirm('타임 오버! 최종 점수: ' + score);
         if (userConfirmed) {
           if (unsolved.length > 0) {
-            //.navigate('UnsolvedScreen', { unsolved });
+            navigate('/unsolvedScreen', { unsolved: { unsolved } });
           } else {
-            //navigation.navigate('Sidebar');
-            //navigation.goBack();
+            navigate('/');
           }
         }
       };
 
       confirmExit();
     }
-  }, [timer, unsolved, isWeb]);
+  }, [timer, unsolved]);
 
   // 키패드 클릭 시 화면 반영
   const handleSelect = (char, index) => {
@@ -307,12 +338,12 @@ const QuizGame = () => {
             key={index}
             style={
               selectedButtons[index]
-                ? { backgroundColor: '#7bb4e3' }
-                : { backgroundColor: '#dfe9f5' }
+                ? { backgroundColor: '#7bb4e3', fontSize: '20' }
+                : { backgroundColor: '#dfe9f5', fontSize: '20' }
             }
             onClick={() => handleSelect(keypadKeywords[index], index)}
           >
-            <ButtonText>{keypadKeywords[index]}</ButtonText>
+            {keypadKeywords[index]}
           </Button>
         );
       })}
@@ -325,33 +356,36 @@ const QuizGame = () => {
         <HashLoader />
       ) : (
         <>
-        <div style={{ position: 'flex', display: 'flex', justifyContent: 'space-between', width: '90%', }}>
-          <Timer>
-            <span style={timer <= 10 ? { color: 'red' } : { color: 'black' }}>
-              {timer > 60
-                ? `남은 시간: ${Math.floor(timer / 60)}분 ${timer % 60}초`
-                : `남은 시간: ${timer}초`}
-            </span>
-          </Timer>
-          <Score>
-            <span>점수: {score}</span>
-          </Score>
-        </div>
-          <Guess>
-            <span style={{ fontSize: '5em' }}>{guess}</span>
-          </Guess>
+          <TopBar>
+            <Timer>
+              <span style={timer <= 10 ? { color: 'red' } : { color: 'black' }}>
+                {timer > 60
+                  ? `남은 시간: ${Math.floor(timer / 60)}분 ${timer % 60}초`
+                  : `남은 시간: ${timer}초`}
+              </span>
+            </Timer>
+            <Score>
+              <span>점수: {score}</span>
+            </Score>
+          </TopBar>
           <NextButton onClick={() => handleNextButton()}>
-            <span style={{ color: 'white' }}>문제 넘기기</span>
-          </NextButton>
-
-          <Line />
-          <Explanation>
-            <span style={{ fontSize: 20 }}>
-              {currentKeyword?.data.explanation}
+            <span style={{ color: 'white', fontWeight: 'bold' }}>
+              문제 넘기기
             </span>
-          </Explanation>
-          <Line />
-          <Keypad>{buttons}</Keypad>
+          </NextButton>
+          <BodyContainer>
+            <Guess>
+              <span style={{ fontSize: '4em' }}>{guess}</span>
+            </Guess>
+            <Line />
+            <Explanation>
+              <span style={{ fontSize: 25 }}>
+                {currentKeyword?.data.explanation}
+              </span>
+            </Explanation>
+            <Line />
+            <Keypad>{buttons}</Keypad>
+          </BodyContainer>
         </>
       )}
     </Container>

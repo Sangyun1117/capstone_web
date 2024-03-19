@@ -16,27 +16,29 @@ const logo =
 
 //여기에 네비게이션 추가.
 const App = () => (
-  <div>
+  <div style={{ height: '100vh' }}>
     <div className="header">
       <Link to="/">
-        <img src={logo} alt="Logo" />
+        <img src={logo} alt="Logo" style={{ marginLeft: '1em' }} />
       </Link>
       <div className="right-align">
         <span>로그인</span>
         <span>회원가입</span>
       </div>
     </div>
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/about" element={<About />} />
-      <Route path="/boardScreen" element={<BoardScreen />} />
+    <div className="content" style={{ height: '93%', overflowY: 'hidden' }}>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/boardScreen" element={<BoardScreen />} />
 
-      <Route path="/postCreate" element={<PostCreate />} />
-      <Route path="/postDetail" element={<PostDetail />} />
+        <Route path="/postCreate" element={<PostCreate />} />
+        <Route path="/postDetail" element={<PostDetail />} />
 
-      <Route path="/quizGame" element={<QuizGame />} />
-      <Route path="/unsolvedScreen" element={<UnsolvedScreen />} />
-    </Routes>
+        <Route path="/quizGame" element={<QuizGame />} />
+        <Route path="/unsolvedScreen" element={<UnsolvedScreen />} />
+      </Routes>
+    </div>
   </div>
 );
 export default () => (
