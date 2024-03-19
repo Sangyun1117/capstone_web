@@ -110,7 +110,9 @@ const Home = () => (
             <Link to="about">역사이야기</Link>
           </div>
           <div className="sub-item">즐겨찾는 영상</div>
-          <div className="sub-item">게임</div>
+          <div className="sub-item">
+            <Link to="quizGame">게임</Link>
+          </div>
           <div className="sub-item">용어사전</div>
         </div>
       </div>

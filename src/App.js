@@ -1,11 +1,14 @@
 import { Route, Routes, Link } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import store from './state';
 import Home from './Main/Home';
 import About from './Main/About';
 
 import BoardScreen from './Board/BoardScreen';
-import BoardScreenUI from './Board/BoardScreenUI';
 import PostCreate from './Board/PostCreate';
 import PostDetail from './Board/PostDetail';
+import QuizGame from './Game/QuizGame';
+import UnsolvedScreen from './Game/UnsolvedScreen';
 import './css/App.css'; // App.css 파일을 import
 
 const logo =
@@ -28,9 +31,16 @@ const App = () => (
       <Route path="/about" element={<About />} />
       <Route path="/boardScreen" element={<BoardScreen />} />
 
-      <Route path="/postCreate" component={PostCreate} />
-      <Route path="/postDetail" component={PostDetail} />
+      <Route path="/postCreate" element={<PostCreate />} />
+      <Route path="/postDetail" element={<PostDetail />} />
+
+      <Route path="/quizGame" element={<QuizGame />} />
+      <Route path="/unsolvedScreen" element={<UnsolvedScreen />} />
     </Routes>
   </div>
 );
-export default App;
+export default () => (
+  <Provider store={store}>
+    <App />
+  </Provider>
+);
