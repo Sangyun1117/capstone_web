@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useLocation } from 'react-router-dom';
 
 const Container = styled.div`
   flex-grow: 1;
@@ -37,7 +38,9 @@ const Title = styled.h1`
   text-align: center;
 `;
 
-const UnsolvedScreen = ({ unsolved }) => {
+const UnsolvedScreen = ( ) => {
+  const { state } = useLocation();
+  const unsolved = state.unsolved;console.log(unsolved);
   const renderItem = (item) => {
     return (
       <Card>

@@ -6,26 +6,30 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import swal from 'sweetalert';
+import { Button } from 'antd';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  width: 60vw;
+  min-height: 93%;
+  width: 60%;
+  min-width: 30em;
   background-color: #bbd2ec;
-  margin: 0 auto;
-  position: relative;
+  min-top: 7%;
+  left: 20%;
+  position: fixed;
 `;
 
 const TopBar = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 58vw;
-  height: 4.5vh;
-  position: absolute;
-  top: 1vh;
+  width: 58%;
+  min-width: 28em;
+  height: 2.5em;
+  position: fixed;
+  top: 4em;
 `;
 
 const Timer = styled.div`
@@ -45,9 +49,11 @@ const Score = styled.div`
 `;
 
 const BodyContainer = styled.div`
-  position: relative;
-  height: 80vh;
-  top: 4.5vh;
+  position: fixed;
+  height: 80%;
+  top: 11em;
+  width: 60%;
+  min-width: 30em;
 `;
 
 const Guess = styled.div`
@@ -57,23 +63,24 @@ const Guess = styled.div`
   height: 5vh;
 `;
 const Explanation = styled.div`
-  flex: 1.2;
+  display: flex;
   padding: 3em;
   justify-content: center;
   align-items: center;
   text-align: center;
+  width: 50vw;
+  min-width: 25em;
 `;
 const Keypad = styled.div`
-  flex: 3;
   display: flex;
-  height: 55vh;
   justify-content: center;
   align-items: center;
 `;
-const Button = styled.button`
+const KeyButton = styled.button`
   margin: 0.7em;
   padding: 0.2em;
-  width: 17vw;
+  width: 15vw;
+  min-height: 4vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -87,16 +94,6 @@ const Line = styled.div`
   border-width: 1em;
   border-radius: 0.5em;
   margin-bottom: 0.1em;
-`;
-const NextButton = styled.button`
-  display: flex;
-  padding: 1em;
-  border-radius: 1em;
-  background-color: red;
-  position: absolute;
-  right: 1.5em;
-  top: 6em;
-  z-index: 2;
 `;
 
 const QuizGame = () => {
@@ -223,6 +220,7 @@ const QuizGame = () => {
     }
   }, [guessCount]);
 
+  // 문제 소진 시 알림창
   useEffect(() => {
     if (solveCount !== 0 && solveCount === keywords.length) {
       setSolveCount(0);
@@ -248,7 +246,8 @@ const QuizGame = () => {
       }).then((value) => {
         switch (value) {
           case 'catch':
-            navigate('/unsolvedScreen', { unsolved: { unsolved } });
+            console.log(unsolved);
+            navigate('/unsolvedScreen', { state: { unsolved } });
             break;
 
           default:
@@ -284,19 +283,26 @@ const QuizGame = () => {
   useEffect(() => {
     if (timer === 0) {
       stopTimer();
-      const confirmExit = () => {
-        const userConfirmed = window.confirm('타임 오버! 최종 점수: ' + score);
-        if (userConfirmed) {
-          if (unsolved.length > 0) {
-            navigate('/unsolvedScreen', { unsolved: { unsolved } });
-          } else {
-            navigate('/');
-          }
+      // 타임 오버 및 점수 알림
+    swal({
+      title: "타임 오버!",
+      text: "최종 점수: " + score,
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willContinue) => {
+      if (willContinue) {
+        // 넘긴 문제가 있을 경우, 넘긴 문제 목록 페이지로 이동
+        if (unsolved.length > 0) {
+          navigate('/unsolvedScreen', { state: { unsolved } });
+        } else {
+          // 그렇지 않으면 홈으로 이동
+          navigate('/');
         }
-      };
-
-      confirmExit();
-    }
+      }
+    });
+  }
   }, [timer, unsolved]);
 
   // 키패드 클릭 시 화면 반영
@@ -334,17 +340,17 @@ const QuizGame = () => {
       {Array.from({ length: 5 }, (_, j) => {
         const index = i * 5 + j;
         return (
-          <Button
+          <KeyButton
             key={index}
             style={
               selectedButtons[index]
-                ? { backgroundColor: '#7bb4e3', fontSize: '20' }
-                : { backgroundColor: '#dfe9f5', fontSize: '20' }
+                ? { backgroundColor: '#7bb4e3' }
+                : { backgroundColor: '#dfe9f5' }
             }
             onClick={() => handleSelect(keypadKeywords[index], index)}
           >
             {keypadKeywords[index]}
-          </Button>
+          </KeyButton>
         );
       })}
     </div>
@@ -368,27 +374,25 @@ const QuizGame = () => {
               <span>점수: {score}</span>
             </Score>
           </TopBar>
-          <NextButton onClick={() => handleNextButton()}>
-            <span style={{ color: 'white', fontWeight: 'bold' }}>
-              문제 넘기기
-            </span>
-          </NextButton>
-          <BodyContainer>
+          <div style={{position: 'fixed', top: '8em', width: '60%', minWidth: '30em', left: '20%'}}>
+            <Button type="primary" danger onClick={() => handleNextButton()} style={{position: 'absolute', right: '0.5em'}}>문제 넘기기
+            </Button>
+            </div>
+          <BodyContainer>    
             <Guess>
               <span style={{ fontSize: '4em' }}>{guess}</span>
             </Guess>
-            <Line />
             <Explanation>
-              <span style={{ fontSize: 25 }}>
+            <span style={{ fontSize: currentKeyword?.data.explanation?.length > 70 ? '15px' : '20px' }}>
                 {currentKeyword?.data.explanation}
-              </span>
+            </span>
             </Explanation>
-            <Line />
             <Keypad>{buttons}</Keypad>
           </BodyContainer>
         </>
       )}
     </Container>
+    
   );
 };
 export default QuizGame;
