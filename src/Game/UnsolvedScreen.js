@@ -12,6 +12,10 @@ const Card = styled.div`
   margin-vertical: 8px;
   margin-horizontal: 16px;
   padding: 10px;
+  margin: 10px;
+  border-radius: 10px;
+  border: 3px solid black;
+  background-color: white;
 `;
 
 const Era = styled.div`
