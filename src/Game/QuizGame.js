@@ -7,6 +7,8 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import swal from 'sweetalert';
 import { Button } from 'antd';
+import Modal from 'react-modal';
+import UnsolvedScreen from './UnsolvedScreen';
 
 const Container = styled.div`
   display: flex;
@@ -29,7 +31,7 @@ const TopBar = styled.div`
   min-width: 28em;
   height: 2.5em;
   position: fixed;
-  top: 4em;
+  top: 6em;
 `;
 
 const Timer = styled.div`
@@ -51,7 +53,7 @@ const Score = styled.div`
 const BodyContainer = styled.div`
   position: fixed;
   height: 80%;
-  top: 11em;
+  top: 25vh;
   width: 60%;
   min-width: 30em;
 `;
@@ -68,7 +70,8 @@ const Explanation = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
-  width: 50vw;
+  width: 100%;
+  box-sizing: border-box;
   min-width: 25em;
 `;
 const Keypad = styled.div`
@@ -115,6 +118,7 @@ const QuizGame = () => {
   );
   const [unsolved, setUnsolved] = useState([]); // 넘긴 문제 저장
   const [solveCount, setSolveCount] = useState(0); // 문제 수 카운트
+  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 오픈 여부
 
   // 키워드 가져오기
   useEffect(() => {
@@ -246,8 +250,7 @@ const QuizGame = () => {
       }).then((value) => {
         switch (value) {
           case 'catch':
-            console.log(unsolved);
-            navigate('/unsolvedScreen', { state: { unsolved } });
+            setIsModalOpen(true); // 모달창 열기
             break;
 
           default:
@@ -284,25 +287,24 @@ const QuizGame = () => {
     if (timer === 0) {
       stopTimer();
       // 타임 오버 및 점수 알림
-    swal({
-      title: "타임 오버!",
-      text: "최종 점수: " + score,
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
-    })
-    .then((willContinue) => {
-      if (willContinue) {
-        // 넘긴 문제가 있을 경우, 넘긴 문제 목록 페이지로 이동
-        if (unsolved.length > 0) {
-          navigate('/unsolvedScreen', { state: { unsolved } });
-        } else {
-          // 그렇지 않으면 홈으로 이동
-          navigate('/');
+      swal({
+        title: '타임 오버!',
+        text: '최종 점수: ' + score,
+        icon: 'warning',
+        buttons: true,
+        dangerMode: true,
+      }).then((willContinue) => {
+        if (willContinue) {
+          // 넘긴 문제가 있을 경우, 넘긴 문제 목록 페이지로 이동
+          if (unsolved.length > 0) {
+            setIsModalOpen(true);
+          } else {
+            // 그렇지 않으면 홈으로 이동
+            navigate('/');
+          }
         }
-      }
-    });
-  }
+      });
+    }
   }, [timer, unsolved]);
 
   // 키패드 클릭 시 화면 반영
@@ -374,25 +376,68 @@ const QuizGame = () => {
               <span>점수: {score}</span>
             </Score>
           </TopBar>
-          <div style={{position: 'fixed', top: '8em', width: '60%', minWidth: '30em', left: '20%'}}>
-            <Button type="primary" danger onClick={() => handleNextButton()} style={{position: 'absolute', right: '0.5em'}}>문제 넘기기
+          <div
+            style={{
+              position: 'fixed',
+              top: '10em',
+              width: '60%',
+              minWidth: '30em',
+              left: '19.5%',
+            }}
+          >
+            <Button
+              type="primary"
+              danger
+              onClick={() => handleNextButton()}
+              style={{ position: 'absolute', right: '0.5em' }}
+            >
+              문제 넘기기
             </Button>
-            </div>
-          <BodyContainer>    
+          </div>
+          <BodyContainer>
             <Guess>
               <span style={{ fontSize: '4em' }}>{guess}</span>
             </Guess>
             <Explanation>
-            <span style={{ fontSize: currentKeyword?.data.explanation?.length > 70 ? '15px' : '20px' }}>
+              <span
+                style={{
+                  fontSize:
+                    currentKeyword?.data.explanation?.length > 70
+                      ? '1.5em'
+                      : '2em',
+                }}
+              >
                 {currentKeyword?.data.explanation}
-            </span>
+              </span>
             </Explanation>
             <Keypad>{buttons}</Keypad>
           </BodyContainer>
+          <Modal
+            isOpen={isModalOpen}
+            onRequestClose={() => setIsModalOpen(false)}
+            contentLabel="넘긴 문제 정답"
+            shouldCloseOnOverlayClick={false}
+            style={{
+              content: {
+                top: '50%',
+                left: '50%',
+                right: 'auto',
+                bottom: 'auto',
+                marginRight: '-50%',
+                transform: 'translate(-50%, -50%)',
+                width: '40%', // 너비 설정
+                height: '60%', // 높이 설정
+
+                borderRadius: '10px', // 테두리 둥글기 설정
+                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.5)', // 그림자 효과 추가
+              },
+            }}
+          >
+            <UnsolvedScreen unsolved={unsolved} />
+          </Modal>
         </>
       )}
     </Container>
-    
   );
 };
 export default QuizGame;

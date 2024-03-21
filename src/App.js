@@ -10,6 +10,9 @@ import PostDetail from './Board/PostDetail';
 import QuizGame from './Game/QuizGame';
 import UnsolvedScreen from './Game/UnsolvedScreen';
 import './css/App.css'; // App.css 파일을 import
+import Modal from 'react-modal';
+
+Modal.setAppElement('#root');
 
 const logo =
   'https://firebasestorage.googleapis.com/v0/b/capstone-ac206.appspot.com/o/%EC%9B%B9%ED%99%88%EB%9D%BC%EB%B2%A8.jpg?alt=media&token=63425a12-b57b-4035-aa33-f5b11a2f5067';

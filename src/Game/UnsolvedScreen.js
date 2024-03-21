@@ -1,79 +1,80 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { Card, Typography, FloatButton } from 'antd';
+import { CloseOutlined } from '@ant-design/icons';
+import swal from 'sweetalert';
 
 const Container = styled.div`
-  flex-grow: 1;
-  padding-top: 10px;
-  background-color: #bbd2ec;
-`;
-
-const Card = styled.div`
-  margin-vertical: 8px;
-  margin-horizontal: 16px;
-  padding: 10px;
-  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   border-radius: 10px;
-  border: 3px solid black;
-  background-color: white;
+  background-color: #838abd;
+  padding: 20px;
 `;
 
-const Era = styled.div`
-  padding-bottom: 5px;
+const FloatingButton = styled.button`
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 10;
+  cursor: pointer;
 `;
 
-const EraText = styled.span`
-  font-size: 13px;
-`;
+const { Title, Text } = Typography;
+const UnsolvedScreen = ({ unsolved }) => {
+  const navigate = useNavigate();
 
-const Explanation = styled.div`
-  padding-bottom: 5px;
-`;
+  const showAlert = () => {
+    swal({
+      title: '정말로 나가시겠습니까?',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    }).then((willContinue) => {
+      if (willContinue) {
+        navigate('/');
+      }
+    });
+  };
 
-const Keyword = styled.span`
-  font-size: 17px;
-`;
-
-const Title = styled.h1`
-  padding-top: 15px;
-  font-size: 20px;
-  font-weight: bold;
-  background-color: #bbd2ec;
-  text-align: center;
-`;
-
-const UnsolvedScreen = ( ) => {
-  const { state } = useLocation();
-  const unsolved = state.unsolved;console.log(unsolved);
   const renderItem = (item) => {
     return (
-      <Card>
-        <Era>
-          <EraText>시대: {item.data.era}</EraText>
-        </Era>
-        <Explanation>
-          <span>{item.data.explanation}</span>
-        </Explanation>
-        <div>
-          <Keyword>답: {item.data.keyword}</Keyword>
-        </div>
+      <Card
+        title={`시대: ${item.data.era}`}
+        style={{ margin: '20px', width: '80%' }}
+      >
+        <p style={{ fontSize: '1.5em', marginBottom: '30px' }}>
+          {item.data.explanation}
+        </p>
+        <Title level={5}>답: {item.data.keyword}</Title>
       </Card>
     );
   };
 
   return (
-    <>
-      <div>
-        <Title>넘긴 문제 정답</Title>
-      </div>
-      <Container>
-        {unsolved.map((item) => (
-          <React.Fragment key={item.data.keyword}>
-            {renderItem(item)}
-          </React.Fragment>
-        ))}
-      </Container>
-    </>
+    <Container>
+      <FloatButton
+        icon={<CloseOutlined />}
+        onClick={showAlert}
+        style={{ right: 40, top: 40 }}
+      >
+        나가기
+      </FloatButton>
+      <Title
+        level={2}
+        style={{ backgroundColor: 'white', borderRadius: '5px' }}
+      >
+        넘긴 문제 정답
+      </Title>
+      {unsolved.map((item) => (
+        <React.Fragment key={item.data.keyword}>
+          {renderItem(item)}
+        </React.Fragment>
+      ))}
+    </Container>
   );
 };
 
