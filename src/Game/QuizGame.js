@@ -15,11 +15,11 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 93%;
+  height: 95%;
   width: 60%;
   min-width: 30em;
   background-color: #bbd2ec;
-  min-top: 7%;
+  top: 5em;
   left: 20%;
   position: fixed;
 `;
@@ -52,8 +52,8 @@ const Score = styled.div`
 
 const BodyContainer = styled.div`
   position: fixed;
-  height: 80%;
-  top: 25vh;
+  height: 100%;
+  top: 10em;
   width: 60%;
   min-width: 30em;
 `;
@@ -62,7 +62,7 @@ const Guess = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 5vh;
+  height: 5em;
 `;
 const Explanation = styled.div`
   display: flex;

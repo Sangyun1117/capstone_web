@@ -77,8 +77,8 @@ const ImageEnd4Click = () => {
 };
 
 const Home = () => (
-  <>
-    <div className="container">
+  <div className="container">
+    <div className="topContainer">
       <div className="menu">
         <div className="item">문제풀이</div>
         <div className="menu-content">
@@ -191,7 +191,7 @@ const Home = () => (
         onClick={ImageEnd4Click}
       />
     </div>
-  </>
+  </div>
 );
 
 export default Home;
