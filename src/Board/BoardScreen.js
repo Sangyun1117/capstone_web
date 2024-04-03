@@ -140,9 +140,9 @@ const BoardScreen = () => {
             onClick={() => {
               isLoggedIn
                 ? navigate('/postCreate', {
-                    boardName: currentTab,
+                    state: { boardName: currentTab },
                   })
-                : navigate('/'); // 로그인 페이지 생기면 이 부분 수정하기
+                : navigate('/login');
             }}
           >
             +
