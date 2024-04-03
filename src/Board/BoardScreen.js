@@ -35,36 +35,55 @@ const StyledLink = styled.button`
   margin: 20px;
   font-weight: bold;
   font-size: 1em;
+  padding-bottom: 10px;
 `;
 
 const QuestionBoard = () => (
-  <BoardScreenUI title="질문 게시판" boardName="questionBoard" />
+  <BoardScreenUI title="질문" boardName="questionBoard" />
 );
 const StudyTipBoard = () => (
-  <BoardScreenUI title="공부 팁 게시판" boardName="tipBoard" />
+  <BoardScreenUI title="공부 팁" boardName="tipBoard" />
 );
 const ExamReviewBoard = () => (
-  <BoardScreenUI title="시험 후기 게시판" boardName="reviewBoard" />
-);
-
-const TabNavigator = ({ setCurrentTab }) => (
-  <TabNavigatorContainer>
-    <NavLinkContainer>
-      <StyledLink onClick={() => setCurrentTab('questionBoard')}>
-        질문
-      </StyledLink>
-      <StyledLink onClick={() => setCurrentTab('tipBoard')}>
-        공부 팁
-      </StyledLink>
-      <StyledLink onClick={() => setCurrentTab('reviewBoard')}>
-        시험 후기
-      </StyledLink>
-    </NavLinkContainer>
-  </TabNavigatorContainer>
+  <BoardScreenUI title="시험 후기" boardName="reviewBoard" />
 );
 
 const BoardScreen = () => {
   const [currentTab, setCurrentTab] = useState('questionBoard');
+
+  const TabNavigator = ({ setCurrentTab }) => (
+    <TabNavigatorContainer>
+      <NavLinkContainer>
+        <StyledLink
+          onClick={() => setCurrentTab('questionBoard')}
+          style={{
+            borderBottom:
+              currentTab === 'questionBoard' ? '2px solid #008b8b' : 'none',
+          }}
+        >
+          질문
+        </StyledLink>
+        <StyledLink
+          onClick={() => setCurrentTab('tipBoard')}
+          style={{
+            borderBottom:
+              currentTab === 'tipBoard' ? '2px solid #008b8b' : 'none',
+          }}
+        >
+          공부 팁
+        </StyledLink>
+        <StyledLink
+          onClick={() => setCurrentTab('reviewBoard')}
+          style={{
+            borderBottom:
+              currentTab === 'reviewBoard' ? '2px solid #008b8b' : 'none',
+          }}
+        >
+          시험 후기
+        </StyledLink>
+      </NavLinkContainer>
+    </TabNavigatorContainer>
+  );
 
   return (
     <>
