@@ -51,13 +51,13 @@ const TabNavigator = ({ setCurrentTab }) => (
   <TabNavigatorContainer>
     <NavLinkContainer>
       <StyledLink onClick={() => setCurrentTab('questionBoard')}>
-        질문 게시판
+        질문
       </StyledLink>
       <StyledLink onClick={() => setCurrentTab('tipBoard')}>
-        공부 팁 게시판
+        공부 팁
       </StyledLink>
       <StyledLink onClick={() => setCurrentTab('reviewBoard')}>
-        시험 후기 게시판
+        시험 후기
       </StyledLink>
     </NavLinkContainer>
   </TabNavigatorContainer>
