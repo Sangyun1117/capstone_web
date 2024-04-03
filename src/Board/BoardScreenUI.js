@@ -5,50 +5,6 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-const TopContainer = styled.div`
-  position: flex;
-  flex-direction: row;
-  top: 10em;
-`;
-
-const CommentInput = styled.input`
-  position: absolute;
-  height: 50px;
-  top: 4em;
-  right: 25.5%;
-  width: 20%;
-  border: none;
-  border-radius: 5px;
-  background-color: #bbd2ec;
-  margin-bottom: 10px;
-  padding: 0 10px;
-  z-index: 1;
-  font-size: 1.5em;
-`;
-
-const WriteButton = styled.button`
-  width: 4%;
-  height: 50px;
-  position: absolute;
-  right: 21%;
-  top: 3em;
-  cursor: pointer;
-  font-weight: 600;
-  text-align: center;
-  line-height: 50px;
-  color: #fff;
-  border-radius: 5px;
-  transition: all 0.2s;
-  background-color: #4dccc6;
-  box-shadow: 0px 0px 0px 0px #01939a;
-  border: none;
-  font-size: 2em;
-  z-index: 1;
-  &:hover {
-    box-shadow: 0px 0px 0px 5px #01939a;
-  }
-`;
-
 const BodyContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -176,17 +132,14 @@ const ListItem = styled.button`
 `;
 
 // 게시판 UI: 글 리스트 표시, 글 작성 버튼
-const BoardScreenUI = ({ boardName }) => {
+const BoardScreenUI = ({ boardName, search }) => {
   const [posts, setPosts] = useState([]); // 게시글 데이터
-  const [search, setSearch] = useState(''); // 검색 텍스트
   const [filteredPosts, setFilteredPosts] = useState([]); // 검색으로 필터링 된 글
   const [isLoading, setIsLoading] = useState(true); // 로딩 상태
 
-  const isLoggedIn = useSelector((state) => state.isLoggedIn);
-  const userEmail = useSelector((state) => state.userEmail);
   // 안드로이드 환경에서는 localhost로 작성하면 에러 발생하므로 ip주소 입력 필요.
   //const serverPath = 'http://192.168.0.3:8080/';
-  const serverPath = 'http://223.194.133.88:8080/';
+  const serverPath = 'http://223.194.133.165:8080/';
   const navigate = useNavigate();
 
   // 글 검색
@@ -221,25 +174,7 @@ const BoardScreenUI = ({ boardName }) => {
   }, []);
 
   return (
-    <>
-      <TopContainer>
-        <CommentInput
-          type="text"
-          placeholder="검색하기"
-          onChange={(e) => setSearch(e.target.value)}
-        />
-        <WriteButton
-          onClick={() => {
-            isLoggedIn
-              ? navigate('/postCreate', {
-                  boardName: boardName,
-                })
-              : navigate('/'); // 로그인 페이지 생기면 이 부분 수정하기
-          }}
-        >
-          +
-        </WriteButton>
-      </TopContainer>
+    <>   
       <BodyContainer>
         {isLoading ? (
           <HashLoader loading={isLoading} size={50} />
