@@ -8,7 +8,7 @@ import TextField from '@mui/material/TextField';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: calc(100% - 5em);
   width: 60%;
   min-width: 30em;
   background-color: #bbd2ec;
@@ -27,7 +27,7 @@ const BodyInput = styled.textarea`
 const SubmitButton = styled.button`
   display: flex;
   position: absolute;
-  top: 70%;
+  top: 85%;
   right: 10px;
   justify-content: center;
   margin: 10px;
@@ -60,8 +60,8 @@ const PostCreate = () => {
   const navigate = useNavigate();
 
   const userEmail = useSelector((state) => state.userEmail);
-  const serverPath = 'http://192.168.0.3:8080/';
-  //const serverPath = 'http://223.194.133.165:8080/';
+  //const serverPath = 'http://192.168.0.3:8080/';
+  const serverPath = 'http://223.194.133.15:8080/';
 
   // 작성한 글을 db에 반영
   const handleSubmit = () => {

@@ -7,115 +7,126 @@ import styled from 'styled-components';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100%;
+  min-height: 100%;
+  height: auto; // 내용이 길어지면 화면이 길어지게 한다.
   width: 60%;
   min-width: 30em;
   background-color: #bbd2ec;
   top: 5em;
   left: 20%;
   position: absolute;
-  backgroundcolor: #bbd2ec;
 `;
 
-const Content = styled.div`
-  flex: 1;
+const ContentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-height: 40%;
   padding: 10px;
 `;
 
-const IdRow = styled.div`
-  flexdirection: row;
-  justifycontent: space-between;
-  alignitems: center;
+const TitleArea = styled.div`
+  font-size: 24px;
+  font-weight: 400;
+  margin-bottom: 10px;
   padding: 5px;
+  background-color: white;
+  border-radius: 10px;
+`;
+
+const TopUIContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  padding: 5px;
+  background-color: white;
+  border-radius: 10px;
+`;
+
+const ButtonContainer = styled.div`
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+`;
+
+const TopButton = styled.button`
+  margin: 5px;
+  padding: 10px;
+  border-radius: 5px;
+`;
+
+const PostBody = styled.div`
+  margin-top: 10px;
+  padding: 5px;
+  background-color: white;
+  border-radius: 5px;
+  min-height: 400px;
+`
+
+const BottomContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-height: 50%;
+  padding: 10px;
+`
+
+const Card = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 10px;
+  margin: 5px 0px;
+  padding: 10px;
+  min-height: 50px;
+`;
+
+const Line = styled.div`
+  display: flex;
+  background-color: #7bb4e3;
+  height: 10px;
+  margin: 5px;
+  border-radius: 20px;
 `;
 
 const CommentRow = styled.div`
-  flexdirection: row;
-  justifycontent: space-between;
-  alignitems: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
-const ButtonRow = styled.div`
-  flexdirection: row;
-  justifycontent: flex-end;
-  alignitems: center;
-  marginbottom: 10px;
-`;
-
-const Title = styled.div`
-  fontsize: 24px;
-  fontweight: bold;
-  marginbottom: 10px;
-  padding: 5px;
-`;
-
-const Button = styled.button`
-  margin: 5px;
-  padding: 10px;
-  borderradius: 5px;
-`;
-
-const Buttondiv = styled.div`
-  color: white;
-`;
-
-const Contentdiv = styled.div`
-  padding: 10px;
-  fontsize: 16px;
-  backgroundcolor: #dfe9f5;
-  minheight: 405px;
-  borderradius: 20px;
-`;
-
-const WriteButton = styled.button`
-  width: 50px;
-  justifycontent: center;
-  alignitems: center;
+const SubmitButton = styled.button`
+  display: flex;
+  width: 70px;
+  height: 50px;
+  justify-content: center;
+  align-items: center;
   position: relative;
-  backgroundcolor: #e6e6fa;
-  bordercolor: #4b3e9a;
-  borderwidth: 1px;
-  borderradius: 5px;
-  margintop: 30px;
+  background-color: #e6e6fa;
+  border-color: #4b3e9a;
+  border-width: 1px;
+  border-radius: 5px;
 `;
 
 const InputRow = styled.div`
-  flexdirection: row;
-  justifycontent: space-between;
+  display: flex;
+  flex-direction: row;
   padding: 10px;
 `;
 
 const CommentInput = styled.input`
-  flex: 1;
-  height: 40px;
-  bordercolor: gray;
-  borderwidth: 1px;
-  borderradius: 5px;
-  marginright: 5px;
-  margintop: 30px;
+  height: 50px;
+  width: 100%;
+  border: 1px solid gray;
+  border-radius: 5px;
+  margin-right: 10px;
+  padding-left: 5px;
 `;
 
 const CommentDeleteButton = styled.button`
   padding: 10px;
-  borderradius: 5px;
-  backgroundcolor: #df243b;
+  border-radius: 5px;
+  background-color: #df243b;
 `;
 
-const Card = styled.div`
-  margin: 5px;
-  minheight: 50px;
-`;
-
-const Carddiv = styled.div`
-  fontsize: 20px;
-`;
-
-const Line = styled.div`
-  borderbottomcolor: #7bb4e3;
-  borderbottomwidth: 10px;
-  margin: 10px;
-  borderradius: 5px;
-`;
 // 게시판 글 클릭했을 때 내용 보이는 화면
 const PostDetail = () => {
   const navigate = useNavigate();
@@ -127,9 +138,8 @@ const PostDetail = () => {
 
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
   const userEmail = useSelector((state) => state.userEmail);
-  const serverPath = 'http://192.168.0.3:8080/';
-
-  console.log('boardName: ' + boardName);
+  //const serverPath = 'http://192.168.0.3:8080/';
+  const serverPath = 'http://223.194.133.15:8080/';
 
   useEffect(() => {
     if (userEmail) {
@@ -248,76 +258,77 @@ const PostDetail = () => {
 
   return (
     <Container>
-      <Content>
-        <Title>{post.title}</Title>
-        <IdRow>
+      <ContentContainer>
+        <TitleArea>{post.title}</TitleArea>
+        <TopUIContainer>
           <div style={{ fontSize: 15 }}>
             작성자: {post ? post.userEmail.split('_')[0] : ''}
           </div>
 
-          <ButtonRow>
+          <ButtonContainer>
             {userEmail === post.userEmail ? (
               <>
-                <Button
+                <TopButton
                   style={{ backgroundColor: '#004EA2' }}
                   onClick={handleUpdate}
                 >
                   <div>수정</div>
-                </Button>
-                <Button
+                </TopButton>
+                <TopButton
                   style={{ backgroundColor: '#DF243B' }}
                   onClick={handleDelete}
                 >
                   <div>삭제</div>
-                </Button>
+                </TopButton>
               </>
             ) : null}
-          </ButtonRow>
-        </IdRow>
-        <div>{post.body}</div>
-      </Content>
+          </ButtonContainer>
+        </TopUIContainer>
+        <PostBody>{post.body}</PostBody>
+      </ContentContainer>
 
-      {commentList.length > 0 && <Line />}
-
-      {commentList.length > 0 &&
-        commentList.map((item, index) => (
-          <Card key={index}>
-            <div>
-              <CommentRow>
-                <div>
-                  <div style={{ fontSize: 12 }}>
-                    {item.userEmail.split('@')[0]}
+      <BottomContainer>
+        {commentList.length > 0 && <Line />}
+        {commentList.length > 0 &&
+          commentList.map((item, index) => (
+            <Card key={index}>
+              <div>
+                <CommentRow>
+                  <div>
+                    <div style={{ fontSize: 12 }}>
+                      {item.userEmail.split('@')[0]}
+                    </div>
+                    <div style={{ fontSize: 16 }}>{item.comment}</div>
                   </div>
-                  <div style={{ fontSize: 16 }}>{item.comment}</div>
-                </div>
-                {userEmail === item.userEmail ? (
-                  <CommentDeleteButton
-                    onClick={() => handleCommentDelete(item.commentId)}
-                  >
-                    <div>삭제</div>
-                  </CommentDeleteButton>
-                ) : null}
-              </CommentRow>
-            </div>
-          </Card>
-        ))}
+                  {userEmail === item.userEmail ? (
+                    <CommentDeleteButton
+                      onClick={() => handleCommentDelete(item.commentId)}
+                    >
+                      <div>삭제</div>
+                    </CommentDeleteButton>
+                  ) : null}
+                </CommentRow>
+              </div>
+            </Card>
+          ))}
 
-      {commentList.length > 0 && <Line />}
+        <Line />
 
-      <InputRow>
-        <CommentInput // 댓글 입력창
-          placeholder={
-            isLoggedIn ? '댓글 작성하기' : '로그인하고 댓글을 작성해보세요!'
-          }
-          onChange={(e) => setComment(e.target.value)}
-          value={comment}
-          readOnly={!isLoggedIn}
-        />
-        <WriteButton onClick={handleSubmit}>
-          전송
-          {/* <Icon name="comment" size={24} color="#35439c" /> */}
-        </WriteButton>
-      </InputRow>
+        <InputRow>
+          <CommentInput // 댓글 입력창
+            placeholder={
+              isLoggedIn ? '댓글 작성하기' : '로그인하고 댓글을 작성해보세요!'
+            }
+            onChange={(e) => setComment(e.target.value)}
+            value={comment}
+            readOnly={!isLoggedIn}
+          />
+          <SubmitButton onClick={handleSubmit}>
+            전송
+            {/* <Icon name="comment" size={24} color="#35439c" /> */}
+          </SubmitButton>
+        </InputRow>
+      </BottomContainer> 
     </Container>
   );
 };

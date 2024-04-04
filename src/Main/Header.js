@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import { setUserEmail, setLoggedIn } from '../state';
@@ -11,6 +11,15 @@ const Header = () => {
     const isLoggedIn = useSelector((state) => state.isLoggedIn);
     const userEmail = useSelector((state) => state.userEmail);
     const navigate = useNavigate();
+
+    useEffect(()=>{
+      const localUserEmail = localStorage.getItem('userEmail');
+      // 로컬스토리지에 로그인 정보 있으면 로그인 유지 처리
+      if(localUserEmail != null){
+        dispatch(setUserEmail(localUserEmail)); 
+        dispatch(setLoggedIn(true));
+      }
+    }, [])
 
     const handleLogout = () => {
         localStorage.removeItem('userEmail');
