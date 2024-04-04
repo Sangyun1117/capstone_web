@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import HashLoader from 'react-spinners/HashLoader';
 import axios from 'axios';
-import { useNavigate, useLocation  } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
+import TextField from '@mui/material/TextField';
 
 const Container = styled.div`
   display: flex;
@@ -17,21 +17,21 @@ const Container = styled.div`
   position: absolute;
 `;
 
-const TitleInput = styled.input`
-  margin: 10px;
-  height: 50px;
-`
-
 const BodyInput = styled.textarea`
-  margin: 10px;
+  margin: 1%;
   height: 60%;
-`
+  width: '95%',
+  left: '1.5%',
+`;
 
 const SubmitButton = styled.button`
   display: flex;
+  position: absolute;
+  top: 70%;
+  right: 10px;
   justify-content: center;
   margin: 10px;
-  width: 4%;
+  width: 10%;
   min-width: 70px;
   height: 50px;
   cursor: pointer;
@@ -49,7 +49,7 @@ const SubmitButton = styled.button`
     box-shadow: 0px 0px 0px 5px #01939a;
   }
   margin-right: 10px;
-`
+`;
 
 // 게시판 글 생성 화면
 const PostCreate = () => {
@@ -60,11 +60,8 @@ const PostCreate = () => {
   const navigate = useNavigate();
 
   const userEmail = useSelector((state) => state.userEmail);
-  //const serverPath = 'http://192.168.0.3:8080/';
-  const serverPath = 'http://223.194.133.165:8080/';
-
-  console.log('boardName: ' + boardName);
-  console.log('userEmail: ' + userEmail);
+  const serverPath = 'http://192.168.0.3:8080/';
+  //const serverPath = 'http://223.194.133.165:8080/';
 
   // 작성한 글을 db에 반영
   const handleSubmit = () => {
@@ -101,18 +98,24 @@ const PostCreate = () => {
 
   return (
     <Container>
-      <TitleInput
-        value={title}
+      <TextField
+        required
+        fullWidth
+        id="outlined-required"
+        label="제목을 입력하세요"
         onChange={(e) => setTitle(e.target.value)}
+        style={{
+          margin: '1.5% 1%',
+          backgroundColor: 'white',
+          width: '98%',
+        }}
       />
       <BodyInput
-        rows="10" 
+        rows="10"
         value={body}
         onChange={(e) => setBody(e.target.value)}
       />
-      <SubmitButton onClick={handleSubmit}>
-        등록
-      </SubmitButton>
+      <SubmitButton onClick={handleSubmit}>등록</SubmitButton>
     </Container>
   );
 };
