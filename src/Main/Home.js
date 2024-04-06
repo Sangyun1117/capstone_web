@@ -105,9 +105,11 @@ const Home = () => (
         <div className="item">미디어</div>
         <div className="menu-content">
           <div className="sub-item">
-            <Link to="about">역사이야기</Link>
+            <Link to="historyTales">역사이야기</Link>
           </div>
-          <div className="sub-item">즐겨찾는 영상</div>
+          <div className="sub-item">
+          <Link to="likedVideos">즐겨찾는 영상</Link>
+          </div>
           <div className="sub-item">
             <Link to="quizGame">게임</Link>
           </div>
