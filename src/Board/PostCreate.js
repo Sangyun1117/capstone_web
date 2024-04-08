@@ -20,17 +20,16 @@ const Container = styled.div`
 const BodyInput = styled.textarea`
   margin: 1%;
   height: 60%;
-  width: '95%',
-  left: '1.5%',
+  width: 95%,
+  left: 1.5%,
 `;
 
 const SubmitButton = styled.button`
   display: flex;
-  position: absolute;
-  top: 85%;
-  right: 10px;
+  right: 0px;
   justify-content: center;
   margin: 10px;
+  margin-left: auto;
   width: 10%;
   min-width: 70px;
   height: 50px;
@@ -40,6 +39,7 @@ const SubmitButton = styled.button`
   line-height: 50px;
   color: #fff;
   border-radius: 5px;
+
   transition: all 0.2s;
   background-color: #4dccc6;
   box-shadow: 0px 0px 0px 0px #01939a;
@@ -60,8 +60,8 @@ const PostCreate = () => {
   const navigate = useNavigate();
 
   const userEmail = useSelector((state) => state.userEmail);
-  //const serverPath = 'http://192.168.0.3:8080/';
-  const serverPath = 'http://223.194.133.15:8080/';
+  const serverPath = 'http://192.168.0.3:8080/';
+  //const serverPath = 'http://223.194.133.15:8080/';
 
   // 작성한 글을 db에 반영
   const handleSubmit = () => {
@@ -110,12 +110,12 @@ const PostCreate = () => {
           width: '98%',
         }}
       />
+      <SubmitButton onClick={handleSubmit}>등록</SubmitButton>
       <BodyInput
         rows="10"
         value={body}
         onChange={(e) => setBody(e.target.value)}
       />
-      <SubmitButton onClick={handleSubmit}>등록</SubmitButton>
     </Container>
   );
 };

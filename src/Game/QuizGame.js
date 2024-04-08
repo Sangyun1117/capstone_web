@@ -15,7 +15,7 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 95%;
+  height: 100%;
   width: 60%;
   min-width: 30em;
   background-color: #bbd2ec;
@@ -29,7 +29,7 @@ const TopBar = styled.div`
   justify-content: space-between;
   width: 58%;
   min-width: 28em;
-  height: 2.5em;
+  height: 4%;
   position: fixed;
   top: 6em;
 `;
@@ -40,6 +40,7 @@ const Timer = styled.div`
   padding: 1em;
   border-radius: 1em;
   background-color: white;
+  font-weight: 600;
 `;
 
 const Score = styled.div`
@@ -48,14 +49,16 @@ const Score = styled.div`
   padding: 1em;
   border-radius: 1em;
   background-color: white;
+  font-weight: 600;
 `;
 
 const BodyContainer = styled.div`
-  position: fixed;
-  height: 100%;
-  top: 10em;
-  width: 60%;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 10%;
   min-width: 30em;
+  height: 100%;
 `;
 
 const Guess = styled.div`
@@ -63,6 +66,7 @@ const Guess = styled.div`
   justify-content: center;
   align-items: center;
   height: 5em;
+  margin-bottom: 5%;
 `;
 const Explanation = styled.div`
   display: flex;
@@ -83,20 +87,29 @@ const KeyButton = styled.button`
   margin: 0.7em;
   padding: 0.2em;
   width: 15vw;
-  min-height: 4vh;
+  height: 5vh;
   display: flex;
   justify-content: center;
   align-items: center;
   border-color: black;
   border-width: 0.1em;
-  border-radius: 0.5em;
+  border-radius: 20px;
+  font-weight: 600;
   font-size: 2em;
+
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0px 0px 0px 0px ${(props) => props.shadowColor};
+  &:hover {
+    box-shadow: 0px 0px 0px 5px ${(props) => props.shadowColor};
+  }
 `;
 const Line = styled.div`
-  background-color: #838abd;
-  border-width: 1em;
-  border-radius: 0.5em;
-  margin-bottom: 0.1em;
+  display: flex;
+  background-color: #7bb4e3;
+  height: 10px;
+  margin: 0.5%;
+  border-radius: 20px;
 `;
 
 const QuizGame = () => {
@@ -389,7 +402,11 @@ const QuizGame = () => {
               type="primary"
               danger
               onClick={() => handleNextButton()}
-              style={{ position: 'absolute', right: '0.5em' }}
+              style={{
+                position: 'absolute',
+                right: '0.5em',
+                fontWeight: '600',
+              }}
             >
               문제 넘기기
             </Button>
@@ -398,6 +415,7 @@ const QuizGame = () => {
             <Guess>
               <span style={{ fontSize: '4em' }}>{guess}</span>
             </Guess>
+            <Line />
             <Explanation>
               <span
                 style={{
@@ -410,6 +428,7 @@ const QuizGame = () => {
                 {currentKeyword?.data.explanation}
               </span>
             </Explanation>
+            <Line />
             <Keypad>{buttons}</Keypad>
           </BodyContainer>
           <Modal

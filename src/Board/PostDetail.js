@@ -27,9 +27,8 @@ const ContentContainer = styled.div`
 const TitleArea = styled.div`
   font-size: 24px;
   font-weight: 400;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   padding: 5px;
-  background-color: white;
   border-radius: 10px;
 `;
 
@@ -38,8 +37,8 @@ const TopUIContainer = styled.div`
   justify-content: space-between;
   position: relative;
   padding: 5px;
-  background-color: white;
   border-radius: 10px;
+  margin-bottom: 50px;
 `;
 
 const ButtonContainer = styled.div`
@@ -48,26 +47,37 @@ const ButtonContainer = styled.div`
   align-items: center;
 `;
 
-const TopButton = styled.button`
+const StyledButton = styled.button`
   margin: 5px;
   padding: 10px;
   border-radius: 5px;
+  color: white;
+  background-color: ${(props) => props.backgroundcolor};
+
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0px 0px 0px 0px ${(props) => props.shadowcolor};
+  border: none;
+  font-size: 1em;
+  &:hover {
+    box-shadow: 0px 0px 0px 5px ${(props) => props.shadowcolor};
+  }
 `;
 
 const PostBody = styled.div`
   margin-top: 10px;
-  padding: 5px;
+  padding: 20px;
   background-color: white;
   border-radius: 5px;
   min-height: 400px;
-`
+`;
 
 const BottomContainer = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 50%;
   padding: 10px;
-`
+`;
 
 const Card = styled.div`
   display: flex;
@@ -83,7 +93,7 @@ const Line = styled.div`
   display: flex;
   background-color: #7bb4e3;
   height: 10px;
-  margin: 5px;
+  margin: 10px;
   border-radius: 20px;
 `;
 
@@ -104,6 +114,16 @@ const SubmitButton = styled.button`
   border-color: #4b3e9a;
   border-width: 1px;
   border-radius: 5px;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0px 0px 0px 0px red;
+  border: none;
+  font-size: 1em;
+  &:hover {
+    box-shadow: 0px 0px 0px 5px red;
+  }
 `;
 
 const InputRow = styled.div`
@@ -121,12 +141,6 @@ const CommentInput = styled.input`
   padding-left: 5px;
 `;
 
-const CommentDeleteButton = styled.button`
-  padding: 10px;
-  border-radius: 5px;
-  background-color: #df243b;
-`;
-
 // 게시판 글 클릭했을 때 내용 보이는 화면
 const PostDetail = () => {
   const navigate = useNavigate();
@@ -138,8 +152,8 @@ const PostDetail = () => {
 
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
   const userEmail = useSelector((state) => state.userEmail);
-  //const serverPath = 'http://192.168.0.3:8080/';
-  const serverPath = 'http://223.194.133.15:8080/';
+  const serverPath = 'http://192.168.0.3:8080/';
+  //const serverPath = 'http://223.194.133.15:8080/';
 
   useEffect(() => {
     if (userEmail) {
@@ -154,6 +168,7 @@ const PostDetail = () => {
       .then((response) => {
         const data = response.data;
         if (data) {
+          console.log('data: ' + data);
           const comments = Object.keys(data).map((key) => ({
             commentId: data[key].commentId,
             userEmail: data[key].userEmail,
@@ -225,6 +240,9 @@ const PostDetail = () => {
       .delete(serverPath + url)
       .then(() => {
         console.log('Data removed successfully.');
+        if (url.includes('comments/')) {
+          fetchComments(); // 댓글 삭제한 경우 댓글 목록을 새로고침
+        }
       })
       .catch((error) => {
         console.error('Data could not be removed.' + error);
@@ -253,7 +271,6 @@ const PostDetail = () => {
   const handleCommentDelete = (commentId) => {
     const url = 'comments/' + commentId;
     removeProcess(url);
-    fetchComments(); // 삭제 후 댓글을 다시 불러옴
   };
 
   return (
@@ -261,25 +278,25 @@ const PostDetail = () => {
       <ContentContainer>
         <TitleArea>{post.title}</TitleArea>
         <TopUIContainer>
-          <div style={{ fontSize: 15 }}>
-            작성자: {post ? post.userEmail.split('_')[0] : ''}
-          </div>
+          <div style={{ fontSize: 15 }}>작성자: {userName}</div>
 
           <ButtonContainer>
             {userEmail === post.userEmail ? (
               <>
-                <TopButton
-                  style={{ backgroundColor: '#004EA2' }}
+                <StyledButton
+                  shadowcolor="#7bb4e3"
+                  backgroundcolor="#004EA2"
                   onClick={handleUpdate}
                 >
                   <div>수정</div>
-                </TopButton>
-                <TopButton
-                  style={{ backgroundColor: '#DF243B' }}
+                </StyledButton>
+                <StyledButton
+                  shadowcolor="#FA7CD7"
+                  backgroundcolor="#DF243B"
                   onClick={handleDelete}
                 >
                   <div>삭제</div>
-                </TopButton>
+                </StyledButton>
               </>
             ) : null}
           </ButtonContainer>
@@ -287,8 +304,26 @@ const PostDetail = () => {
         <PostBody>{post.body}</PostBody>
       </ContentContainer>
 
+      <Line />
+
+      <InputRow>
+        <CommentInput // 댓글 입력창
+          placeholder={
+            isLoggedIn ? '댓글 작성하기' : '로그인하고 댓글을 작성해보세요!'
+          }
+          onChange={(e) => setComment(e.target.value)}
+          value={comment}
+          readOnly={!isLoggedIn}
+        />
+        <SubmitButton onClick={handleSubmit}>
+          전송
+          {/* <Icon name="comment" size={24} color="#35439c" /> */}
+        </SubmitButton>
+      </InputRow>
+
+      {commentList.length > 0 && <Line />}
+
       <BottomContainer>
-        {commentList.length > 0 && <Line />}
         {commentList.length > 0 &&
           commentList.map((item, index) => (
             <Card key={index}>
@@ -301,34 +336,19 @@ const PostDetail = () => {
                     <div style={{ fontSize: 16 }}>{item.comment}</div>
                   </div>
                   {userEmail === item.userEmail ? (
-                    <CommentDeleteButton
+                    <StyledButton
+                      shadowcolor="#FA7CD7"
+                      backgroundcolor="#DF243B"
                       onClick={() => handleCommentDelete(item.commentId)}
                     >
                       <div>삭제</div>
-                    </CommentDeleteButton>
+                    </StyledButton>
                   ) : null}
                 </CommentRow>
               </div>
             </Card>
           ))}
-
-        <Line />
-
-        <InputRow>
-          <CommentInput // 댓글 입력창
-            placeholder={
-              isLoggedIn ? '댓글 작성하기' : '로그인하고 댓글을 작성해보세요!'
-            }
-            onChange={(e) => setComment(e.target.value)}
-            value={comment}
-            readOnly={!isLoggedIn}
-          />
-          <SubmitButton onClick={handleSubmit}>
-            전송
-            {/* <Icon name="comment" size={24} color="#35439c" /> */}
-          </SubmitButton>
-        </InputRow>
-      </BottomContainer> 
+      </BottomContainer>
     </Container>
   );
 };
