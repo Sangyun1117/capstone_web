@@ -95,7 +95,7 @@ const KeyButton = styled.button`
   border-width: 0.1em;
   border-radius: 20px;
   font-weight: 600;
-  font-size: 2em;
+  font-size: 1.3em;
 
   cursor: pointer;
   transition: all 0.2s;
@@ -389,6 +389,8 @@ const QuizGame = () => {
               <span>점수: {score}</span>
             </Score>
           </TopBar>
+          
+          <BodyContainer>
           <div
             style={{
               position: 'fixed',
@@ -411,9 +413,8 @@ const QuizGame = () => {
               문제 넘기기
             </Button>
           </div>
-          <BodyContainer>
             <Guess>
-              <span style={{ fontSize: '4em' }}>{guess}</span>
+              <span style={{ fontSize: '2em' }}>{guess}</span>
             </Guess>
             <Line />
             <Explanation>
@@ -421,8 +422,8 @@ const QuizGame = () => {
                 style={{
                   fontSize:
                     currentKeyword?.data.explanation?.length > 70
-                      ? '1.5em'
-                      : '2em',
+                      ? '1.1em'
+                      : '1.3em',
                 }}
               >
                 {currentKeyword?.data.explanation}

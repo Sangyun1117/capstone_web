@@ -83,7 +83,7 @@ const Home = () => (
         <div className="item">문제풀이</div>
         <div className="menu-content">
           <div className="sub-item">
-            <Link to="about">기출문제</Link>
+            <Link to="practiceRoundSelect">기출문제</Link>
           </div>
           <div className="sub-item">시대별 풀이</div>
           <div className="sub-item">유형별 풀이</div>

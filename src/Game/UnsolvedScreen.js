@@ -24,6 +24,7 @@ const FloatingButton = styled.button`
 `;
 
 const { Title, Text } = Typography;
+
 const UnsolvedScreen = ({ unsolved }) => {
   const navigate = useNavigate();
 

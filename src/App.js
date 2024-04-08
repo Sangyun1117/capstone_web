@@ -13,6 +13,12 @@ import PostCreate from './Board/PostCreate';
 import PostDetail from './Board/PostDetail';
 import QuizGame from './Game/QuizGame';
 import UnsolvedScreen from './Game/UnsolvedScreen';
+
+import PracticeResult from './Practice/PracticeResult';
+import PracticeRoundSelect from './Practice/PracticeRoundSelect';
+import ProblemCommentary from './Practice/ProblemCommentary';
+import ProblemDetail from './Practice/ProblemDetail';
+
 import HistoryTalesScreen from './HistoryTales/HistoryTalesScreen'
 import LikedVideosScreen from './HistoryTales/LikedVideosScreen'
 import Modal from 'react-modal';
@@ -33,6 +39,12 @@ const App = () => (
       <Route path="/postDetail" element={<PostDetail />} />
       <Route path="/quizGame" element={<QuizGame />} />
       <Route path="/unsolvedScreen" element={<UnsolvedScreen />} />
+
+      <Route path="/practiceResult" element={<PracticeResult />} />
+      <Route path="/practiceRoundSelect" element={<PracticeRoundSelect />} />
+      <Route path="/problemCommentary" element={<ProblemCommentary />} />
+      <Route path="/problemDetail" element={<ProblemDetail />} />
+
       <Route path="/historyTales" element={<HistoryTalesScreen />} />
       <Route path="/likedVideos" element={<LikedVideosScreen />} />
     </Routes>
