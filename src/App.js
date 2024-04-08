@@ -13,6 +13,8 @@ import PostCreate from './Board/PostCreate';
 import PostDetail from './Board/PostDetail';
 import QuizGame from './Game/QuizGame';
 import UnsolvedScreen from './Game/UnsolvedScreen';
+import HistoryTalesScreen from './HistoryTales/HistoryTalesScreen'
+import LikedVideosScreen from './HistoryTales/LikedVideosScreen'
 import Modal from 'react-modal';
 
 Modal.setAppElement('#root');
@@ -31,6 +33,8 @@ const App = () => (
       <Route path="/postDetail" element={<PostDetail />} />
       <Route path="/quizGame" element={<QuizGame />} />
       <Route path="/unsolvedScreen" element={<UnsolvedScreen />} />
+      <Route path="/historyTales" element={<HistoryTalesScreen />} />
+      <Route path="/likedVideos" element={<LikedVideosScreen />} />
     </Routes>
   </>
   );
