@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
 import { firestore } from '../firebaseConfig';
 import { HashLoader } from 'react-spinners';
-import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import swal from 'sweetalert';

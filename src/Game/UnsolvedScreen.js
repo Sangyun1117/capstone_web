@@ -15,14 +15,6 @@ const Container = styled.div`
   padding: 20px;
 `;
 
-const FloatingButton = styled.button`
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  z-index: 10;
-  cursor: pointer;
-`;
-
 const { Title, Text } = Typography;
 
 const UnsolvedScreen = ({ unsolved }) => {
