@@ -60,14 +60,14 @@ const PostBody = styled.div`
   background-color: white;
   border-radius: 5px;
   min-height: 400px;
-`
+`;
 
 const BottomContainer = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 50%;
   padding: 10px;
-`
+`;
 
 const Card = styled.div`
   display: flex;
@@ -139,7 +139,7 @@ const PostDetail = () => {
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
   const userEmail = useSelector((state) => state.userEmail);
   //const serverPath = 'http://192.168.0.3:8080/';
-  const serverPath = 'http://223.194.133.15:8080/';
+  const serverPath = 'http://192.168.126.1:8080/';
 
   useEffect(() => {
     if (userEmail) {
@@ -328,7 +328,7 @@ const PostDetail = () => {
             {/* <Icon name="comment" size={24} color="#35439c" /> */}
           </SubmitButton>
         </InputRow>
-      </BottomContainer> 
+      </BottomContainer>
     </Container>
   );
 };

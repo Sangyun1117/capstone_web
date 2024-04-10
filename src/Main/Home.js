@@ -85,9 +85,15 @@ const Home = () => (
           <div className="sub-item">
             <Link to="boardScreen">기출문제</Link>
           </div>
-          <div className="sub-item">시대별 풀이</div>
-          <div className="sub-item">유형별 풀이</div>
-          <div className="sub-item">킬러문제</div>
+          <div className="sub-item">
+            <Link to="eraProblem/era1">시대별 풀이</Link>
+          </div>
+          <div className="sub-item">
+            <Link to="typeProblem/type1">유형별 풀이</Link>
+          </div>
+          <div className="sub-item">
+            <Link to="killerProblem">킬러문제</Link>
+          </div>
         </div>
       </div>
       <div className="menu">
@@ -95,6 +101,9 @@ const Home = () => (
         <div className="menu-content">
           <div className="sub-item">
             <Link to="about">오답노트</Link>
+          </div>
+          <div className="sub-item">
+            <Link to="bookmarkProblem">북마크</Link>
           </div>
           <div className="sub-item">플래너</div>
           <div className="sub-item">통계</div>
@@ -111,7 +120,9 @@ const Home = () => (
           <div className="sub-item">
             <Link to="quizGame">게임</Link>
           </div>
-          <div className="sub-item">용어사전</div>
+          <div className="sub-item">
+            <Link to="dictionary">용어사전</Link>
+          </div>
         </div>
       </div>
       <div className="item">게시판</div>
