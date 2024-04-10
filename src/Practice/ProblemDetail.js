@@ -20,7 +20,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: calc(100% - 5em);
+  min-height: 100%;
   width: 60%;
   min-width: 30em;
   background-color: #bbd2ec;
@@ -29,14 +29,34 @@ const Container = styled.div`
   position: absolute;
 `;
 const TopContainer = styled.div`
-`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 98%;
+  margin: 20px;
+  top: 100px;
+`;
 const IdText = styled.div`
-`
+  display: flex;
+  padding: 10px;
+  font-weight: 600;
+  font-size: 1.5em;
+  align-items: center;
+  background-color: white;
+  border-radius: 10px;
+`;
 const BookmarkButton = styled.button`
-background-color: #bbd2ec;
-border: none;
-`
-
+  background-color: #bbd2ec;
+  border: none;
+`;
+const BottomContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 7%;
+`;
 const Line = styled.div`
   display: flex;
   background-color: #7bb4e3;
@@ -46,14 +66,66 @@ const Line = styled.div`
 `;
 
 const SelectContainer = styled.div`
-`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  height: 200px;
+  margin: 20px;
+  padding: 20px;
+`;
 const SelectButton = styled.button`
-  
-`
-const ModeButtonContainer = styled.div`
-`
-const MobeButton = styled.button`
-`
+  margin: 20px;
+  width: 100px;
+  height: 100px;
+  color: white;
+  border-radius: 10px;
+
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0px 0px 0px 0px white;
+  border: none;
+  font-size: 2em;
+  &:hover {
+    box-shadow: 0px 0px 0px 5px white;
+  }
+`;
+const MoveButtonContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20%;
+  height: 70px;
+`;
+const MoveButton = styled.button`
+  width: 70px;
+  height: 70px;
+  margin: 20px;
+  background-color: #838abd;
+  color: white;
+  border-radius: 10px;
+  font-weight: 500;
+
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0px 0px 0px 0px white;
+  border: none;
+  font-size: 1em;
+  &:hover {
+    box-shadow: 0px 0px 0px 5px white;
+  }
+`;
+
+const DisabledButton = styled.button`
+  width: 70px;
+  height: 70px;
+  margin: 20px;
+  background-color: #495057;
+  color: #868e96;
+  border-radius: 10px;
+  border: none;
+  font-weight: 500;
+`;
 
 const ProblemDetail = () => {
   const location = useLocation();
@@ -89,7 +161,12 @@ const ProblemDetail = () => {
       try {
         setIsLoading(true);
         const list = [];
-        const problemCollection = collection(firestore, 'exam round', examDocId, examDocId);
+        const problemCollection = collection(
+          firestore,
+          'exam round',
+          examDocId,
+          examDocId
+        );
         const problemSnapshot = await getDocs(problemCollection);
         problemSnapshot.forEach((problemDoc) => {
           list.push({ id: problemDoc.id, data: problemDoc.data() });
@@ -97,7 +174,12 @@ const ProblemDetail = () => {
         setProblems(list);
 
         const alist = [];
-        const answerCollection = collection(firestore, 'answer round', examDocId, examDocId);
+        const answerCollection = collection(
+          firestore,
+          'answer round',
+          examDocId,
+          examDocId
+        );
         const answerSnapshot = await getDocs(answerCollection);
         answerSnapshot.forEach((answerDoc) => {
           alist.push({ id: answerDoc.id, data: answerDoc.data() });
@@ -248,7 +330,7 @@ const ProblemDetail = () => {
     }
     const examId = examDocId;
     navigate('/practiceResult', {
-      state:{
+      state: {
         userChoices,
         problems,
         answers,
@@ -275,7 +357,7 @@ const ProblemDetail = () => {
   return (
     <Container>
       {isLoading ? (
-        <HashLoader style={{display: 'flex'}}/>
+        <HashLoader style={{ display: 'flex' }} />
       ) : (
         <>
           <TopContainer>
@@ -283,48 +365,67 @@ const ProblemDetail = () => {
             {isLoggedIn ? (
               <BookmarkButton onClick={() => handleBookmark(currentIndex)}>
                 <FontAwesomeIcon
-                  icon={indexBookMark.includes(currentIndex) ? BoldStar : VoidStar}
-                  size="2x"
+                  icon={
+                    indexBookMark.includes(currentIndex) ? BoldStar : VoidStar
+                  }
+                  size="4x"
                   color={indexBookMark.includes(currentIndex) ? 'gold' : 'gray'}
                 />
               </BookmarkButton>
             ) : null}
           </TopContainer>
           <Line />
-          {problems.length > 0 && <img 
-                src={problems[currentIndex].data.img} 
+          <BottomContainer>
+            {problems.length > 0 && (
+              <img
+                src={problems[currentIndex].data.img}
                 alt="문제 이미지"
-                style={{objectFit: 'contain', width: '60%', height: 'auto'}}
-              />}
+                style={{ objectFit: 'contain', width: '30%', height: 'auto' }}
+              />
+            )}
+
             <SelectContainer>
               {[1, 2, 3, 4, 5].map((number) => (
-                <SelectButton 
-                  key={number}                  
+                <SelectButton
+                  key={number}
                   onClick={() => handleSelect(number)}
+                  style={{
+                    backgroundColor:
+                      userChoices[problems[currentIndex].id] === number
+                        ? '#523383'
+                        : '#978ff9',
+                  }}
                 >
                   <div>{number}</div>
-                </SelectButton>                
+                </SelectButton>
               ))}
             </SelectContainer>
-          <ModeButtonContainer>
-            <MobeButton
-              onClick={handlePrev}
-              disabled={currentIndex === 0}
-            >
-              <div>이전</div>
-            </MobeButton>
-            <MobeButton
-              onClick={handleSubmit}
-            >
-              <div>제출</div>
-            </MobeButton>
-            <MobeButton
-              onClick={handleNext}
-              disabled={currentIndex === problems.length - 1}
-            >
-              <div>다음</div>
-            </MobeButton>
-          </ModeButtonContainer>
+            <MoveButtonContainer>
+              {currentIndex === 0 ? (
+                <DisabledButton>
+                  <div>이전</div>
+                </DisabledButton>
+              ) : (
+                <MoveButton onClick={handlePrev}>
+                  <div>이전</div>
+                </MoveButton>
+              )}
+
+              <MoveButton onClick={handleSubmit}>
+                <div>제출</div>
+              </MoveButton>
+
+              {currentIndex === problems.length - 1 ? (
+                <DisabledButton>
+                  <div>다음</div>
+                </DisabledButton>
+              ) : (
+                <MoveButton onClick={handleNext}>
+                  <div>다음</div>
+                </MoveButton>
+              )}
+            </MoveButtonContainer>
+          </BottomContainer>
         </>
       )}
     </Container>

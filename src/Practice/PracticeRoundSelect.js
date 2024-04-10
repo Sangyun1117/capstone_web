@@ -22,33 +22,42 @@ const Title = styled.div`
   display: flex;
   position: absolute;
   align-items: center;
-  justify-content: center;  
+  justify-content: center;
   top: 10px;
-  background-color: white; 
+  background-color: white;
   border-radius: 5px;
   font-weight: 600;
   font-size: 1.5em;
-  width: 50%;
+  width: 20%;
   height: 50px;
-`
+`;
 
 const CardContainer = styled.div`
   display: flex;
   position: absolute;
   flex-direction: column;
-  top: 100px;
+  top: 30%;
   width: 50%;
-`
+`;
 
 const Card = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;  
+  justify-content: center;
   margin: 10px;
   background-color: white;
   border-radius: 10px;
-  height: 40px;
-`
+  height: 50px;
+
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0px 0px 0px 0px #838abd;
+  border: none;
+  font-size: 1em;
+  &:hover {
+    box-shadow: 0px 0px 0px 5px #838abd;
+  }
+`;
 const PracticeRoundSelect = () => {
   const [examRounds, setExamRounds] = useState([]); // 기출 문제 회차
   const [isLoading, setIsLoading] = useState(true); // 로딩 상태
@@ -80,7 +89,7 @@ const PracticeRoundSelect = () => {
       const answerRoundSnapshot = await getDocs(answerRoundCollection);
       let answerItem;
       answerRoundSnapshot.forEach((doc) => {
-        if (doc.id == item.id) answerItem = { id: doc.id, };
+        if (doc.id == item.id) answerItem = { id: doc.id };
       });
       console.log(item);
       console.log(answerItem);
@@ -89,32 +98,30 @@ const PracticeRoundSelect = () => {
         state: {
           examDocId: item.id,
         },
-      })
+      });
     } catch (err) {
       console.error('Error fetching data: ', err);
     }
   };
-    // 네비게이트할 때 item 등의 직렬화 문제로 안되는거같음. 확인하기.
+  // 네비게이트할 때 item 등의 직렬화 문제로 안되는거같음. 확인하기.
   const renderItem = (item) => {
-    return (
-      <Card onClick={() => handleSelect(item)}>
-        {item.id}회차
-      </Card>
-    );
+    return <Card onClick={() => handleSelect(item)}>{item.id}회차</Card>;
   };
 
   return (
     <Container>
       <Title>기출문제 회차선택</Title>
-      {isLoading ? <HashLoader style={{display: 'flex'}}/> : <>
-      <CardContainer>
-        {examRounds.map((item) => (
-          <React.Fragment key={item.id}>
-            {renderItem(item)}
-          </React.Fragment>
-        ))}
-      </CardContainer></>}
-      
+      {isLoading ? (
+        <HashLoader style={{ display: 'flex' }} />
+      ) : (
+        <>
+          <CardContainer>
+            {examRounds.map((item) => (
+              <React.Fragment key={item.id}>{renderItem(item)}</React.Fragment>
+            ))}
+          </CardContainer>
+        </>
+      )}
     </Container>
   );
 };

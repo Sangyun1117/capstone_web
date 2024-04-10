@@ -90,17 +90,16 @@ const KeyButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  border-color: black;
-  border-width: 0.1em;
+  border: none;
   border-radius: 20px;
   font-weight: 600;
   font-size: 1.3em;
 
   cursor: pointer;
   transition: all 0.2s;
-  box-shadow: 0px 0px 0px 0px ${(props) => props.shadowColor};
+  box-shadow: 0px 0px 0px 0px #838abd;
   &:hover {
-    box-shadow: 0px 0px 0px 5px ${(props) => props.shadowColor};
+    box-shadow: 0px 0px 0px 5px #838abd;
   }
 `;
 const Line = styled.div`
@@ -388,30 +387,30 @@ const QuizGame = () => {
               <span>점수: {score}</span>
             </Score>
           </TopBar>
-          
+
           <BodyContainer>
-          <div
-            style={{
-              position: 'fixed',
-              top: '10em',
-              width: '60%',
-              minWidth: '30em',
-              left: '19.5%',
-            }}
-          >
-            <Button
-              type="primary"
-              danger
-              onClick={() => handleNextButton()}
+            <div
               style={{
-                position: 'absolute',
-                right: '0.5em',
-                fontWeight: '600',
+                position: 'fixed',
+                top: '10em',
+                width: '60%',
+                minWidth: '30em',
+                left: '19.5%',
               }}
             >
-              문제 넘기기
-            </Button>
-          </div>
+              <Button
+                type="primary"
+                danger
+                onClick={() => handleNextButton()}
+                style={{
+                  position: 'absolute',
+                  right: '0.5em',
+                  fontWeight: '600',
+                }}
+              >
+                문제 넘기기
+              </Button>
+            </div>
             <Guess>
               <span style={{ fontSize: '2em' }}>{guess}</span>
             </Guess>
