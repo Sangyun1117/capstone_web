@@ -108,7 +108,7 @@ const Home = () => (
             <Link to="historyTales">역사이야기</Link>
           </div>
           <div className="sub-item">
-          <Link to="likedVideos">즐겨찾는 영상</Link>
+            <Link to="likedVideos">즐겨찾는 영상</Link>
           </div>
           <div className="sub-item">
             <Link to="quizGame">게임</Link>

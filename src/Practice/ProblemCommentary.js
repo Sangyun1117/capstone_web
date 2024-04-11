@@ -1,50 +1,49 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 60%;
-  min-width: 30em;
-  height: calc(100vh - 5em);
+  min-height: calc(100vh - 5em);
+  min-width: 800px;
   background-color: #bbd2ec;
-  top: 5em;
   left: 20%;
-  position: absolute;
+  position: relative;
 `;
 
 const Title = styled.h1`
   display: flex;
-  position: absolute;
   align-items: center;
   justify-content: center;
-  top: 10px;
+  margin: 20px;
   background-color: white;
   border-radius: 5px;
   font-weight: 600;
   font-size: 1.5em;
   width: 20%;
+  min-width: 300px;
   height: 50px;
 `;
 
 const BodyContainer = styled.div`
   display: flex;
-  position: absolute;
+  margin-top: 40px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  top: 15%;
+  top: 7%;
   width: 80%;
 `;
 
 const BoxContainer = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: center;
   justify-content: center;
   width: 100%;
+  margin-top: 50px;
 `;
 
 const Box = styled.div`
@@ -64,8 +63,6 @@ const SemiTitle = styled.h2`
   margin-top: 5px;
 `;
 
-const Content = styled.p``;
-
 const ProblemCommentary = () => {
   const location = useLocation();
   const { problem, answer } = location.state; // 문제, 답 정보
@@ -80,7 +77,7 @@ const ProblemCommentary = () => {
 
     return sentences.map((sentence, index) => (
       <div key={index}>
-        <Content>{sentence.trim()}</Content>
+        <p>{sentence.trim()}</p>
       </div>
     ));
   };
@@ -92,13 +89,19 @@ const ProblemCommentary = () => {
         <img
           src={problem.data.img}
           alt="Problem Image"
-          style={{ objectFit: 'contain', width: '30%', height: 'auto' }}
+          style={{
+            objectFit: 'contain',
+            width: '30%',
+            minWidth: '350px',
+            height: 'auto',
+          }}
         />
+
         <BoxContainer>
           <Box style={{ backgroundColor: '#e0f7fa' }}>
             <SemiTitle>정답: {answer.data.answer}</SemiTitle>
             <SemiTitle>정답 해설</SemiTitle>
-            <Content>{answer.data.commentary}</Content>
+            <p>{answer.data.commentary}</p>
           </Box>
 
           <Box style={{ backgroundColor: '#ffebee' }}>

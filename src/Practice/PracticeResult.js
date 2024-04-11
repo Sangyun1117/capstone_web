@@ -45,7 +45,7 @@ const ShowButton = styled.div`
   position: absolute;
   right: 10px;
   top: 10px;
-  width: 150px;
+  width: 180px;
   height: 70px;
   margin: 20px;
   background-color: #838abd;
@@ -53,6 +53,15 @@ const ShowButton = styled.div`
   border-radius: 10px;
   font-weight: 500;
   font-size: 1.1em;
+
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0px 0px 0px 0px white;
+  border: none;
+  font-size: 1em;
+  &:hover {
+    box-shadow: 0px 0px 0px 5px white;
+  }
 `;
 const ListContainer = styled.div`
   display: flex;
@@ -89,6 +98,15 @@ const CommantButton = styled.div`
   font-size: 1.2em;
   padding: 10px;
   border-radius: 5px;
+
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0px 0px 0px 0px #7bb4e3;
+  border: none;
+  font-size: 1em;
+  &:hover {
+    box-shadow: 0px 0px 0px 5px #7bb4e3;
+  }
 `;
 
 const PracticeResult = () => {

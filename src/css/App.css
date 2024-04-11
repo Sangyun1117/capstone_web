@@ -6,7 +6,6 @@
 .header {
   display: flex;
   justify-content: space-between;
-  position: absolute;
   align-items: center;
   min-height: 5em;
   width: 100%;

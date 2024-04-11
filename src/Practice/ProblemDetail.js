@@ -57,14 +57,6 @@ const BottomContainer = styled.div`
   width: 100%;
   margin: 7%;
 `;
-const Line = styled.div`
-  display: flex;
-  background-color: #7bb4e3;
-  height: 10px;
-  margin: 0.5%;
-  border-radius: 20px;
-`;
-
 const SelectContainer = styled.div`
   display: flex;
   align-items: center;
@@ -94,7 +86,7 @@ const MoveButtonContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 20%;
+  width: 50%;
   height: 70px;
 `;
 const MoveButton = styled.button`
@@ -125,6 +117,15 @@ const DisabledButton = styled.button`
   border-radius: 10px;
   border: none;
   font-weight: 500;
+`;
+
+const Line = styled.div`
+  display: flex;
+  background-color: #7bb4e3;
+  width: 80%;
+  height: 10px;
+  margin: 30px;
+  border-radius: 20px;
 `;
 
 const ProblemDetail = () => {
@@ -374,7 +375,7 @@ const ProblemDetail = () => {
               </BookmarkButton>
             ) : null}
           </TopContainer>
-          <Line />
+
           <BottomContainer>
             {problems.length > 0 && (
               <img
@@ -400,6 +401,7 @@ const ProblemDetail = () => {
                 </SelectButton>
               ))}
             </SelectContainer>
+            <Line />
             <MoveButtonContainer>
               {currentIndex === 0 ? (
                 <DisabledButton>
