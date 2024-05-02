@@ -7,6 +7,10 @@ import About from './Main/About';
 import Login from './Main/Login';
 import CreateId from './Main/CreateId';
 import Header from './Main/Header';
+import Chart from 'chart.js/auto';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+
+import Statistics from './Statistics/Statistics';
 
 import BoardScreen from './Board/BoardScreen';
 import PostCreate from './Board/PostCreate';
@@ -22,17 +26,22 @@ import ProblemDetail from './Practice/ProblemDetail';
 import HistoryTalesScreen from './HistoryTales/HistoryTalesScreen'
 import LikedVideosScreen from './HistoryTales/LikedVideosScreen'
 import Modal from 'react-modal';
+import EventMap from './Map/EventMap';
 
 Modal.setAppElement('#root');
-
+Chart.register(ChartDataLabels);  //차트 레이블 추가 코드
 const App = () => (
+
   <>
+  
     <Header />
+    
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/about" element={<About />} />
       <Route path="/login" element={<Login />} />
       <Route path="/createId" element={<CreateId />} />
+      <Route path="/statistics" element={<Statistics />} />
 
       <Route path="/boardScreen" element={<BoardScreen />} />
       <Route path="/postCreate" element={<PostCreate />} />
@@ -47,6 +56,7 @@ const App = () => (
 
       <Route path="/historyTales" element={<HistoryTalesScreen />} />
       <Route path="/likedVideos" element={<LikedVideosScreen />} />
+      <Route path="/eventMap" element={<EventMap />} />
     </Routes>
   </>
   );
