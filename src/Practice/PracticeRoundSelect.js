@@ -103,7 +103,7 @@ const PracticeRoundSelect = () => {
       console.error('Error fetching data: ', err);
     }
   };
-  // 네비게이트할 때 item 등의 직렬화 문제로 안되는거같음. 확인하기.
+
   const renderItem = (item) => {
     return <Card onClick={() => handleSelect(item)}>{item.id}회차</Card>;
   };

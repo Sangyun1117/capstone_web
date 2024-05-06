@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
-import './css/App.css'
+import './css/App.css';
 import { Provider } from 'react-redux';
 import store from './state';
 import Home from './Main/Home';
@@ -18,9 +18,10 @@ import PracticeResult from './Practice/PracticeResult';
 import PracticeRoundSelect from './Practice/PracticeRoundSelect';
 import ProblemCommentary from './Practice/ProblemCommentary';
 import ProblemDetail from './Practice/ProblemDetail';
+import RecommendationQuestion from './RecommendationPractice/RecommendationQuestion';
 
-import HistoryTalesScreen from './HistoryTales/HistoryTalesScreen'
-import LikedVideosScreen from './HistoryTales/LikedVideosScreen'
+import HistoryTalesScreen from './HistoryTales/HistoryTalesScreen';
+import LikedVideosScreen from './HistoryTales/LikedVideosScreen';
 import Modal from 'react-modal';
 
 Modal.setAppElement('#root');
@@ -44,13 +45,17 @@ const App = () => (
       <Route path="/practiceRoundSelect" element={<PracticeRoundSelect />} />
       <Route path="/problemCommentary" element={<ProblemCommentary />} />
       <Route path="/problemDetail" element={<ProblemDetail />} />
+      <Route
+        path="/recommendationQuestion"
+        element={<RecommendationQuestion />}
+      />
 
       <Route path="/historyTales" element={<HistoryTalesScreen />} />
       <Route path="/likedVideos" element={<LikedVideosScreen />} />
     </Routes>
   </>
-  );
-  
+);
+
 export default () => (
   <Provider store={store}>
     <App />

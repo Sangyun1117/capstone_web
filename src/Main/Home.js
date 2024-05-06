@@ -88,6 +88,9 @@ const Home = () => (
           <div className="sub-item">시대별 풀이</div>
           <div className="sub-item">유형별 풀이</div>
           <div className="sub-item">킬러문제</div>
+          <div className="sub-item">
+            <Link to="recommendationQuestion">추천문제</Link>
+          </div>
         </div>
       </div>
       <div className="menu">
@@ -117,7 +120,12 @@ const Home = () => (
         </div>
       </div>
       <div className="item">
-        <Link to="boardScreen">게시판</Link>
+        <Link
+          to="boardScreen"
+          style={{ color: 'black', textDecoration: 'none' }}
+        >
+          게시판
+        </Link>
       </div>
     </div>
     <div>
