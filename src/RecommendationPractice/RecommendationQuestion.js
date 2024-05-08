@@ -38,7 +38,7 @@ const CardContainer = styled.div`
   flex-wrap: wrap;
   justify-content: space-around;
   margin-top: 5%;
-  width: 1040px;
+  width: 100%;
 `;
 
 const Card = styled.div`
@@ -49,8 +49,8 @@ const Card = styled.div`
   margin: 10px;
   background-color: white;
   border-radius: 10px;
-  height: 700px; // 정사각형 모양을 위해 높이와 너비를 동일하게 설정
-  width: 500px; // 한 행에 2개가 나오도록 충분한 여백을 확보
+  min-height: 20%;
+  width: 40%;
   position: relative;
 `;
 
@@ -79,14 +79,15 @@ const AnswerButton = styled.button`
 const ProblemImage = styled.img`
   max-width: 90%;
   max-height: 70%;
+  margin-top: 20px;
 
   cursor: pointer;
   transition: all 0.2s;
-  box-shadow: 0px 0px 0px 0px white;
+  box-shadow: 0px 0px 0px 0px #838abd;
   border: none;
   font-size: 1em;
   &:hover {
-    box-shadow: 0px 0px 0px 5px white;
+    box-shadow: 0px 0px 0px 5px #838abd;
   }
 `;
 
@@ -341,16 +342,16 @@ const RecommendationQuestion = () => {
 
         {/* 이미지 클릭 시 크게 표시*/}
         <ProblemImage
-      src={item.img}
-      alt={`문제 ${item.id}`}
-      onClick={() => {
-        swal({
-          icon: item.img,
-          button: "닫기",
-          className: "custom-swal"
-        });
-      }}
-    />
+          src={item.img}
+          alt={`문제 ${item.id}`}
+          onClick={() => {
+            swal({
+              icon: item.img,
+              button: '닫기',
+              className: 'custom-swal',
+            });
+          }}
+        />
       </Card>
     );
   };
@@ -359,38 +360,37 @@ const RecommendationQuestion = () => {
   return (
     <Container>
       <Title>추천 문제</Title>
-      {isLoading ? (
-        <HashLoader style={{ display: 'flex' }} />
-      ) : (
-        <>
+      <>
+        {isLoading ? (
+          <HashLoader style={{ display: 'flex' }} />
+        ) : (
           <CardContainer>
             {currentProblems.map((item) => (
               <React.Fragment key={item.id}>{renderItem(item)}</React.Fragment>
             ))}
           </CardContainer>
-
-          <MoveButtonContainer>
-            {currentIndex <= 1 ? (
-              <DisabledButton>
-                <div>이전</div>
-              </DisabledButton>
-            ) : (
-              <MoveButton onClick={() => handlelMove(-1)}>
-                <div>이전</div>
-              </MoveButton>
-            )}
-            {currentProblems.length < 10 ? (
-              <DisabledButton>
-                <div>다음</div>
-              </DisabledButton>
-            ) : (
-              <MoveButton onClick={() => handlelMove(1)}>
-                <div>다음</div>
-              </MoveButton>
-            )}
-          </MoveButtonContainer>
-        </>
-      )}
+        )}
+        <MoveButtonContainer>
+          {currentIndex <= 1 ? (
+            <DisabledButton>
+              <div>이전</div>
+            </DisabledButton>
+          ) : (
+            <MoveButton onClick={() => handlelMove(-1)}>
+              <div>이전</div>
+            </MoveButton>
+          )}
+          {currentProblems.length < 10 ? (
+            <DisabledButton>
+              <div>다음</div>
+            </DisabledButton>
+          ) : (
+            <MoveButton onClick={() => handlelMove(1)}>
+              <div>다음</div>
+            </MoveButton>
+          )}
+        </MoveButtonContainer>
+      </>
     </Container>
   );
 };

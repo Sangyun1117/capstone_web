@@ -49,6 +49,20 @@ const BookmarkButton = styled.button`
   background-color: #bbd2ec;
   border: none;
 `;
+const ProblemImage = styled.img`
+  object-fit: contain;
+  width: 500px;
+  height: auto;
+
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0px 0px 0px 0px #838abd;
+  border: none;
+  font-size: 1em;
+  &:hover {
+    box-shadow: 0px 0px 0px 5px #838abd;
+  }
+`;
 const BottomContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -379,10 +393,16 @@ const ProblemDetail = () => {
 
           <BottomContainer>
             {problems.length > 0 && (
-              <img
+              <ProblemImage
                 src={problems[currentIndex].data.img}
                 alt="문제 이미지"
-                style={{ objectFit: 'contain', width: '500px', height: 'auto' }}
+                onClick={() => {
+                  swal({
+                    icon: problems[currentIndex].data.img,
+                    button: '닫기',
+                    className: 'custom-swal',
+                  });
+                }}
               />
             )}
 
