@@ -68,8 +68,9 @@ const SelectContainer = styled.div`
 `;
 const SelectButton = styled.button`
   margin: 20px;
-  width: 100px;
-  height: 100px;
+  width: 50px;
+  min-width: 30px;
+  height: 50px;
   color: white;
   border-radius: 10px;
 
@@ -381,7 +382,7 @@ const ProblemDetail = () => {
               <img
                 src={problems[currentIndex].data.img}
                 alt="문제 이미지"
-                style={{ objectFit: 'contain', width: '30%', height: 'auto' }}
+                style={{ objectFit: 'contain', width: '500px', height: 'auto' }}
               />
             )}
 

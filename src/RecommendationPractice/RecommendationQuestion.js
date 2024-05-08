@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { collection, getDocs, doc, getDoc } from 'firebase/firestore';
 import { firestore } from '../firebaseConfig';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
 import { HashLoader } from 'react-spinners';
 import { useSelector } from 'react-redux';
-import ProblemDetail from '../Practice/ProblemDetail';
+import swal from 'sweetalert';
 
 const Container = styled.div`
   display: flex;
@@ -80,6 +79,15 @@ const AnswerButton = styled.button`
 const ProblemImage = styled.img`
   max-width: 90%;
   max-height: 70%;
+
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0px 0px 0px 0px white;
+  border: none;
+  font-size: 1em;
+  &:hover {
+    box-shadow: 0px 0px 0px 5px white;
+  }
 `;
 
 const Episode = styled.div`
@@ -156,6 +164,8 @@ const RecommendationQuestion = () => {
     const snapshot = await getDocs(ref);
     let items = [];
     snapshot.forEach((doc) => items.push(doc.id));
+    console.log('items: ');
+    console.log(items);
     shuffleArray(items);
     return items;
   };
@@ -250,6 +260,8 @@ const RecommendationQuestion = () => {
         }
       );
 
+      console.log(newRecommendProblems);
+
       setRecommendProblems(newRecommendProblems);
     };
 
@@ -326,7 +338,19 @@ const RecommendationQuestion = () => {
         <Episode>{`${item.id.slice(0, 2)}회차 ${parseInt(
           item.id.slice(2)
         )}번`}</Episode>
-        <ProblemImage src={item.img} alt={`문제 ${item.id}`} />
+
+        {/* 이미지 클릭 시 크게 표시*/}
+        <ProblemImage
+      src={item.img}
+      alt={`문제 ${item.id}`}
+      onClick={() => {
+        swal({
+          icon: item.img,
+          button: "닫기",
+          className: "custom-swal"
+        });
+      }}
+    />
       </Card>
     );
   };
@@ -346,7 +370,7 @@ const RecommendationQuestion = () => {
           </CardContainer>
 
           <MoveButtonContainer>
-            {currentIndex === 1 ? (
+            {currentIndex <= 1 ? (
               <DisabledButton>
                 <div>이전</div>
               </DisabledButton>
