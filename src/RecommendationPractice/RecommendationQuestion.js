@@ -173,6 +173,7 @@ const RecommendationQuestion = () => {
 
   useEffect(() => {
     const fetchProblemsAndAnswers = async () => {
+      setIsLoading(true);
       let tempAllProblems = {};
       let tempAllAnswers = {};
 
@@ -265,8 +266,9 @@ const RecommendationQuestion = () => {
 
       setRecommendProblems(newRecommendProblems);
     };
-
-    fetchUserRelatedData();
+    console.log('test');
+    if (allProblems.length !== 0 && allAnswers.length !== 0)
+      fetchUserRelatedData();
   }, [allProblems, allAnswers]);
 
   // 현재 인덱스가 변경되면 해당 인덱스부터 10개 문제를 보이게 한다.
@@ -274,7 +276,6 @@ const RecommendationQuestion = () => {
     console.log('ci: ' + currentIndex);
     if (recommendProblems.length === 0) return;
 
-    setIsLoading(true);
     let updArr = [];
     let ci = 0;
     if (currentIndex !== 0) ci = currentIndex - 1;
@@ -360,37 +361,38 @@ const RecommendationQuestion = () => {
   return (
     <Container>
       <Title>추천 문제</Title>
-      <>
-        {isLoading ? (
-          <HashLoader style={{ display: 'flex' }} />
-        ) : (
+      {isLoading ? (
+        <HashLoader style={{ display: 'flex' }} />
+      ) : (
+        <>
           <CardContainer>
             {currentProblems.map((item) => (
               <React.Fragment key={item.id}>{renderItem(item)}</React.Fragment>
             ))}
           </CardContainer>
-        )}
-        <MoveButtonContainer>
-          {currentIndex <= 1 ? (
-            <DisabledButton>
-              <div>이전</div>
-            </DisabledButton>
-          ) : (
-            <MoveButton onClick={() => handlelMove(-1)}>
-              <div>이전</div>
-            </MoveButton>
-          )}
-          {currentProblems.length < 10 ? (
-            <DisabledButton>
-              <div>다음</div>
-            </DisabledButton>
-          ) : (
-            <MoveButton onClick={() => handlelMove(1)}>
-              <div>다음</div>
-            </MoveButton>
-          )}
-        </MoveButtonContainer>
-      </>
+
+          <MoveButtonContainer>
+            {currentIndex <= 1 ? (
+              <DisabledButton>
+                <div>이전</div>
+              </DisabledButton>
+            ) : (
+              <MoveButton onClick={() => handlelMove(-1)}>
+                <div>이전</div>
+              </MoveButton>
+            )}
+            {currentProblems.length < 10 ? (
+              <DisabledButton>
+                <div>다음</div>
+              </DisabledButton>
+            ) : (
+              <MoveButton onClick={() => handlelMove(1)}>
+                <div>다음</div>
+              </MoveButton>
+            )}
+          </MoveButtonContainer>
+        </>
+      )}
     </Container>
   );
 };
