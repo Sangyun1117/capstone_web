@@ -195,6 +195,10 @@ const PracticeResult = () => {
 
         // 오답 문제 유형 저장
         const typeIndexArray = problem.data.type;
+        console.log('problem: ');
+        console.log(problem.data);
+        console.log('error test: ');
+        console.log(typeIndexArray);
         for (let i = 0; i < typeIndexArray.length; i++) {
           const typeIndex = getTypeIndex(typeIndexArray[i]);
           if (typeIndex !== -1) {
