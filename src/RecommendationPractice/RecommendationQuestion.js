@@ -29,7 +29,7 @@ const Title = styled.div`
   font-weight: 600;
   font-size: 1.5em;
   width: 20%;
-  height: 50px;
+  min-height: 50px;
   margin-top: 30px;
 `;
 
@@ -63,8 +63,8 @@ const AnswerButton = styled.button`
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  width: 100px;
-  height: 50px;
+  width: 80px;
+  min-height: 50px
 
   cursor: pointer;
   transition: all 0.2s;
@@ -187,6 +187,7 @@ const RecommendationQuestion = () => {
         });
         tempAllProblems[round] = roundProblems;
       }
+      console.log(tempAllProblems);
 
       // 답안 정보 가져오기
       for (let round = 61; round <= 68; round++) {
@@ -201,6 +202,7 @@ const RecommendationQuestion = () => {
         });
         tempAllAnswers[round] = roundAnswers;
       }
+      console.log(tempAllAnswers);
 
       setAllProblems(tempAllProblems);
       setAllAnswers(tempAllAnswers);
@@ -267,8 +269,7 @@ const RecommendationQuestion = () => {
       setRecommendProblems(newRecommendProblems);
     };
     console.log('test');
-    if (allProblems.length !== 0 && allAnswers.length !== 0)
-      fetchUserRelatedData();
+    fetchUserRelatedData();
   }, [allProblems, allAnswers]);
 
   // 현재 인덱스가 변경되면 해당 인덱스부터 10개 문제를 보이게 한다.
