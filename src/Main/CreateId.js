@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebaseConfig';
 import { useNavigate } from 'react-router-dom';
+import { firestore } from '../firebaseConfig';
+import { doc, setDoc } from 'firebase/firestore';
 import '../css/Login.css';
 
 const CreateId = () => {
@@ -30,6 +32,14 @@ const CreateId = () => {
 
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
+      try {
+        await setDoc(doc(firestore, "users", email), {
+          email: email,
+          name: name,
+        });
+      } catch (e) {
+        console.error("Error adding document: ", e);
+      }
       console.log('Successfully signed up:', user.uid);
       alert("회원가입이 완료되었습니다.");
       navigate('/login');
@@ -84,7 +94,7 @@ const CreateId = () => {
 
           <div className="input-field">
             <input
-              type="checkpassword"
+              type="password"
               value={checkpassword}
               onChange={(e) => setcheckPassword(e.target.value)}
               placeholder="Password check"
@@ -101,7 +111,7 @@ const CreateId = () => {
               style={{ width: '290px', height: '30px', fontSize: '15px' }}
             />
           </div>
-          <button type="submit" className="login-button">가입하기</button>
+          <button type="submit" class="login-button">가입하기</button>
         </form>
       </div>
     </div>

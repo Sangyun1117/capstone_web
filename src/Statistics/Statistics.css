@@ -1,0 +1,63 @@
+/* 통계 정보 섹션 스타일링 */
+.statistics-info-container {
+    margin: 20px 0;
+    padding: 20px;
+    background-color: #f8f9fa; /* 배경색 설정 */
+    border-radius: 8px; /* 모서리 둥글게 */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* 그림자 효과 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+  }
+  
+  /* 시대별 및 유형별 통계 섹션 스타일링 */
+  .statistics-era-section,
+  .statistics-type-section {
+    margin-bottom: 40px; /* 섹션 간격 */
+  }
+  
+  .statistics-chart-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap; /* 내용이 많을 경우 줄바꿈 */
+    gap: 20px; /* 차트 간격 */
+  }
+  
+  .statistics-chart {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 내용 중앙 정렬 */
+    width: 100%; /* 모바일 반응형을 고려한 경우 */
+    max-width: 500px; /* 최대 너비 제한 */
+    
+    padding: 20px; /* 패딩 설정 */
+    background-color: #ffffff; /* 배경색 설정 */
+    border-radius: 8px; /* 모서리 둥글게 */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* 그림자 효과 */
+  }
+  
+ 
+
+  .statistics-era-section h2,
+.statistics-type-section h2 {
+  text-align: center; /* 텍스트 가운데 정렬 */
+  margin-bottom: 50px;
+}
+
+.statistics-button {
+    background-color: #63b265; /* 녹색 배경 */
+    border: none;
+    color: white;
+    padding: 15px 32px; /* 상하 15px, 좌우 32px 패딩 */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px; /* 글씨 크기 */
+    margin: 4px 20px; /* 주변 마진 */
+    cursor: pointer; /* 마우스 오버 시 커서 변경 */
+    border-radius: 5px; /* 모서리 둥글게 */
+    transition: background-color 0.3s ease; /* 배경색 변경 애니메이션 */
+  }
+  
+  .statistics-button:hover {
+    background-color: #033605; /* 호버 시 더 어두운 녹색으로 변경 */
+  }
+  
