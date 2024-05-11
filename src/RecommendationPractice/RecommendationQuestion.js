@@ -268,7 +268,6 @@ const RecommendationQuestion = () => {
 
       setRecommendProblems(newRecommendProblems);
     };
-    console.log('test');
     fetchUserRelatedData();
   }, [allProblems, allAnswers]);
 
@@ -280,35 +279,39 @@ const RecommendationQuestion = () => {
     let updArr = [];
     let ci = 0;
     if (currentIndex !== 0) ci = currentIndex - 1;
-    // recommendProblems 사용하여 배열 업데이트 처리를 위한 함수
-    const updateArrayFromRecommend = (recommendArr, perChunk, ci) => {
-      // recommendProblems 내의 각 배열에 접근
-      return recommendArr
-        .map((sourceArray) => {
-          let startIndex = ci * perChunk;
-          let endIndex = startIndex + perChunk;
 
-          if (startIndex < sourceArray.length) {
-            return sourceArray.slice(
+    // recommendProblems 사용하여 배열 업데이트 처리를 위한 함수
+    const updateArrayFromRecommend = (recommendArr, ci) => {
+      let totalPerChunk = [4, 4, 2]; // 각 배열에 대한 추출 개수 설정
+      let result = [];
+      let counter = 0; // 현재까지 추출한 문제의 총 개수를 추적
+
+      for (let i = 0; i < recommendArr.length; i++) {
+        let perChunk = totalPerChunk[i]; // 현재 배열에 대한 추출 개수
+        let sourceArray = recommendArr[i];
+        let startIndex = ci * perChunk;
+        let endIndex = startIndex + perChunk;
+
+        if (startIndex < sourceArray.length) {
+          result.push(
+            ...sourceArray.slice(
               startIndex,
               Math.min(endIndex, sourceArray.length)
-            );
-          }
-          return [];
-        })
-        .flat(); // 2차원 배열을 1차원 배열로 평탄화
-    };
-    // recommendProblems를 사용하여 배열 업데이트
-    updArr = updateArrayFromRecommend(
-      [
-        recommendProblems[0], // userWrongProblems 대응
-        recommendProblems[1], // killerRound 대응
-        recommendProblems[2], // userBookMark 대응
-      ],
-      10,
-      ci
-    ); // 전체 문제를 10개 단위로 나누어 현재 인덱스에 따라 해당하는 문제들을 표시
+            )
+          );
+          counter += endIndex - startIndex; // 추출된 개수를 카운터에 추가
+        }
 
+        if (counter >= 10) break; // 총 10개를 추출했으면 반복 종료
+      }
+
+      return result;
+    };
+
+    updArr = updateArrayFromRecommend(recommendProblems, ci);
+
+    console.log('updArr');
+    console.log(updArr);
     setCurrentProblems(updArr); // 현재 문제 상태 업데이트
     setIsLoading(false);
   }, [recommendProblems, currentIndex]); // currentIndex 의존성 추가
