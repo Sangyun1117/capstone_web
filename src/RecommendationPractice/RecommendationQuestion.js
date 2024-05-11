@@ -165,48 +165,43 @@ const RecommendationQuestion = () => {
     const snapshot = await getDocs(ref);
     let items = [];
     snapshot.forEach((doc) => items.push(doc.id));
-    console.log('items: ');
-    console.log(items);
     shuffleArray(items);
     return items;
   };
 
+  // 모든 문제, 정답 정보 가져오기
+  const fetchProblemsAndAnswers = async () => {
+    setIsLoading(true);
+    let tempAllProblems = {};
+    let tempAllAnswers = {};
+
+    // 문제 정보 가져오기
+    for (let round = 61; round <= 68; round++) {
+      const roundRef = collection(firestore, `exam round/${round}/${round}`);
+      const roundSnapshot = await getDocs(roundRef);
+      let roundProblems = {}; // 객체로 초기화
+      roundSnapshot.forEach((doc) => {
+        roundProblems[doc.id] = doc.data().img; // 문제 ID를 키로, 이미지 URL을 값으로 저장
+      });
+      tempAllProblems[round] = roundProblems;
+    }
+
+    // 답안 정보 가져오기
+    for (let round = 61; round <= 68; round++) {
+      const answerRef = collection(firestore, `answer round/${round}/${round}`);
+      const answerSnapshot = await getDocs(answerRef);
+      let roundAnswers = {};
+      answerSnapshot.forEach((doc) => {
+        roundAnswers[doc.id] = doc.data().answer;
+      });
+      tempAllAnswers[round] = roundAnswers;
+    }
+
+    setAllProblems(tempAllProblems);
+    setAllAnswers(tempAllAnswers);
+  };
+
   useEffect(() => {
-    const fetchProblemsAndAnswers = async () => {
-      setIsLoading(true);
-      let tempAllProblems = {};
-      let tempAllAnswers = {};
-
-      // 문제 정보 가져오기
-      for (let round = 61; round <= 68; round++) {
-        const roundRef = collection(firestore, `exam round/${round}/${round}`);
-        const roundSnapshot = await getDocs(roundRef);
-        let roundProblems = {}; // 객체로 초기화
-        roundSnapshot.forEach((doc) => {
-          roundProblems[doc.id] = doc.data().img; // 문제 ID를 키로, 이미지 URL을 값으로 저장
-        });
-        tempAllProblems[round] = roundProblems;
-      }
-      console.log(tempAllProblems);
-
-      // 답안 정보 가져오기
-      for (let round = 61; round <= 68; round++) {
-        const answerRef = collection(
-          firestore,
-          `answer round/${round}/${round}`
-        );
-        const answerSnapshot = await getDocs(answerRef);
-        let roundAnswers = {};
-        answerSnapshot.forEach((doc) => {
-          roundAnswers[doc.id] = doc.data().answer;
-        });
-        tempAllAnswers[round] = roundAnswers;
-      }
-      console.log(tempAllAnswers);
-
-      setAllProblems(tempAllProblems);
-      setAllAnswers(tempAllAnswers);
-    };
     fetchProblemsAndAnswers(); // 모든 문제, 정답 정보 가져오기
   }, [userEmail]);
 
@@ -225,20 +220,9 @@ const RecommendationQuestion = () => {
         fetchAndShuffle(killerProblemsRef),
         fetchAndShuffle(bookMarksRef),
       ]);
-      console.log(a1);
-      console.log(a2);
-      console.log(a3);
 
       // 각 추천문제 배열에 문제번호에 맞게 id, 문제 사진, 답 정보를 저장한다.
       const indexRecommendProblems = [a1, a2, a3];
-
-      // 배열 업데이트 필요성 검사 함수
-      const isUpdateNeeded = (array, allData) => {
-        return array.some((id) => {
-          const round = parseInt(id.toString().substring(0, 2), 10);
-          return !allData[round] || !allData[round][id];
-        });
-      };
 
       // 배열 업데이트 함수
       const updateArrayWithInfo = (array, allProblems, allAnswers) => {
@@ -246,6 +230,7 @@ const RecommendationQuestion = () => {
           const round = parseInt(id.toString().substring(0, 2), 10);
           const img = allProblems[round] ? allProblems[round][id] : null;
           const answer = allAnswers[round] ? allAnswers[round][id] : null;
+          if (img === null || answer === null) fetchProblemsAndAnswers();
           return { id, img, answer };
         });
       };
@@ -253,18 +238,9 @@ const RecommendationQuestion = () => {
       // 상태 업데이트 공통 로직
       const newRecommendProblems = indexRecommendProblems.map(
         (array, index) => {
-          if (
-            isUpdateNeeded(array, allProblems) ||
-            isUpdateNeeded(array, allAnswers)
-          ) {
-            return updateArrayWithInfo(array, allProblems, allAnswers);
-          } else {
-            return array; // 필요한 업데이트가 없는 경우 기존 배열을 그대로 반환
-          }
+          return updateArrayWithInfo(array, allProblems, allAnswers);
         }
       );
-
-      console.log(newRecommendProblems);
 
       setRecommendProblems(newRecommendProblems);
     };
@@ -273,7 +249,6 @@ const RecommendationQuestion = () => {
 
   // 현재 인덱스가 변경되면 해당 인덱스부터 10개 문제를 보이게 한다.
   useEffect(() => {
-    console.log('ci: ' + currentIndex);
     if (recommendProblems.length === 0) return;
 
     let updArr = [];
@@ -310,8 +285,6 @@ const RecommendationQuestion = () => {
 
     updArr = updateArrayFromRecommend(recommendProblems, ci);
 
-    console.log('updArr');
-    console.log(updArr);
     setCurrentProblems(updArr); // 현재 문제 상태 업데이트
     setIsLoading(false);
   }, [recommendProblems, currentIndex]); // currentIndex 의존성 추가
