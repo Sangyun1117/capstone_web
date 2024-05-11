@@ -284,7 +284,7 @@ const RecommendationQuestion = () => {
     };
 
     updArr = updateArrayFromRecommend(recommendProblems, ci);
-
+    if (updArr[0].img === null) return;
     setCurrentProblems(updArr); // 현재 문제 상태 업데이트
     setIsLoading(false);
   }, [recommendProblems, currentIndex]); // currentIndex 의존성 추가
