@@ -78,69 +78,6 @@ const ImageEnd4Click = () => {
 
 const Home = () => (
   <div className="container">
-    {/* <<<<<<< HEAD
-    <div className="topContainer">
-      <div className="menu">
-        <div className="item">문제풀이</div>
-        <div className="menu-content">
-          <div className="sub-item">
-            <Link to="practiceRoundSelect">기출문제</Link>
-          </div>
-          <div className="sub-item">
-            <Link to="eraProblem/era1">시대별 풀이</Link>
-          </div>
-          <div className="sub-item">
-            <Link to="typeProblem/type1">유형별 풀이</Link>
-          </div>
-          <div className="sub-item">
-            <Link to="killerProblem">킬러문제</Link>
-          </div>
-          <div className="sub-item">
-            <Link to="recommendationQuestion">추천문제</Link>
-          </div>
-        </div>
-      </div>
-      <div className="menu">
-        <div className="item">나의 풀이정보</div>
-        <div className="menu-content">
-          <div className="sub-item">
-            <Link to="wrongProblem">오답노트</Link>
-          </div>
-          <div className="sub-item">
-            <Link to="bookmarkProblem">북마크</Link>
-          </div>
-          <div className="sub-item">통계</div>
-        </div>
-      </div>
-
-      <div className="menu">
-        <div className="item">미디어</div>
-        <div className="menu-content">
-          <div className="sub-item">
-            <Link to="historyTales">역사이야기</Link>
-          </div>
-          <div className="sub-item">
-            <Link to="likedVideos">즐겨찾는 영상</Link>
-          </div>
-          <div className="sub-item">
-            <Link to="quizGame">게임</Link>
-          </div>
-          <div className="sub-item">
-            <Link to="dictionaryHome">용어사전</Link>
-          </div>
-        </div>
-      </div>
-      <div className="item">
-        <Link
-          to="boardScreen"
-          style={{ color: 'black', textDecoration: 'none' }}
-        >
-          게시판
-        </Link>
-      </div>
-    </div>
-=======
->>>>>>> 20feff0d89890b74205478cd095e40c7fbe0894c */}
     <div>
       <div>
         <img src={MainImage} alt="배경이미지" className="main-image" />

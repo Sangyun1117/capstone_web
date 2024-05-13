@@ -60,8 +60,10 @@ const PostCreate = () => {
   const navigate = useNavigate();
 
   const userEmail = useSelector((state) => state.userEmail);
-  const serverPath = 'http://192.168.0.3:8080/';
+  //const serverPath = 'http://192.168.0.3:8080/';
   //const serverPath = 'http://223.194.133.15:8080/';
+  //const serverPath = 'http://192.168.0.3:8080/';
+  const serverPath = 'http://192.168.126.1:8080/';
 
   // 작성한 글을 db에 반영
   const handleSubmit = () => {
