@@ -121,7 +121,7 @@ const Home = () => (
             <Link to="quizGame">게임</Link>
           </div>
           <div className="sub-item">
-            <Link to="dictionary">용어사전</Link>
+            <Link to="dictionaryHome">용어사전</Link>
           </div>
         </div>
       </div>

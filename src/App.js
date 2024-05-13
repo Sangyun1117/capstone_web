@@ -45,6 +45,7 @@ import {
 import WrongProblem from './Problem/WrongProblem';
 import { BookmarkProblem } from './Problem/BookmarkProblem';
 import SampleProblem from './Problem/SampleProblem';
+import DictionaryHome from './Problem/DictionaryHome';
 
 Modal.setAppElement('#root');
 
@@ -88,6 +89,7 @@ const App = () => (
         <Route path="type11" element={<Type11Problem />} />
       </Route>
       <Route path="/dictionary" element={<Dictionary />} />
+      <Route path="/dictionaryHome" element={<DictionaryHome />} />
       <Route path="/wrongProblem" element={<WrongProblem />} />
       <Route path="/bookmarkProblem" element={<BookmarkProblem />} />
       <Route path="/sample" element={<SampleProblem />} />

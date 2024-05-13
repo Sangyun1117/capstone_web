@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { firestore } from '../firebaseConfig';
 import { Box, Typography, Button } from '@mui/material';
-import { query, collection, getDocs } from 'firebase/firestore';
+import { query, collection, getDocs, orderBy } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ListItemText from '@mui/material/ListItemText';
 import IconButton from '@mui/material/IconButton';
-import { MyPageSideBar } from './SideBar';
+import { MediaSideBar } from './SideBar';
 
-export default function BasicProblemList({ param }) {
+export default function DictionaryHome() {
   const userEmail = 'aaa@aaa.com';
   const navigate = useNavigate();
   const [data, setData] = useState([]);
@@ -22,10 +22,11 @@ export default function BasicProblemList({ param }) {
 
   const getData = async () => {
     var datas = [];
-    const q = query(collection(firestore, 'users', userEmail, param));
+    const collRef = collection(firestore, 'dictionary', 'character', '조선');
+    const q = query(collRef, orderBy('eid'));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
-      datas.push(doc.id);
+      datas.push({ name: doc.id, ...doc.data() });
     });
     setData(datas);
   };
@@ -68,9 +69,10 @@ export default function BasicProblemList({ param }) {
       style={{
         display: 'flex',
         flexDirection: 'row',
+        paddingTop: '10%',
       }}
     >
-      <MyPageSideBar />
+      <MediaSideBar />
       <Box
         style={{
           width: '40%',
@@ -85,10 +87,10 @@ export default function BasicProblemList({ param }) {
             textDecoration: 'underline',
           }}
         >
-          {param === 'bookMark' ? '북마크' : '오답노트'}
+          용어사전
         </Typography>
         <List dense={true} style={{ paddingTop: '10%' }}>
-          {currentItems.map((problem, index) => (
+          {currentItems.map((word, index) => (
             <ListItem
               key={index}
               secondaryAction={
@@ -97,22 +99,21 @@ export default function BasicProblemList({ param }) {
                 </IconButton>
               }
             >
-              <ListItemText>
-                {index + 1 + (currentPage - 1) * MAX_ITEM}
-              </ListItemText>
               <ListItemText
                 onClick={() =>
-                  navigate('/sample', {
+                  navigate('/dictionary', {
                     state: {
-                      data: data,
-                      index: index + (currentPage - 1) * MAX_ITEM,
+                      id: word.eid,
                     },
                   })
                 }
                 style={{ cursor: 'pointer' }}
               >
-                한국사 능력 검정 시험 {Math.floor(parseInt(problem) / 100)}회{' '}
-                {parseInt(problem) % 100}번
+                <span style={{ paddingRight: '5%' }}>
+                  {index + 1 + (currentPage - 1) * MAX_ITEM}
+                </span>
+
+                {word.name}
               </ListItemText>
             </ListItem>
           ))}

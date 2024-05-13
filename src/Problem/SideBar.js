@@ -170,3 +170,44 @@ export function MyPageSideBar() {
     </Box>
   );
 }
+
+export function MediaSideBar() {
+  const navigate = useNavigate(); // 네비게이션 훅 사용
+  return (
+    <Box
+      style={{
+        width: '15%',
+        paddingLeft: '10%',
+        paddingTop: '8%',
+        paddingRight: '5%',
+      }}
+    >
+      <Typography style={{ paddingLeft: '10%', fontSize: '150%' }}>
+        미디어
+      </Typography>
+      <Navigation
+        onSelect={({ itemId }) => {
+          if (itemId.startsWith('/')) navigate(itemId);
+        }}
+        items={[
+          {
+            title: '역사이야기',
+            itemId: '/about',
+          },
+          {
+            title: '즐겨찾는영상',
+            itemId: '/home',
+          },
+          {
+            title: '게임',
+            itemId: '/quizGame',
+          },
+          {
+            title: '용어사전',
+            itemId: '/dictionaryHome',
+          },
+        ]}
+      />
+    </Box>
+  );
+}
