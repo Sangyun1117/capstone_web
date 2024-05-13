@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { collection, getDocs, doc, getDoc } from 'firebase/firestore';
 import { firestore } from '../firebaseConfig';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
 import { HashLoader } from 'react-spinners';
 import { useSelector } from 'react-redux';
-import ProblemDetail from '../Practice/ProblemDetail';
+import swal from 'sweetalert';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
@@ -30,7 +30,7 @@ const Title = styled.div`
   font-weight: 600;
   font-size: 1.5em;
   width: 20%;
-  height: 50px;
+  min-height: 50px;
   margin-top: 30px;
 `;
 
@@ -39,7 +39,7 @@ const CardContainer = styled.div`
   flex-wrap: wrap;
   justify-content: space-around;
   margin-top: 5%;
-  width: 1040px;
+  width: 100%;
 `;
 
 const Card = styled.div`
@@ -50,8 +50,8 @@ const Card = styled.div`
   margin: 10px;
   background-color: white;
   border-radius: 10px;
-  height: 700px; // 정사각형 모양을 위해 높이와 너비를 동일하게 설정
-  width: 500px; // 한 행에 2개가 나오도록 충분한 여백을 확보
+  min-height: 20%;
+  width: 40%;
   position: relative;
 `;
 
@@ -64,8 +64,8 @@ const AnswerButton = styled.button`
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  width: 100px;
-  height: 50px;
+  width: 80px;
+  min-height: 50px
 
   cursor: pointer;
   transition: all 0.2s;
@@ -80,6 +80,16 @@ const AnswerButton = styled.button`
 const ProblemImage = styled.img`
   max-width: 90%;
   max-height: 70%;
+  margin-top: 20px;
+
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0px 0px 0px 0px #838abd;
+  border: none;
+  font-size: 1em;
+  &:hover {
+    box-shadow: 0px 0px 0px 5px #838abd;
+  }
 `;
 
 const Episode = styled.div`
@@ -141,8 +151,9 @@ const RecommendationQuestion = () => {
 
   const [answerShown, setAnswerShown] = useState([]); // 정답 보임 여부
   const [isLoading, setIsLoading] = useState(false); // 로딩 여부
-  const userEmail = useSelector((state) => state.userEmail); // 유저 이메일
 
+  const navigate = useNavigate();
+  const userEmail = useSelector((state) => state.userEmail); // 유저 이메일
   // 배열 섞는 함수
   function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -160,39 +171,44 @@ const RecommendationQuestion = () => {
     return items;
   };
 
+  // 모든 문제, 정답 정보 가져오기
+  const fetchProblemsAndAnswers = async () => {
+    setIsLoading(true);
+    let tempAllProblems = {};
+    let tempAllAnswers = {};
+
+    // 문제 정보 가져오기
+    for (let round = 61; round <= 68; round++) {
+      const roundRef = collection(firestore, `exam round/${round}/${round}`);
+      const roundSnapshot = await getDocs(roundRef);
+      let roundProblems = {}; // 객체로 초기화
+      roundSnapshot.forEach((doc) => {
+        roundProblems[doc.id] = doc.data().img; // 문제 ID를 키로, 이미지 URL을 값으로 저장
+      });
+      tempAllProblems[round] = roundProblems;
+    }
+
+    // 답안 정보 가져오기
+    for (let round = 61; round <= 68; round++) {
+      const answerRef = collection(firestore, `answer round/${round}/${round}`);
+      const answerSnapshot = await getDocs(answerRef);
+      let roundAnswers = {};
+      answerSnapshot.forEach((doc) => {
+        roundAnswers[doc.id] = doc.data().answer;
+      });
+      tempAllAnswers[round] = roundAnswers;
+    }
+
+    setAllProblems(tempAllProblems);
+    setAllAnswers(tempAllAnswers);
+  };
+
   useEffect(() => {
-    const fetchProblemsAndAnswers = async () => {
-      let tempAllProblems = {};
-      let tempAllAnswers = {};
-
-      // 문제 정보 가져오기
-      for (let round = 61; round <= 68; round++) {
-        const roundRef = collection(firestore, `exam round/${round}/${round}`);
-        const roundSnapshot = await getDocs(roundRef);
-        let roundProblems = {}; // 객체로 초기화
-        roundSnapshot.forEach((doc) => {
-          roundProblems[doc.id] = doc.data().img; // 문제 ID를 키로, 이미지 URL을 값으로 저장
-        });
-        tempAllProblems[round] = roundProblems;
-      }
-
-      // 답안 정보 가져오기
-      for (let round = 61; round <= 68; round++) {
-        const answerRef = collection(
-          firestore,
-          `answer round/${round}/${round}`
-        );
-        const answerSnapshot = await getDocs(answerRef);
-        let roundAnswers = {};
-        answerSnapshot.forEach((doc) => {
-          roundAnswers[doc.id] = doc.data().answer;
-        });
-        tempAllAnswers[round] = roundAnswers;
-      }
-
-      setAllProblems(tempAllProblems);
-      setAllAnswers(tempAllAnswers);
-    };
+    // 로그아웃 상태인 경우 로그인 화면으로 이동
+    if (!userEmail) {
+      navigate('/login'); // 사용자를 로그인 페이지로 리디렉션
+      return;
+    }
     fetchProblemsAndAnswers(); // 모든 문제, 정답 정보 가져오기
   }, [userEmail]);
 
@@ -211,20 +227,9 @@ const RecommendationQuestion = () => {
         fetchAndShuffle(killerProblemsRef),
         fetchAndShuffle(bookMarksRef),
       ]);
-      console.log(a1);
-      console.log(a2);
-      console.log(a3);
 
       // 각 추천문제 배열에 문제번호에 맞게 id, 문제 사진, 답 정보를 저장한다.
       const indexRecommendProblems = [a1, a2, a3];
-
-      // 배열 업데이트 필요성 검사 함수
-      const isUpdateNeeded = (array, allData) => {
-        return array.some((id) => {
-          const round = parseInt(id.toString().substring(0, 2), 10);
-          return !allData[round] || !allData[round][id];
-        });
-      };
 
       // 배열 업데이트 함수
       const updateArrayWithInfo = (array, allProblems, allAnswers) => {
@@ -232,6 +237,7 @@ const RecommendationQuestion = () => {
           const round = parseInt(id.toString().substring(0, 2), 10);
           const img = allProblems[round] ? allProblems[round][id] : null;
           const answer = allAnswers[round] ? allAnswers[round][id] : null;
+          if (img === null || answer === null) fetchProblemsAndAnswers();
           return { id, img, answer };
         });
       };
@@ -239,61 +245,53 @@ const RecommendationQuestion = () => {
       // 상태 업데이트 공통 로직
       const newRecommendProblems = indexRecommendProblems.map(
         (array, index) => {
-          if (
-            isUpdateNeeded(array, allProblems) ||
-            isUpdateNeeded(array, allAnswers)
-          ) {
-            return updateArrayWithInfo(array, allProblems, allAnswers);
-          } else {
-            return array; // 필요한 업데이트가 없는 경우 기존 배열을 그대로 반환
-          }
+          return updateArrayWithInfo(array, allProblems, allAnswers);
         }
       );
 
       setRecommendProblems(newRecommendProblems);
     };
-
     fetchUserRelatedData();
   }, [allProblems, allAnswers]);
 
   // 현재 인덱스가 변경되면 해당 인덱스부터 10개 문제를 보이게 한다.
   useEffect(() => {
-    console.log('ci: ' + currentIndex);
     if (recommendProblems.length === 0) return;
 
-    setIsLoading(true);
     let updArr = [];
     let ci = 0;
     if (currentIndex !== 0) ci = currentIndex - 1;
-    // recommendProblems 사용하여 배열 업데이트 처리를 위한 함수
-    const updateArrayFromRecommend = (recommendArr, perChunk, ci) => {
-      // recommendProblems 내의 각 배열에 접근
-      return recommendArr
-        .map((sourceArray) => {
-          let startIndex = ci * perChunk;
-          let endIndex = startIndex + perChunk;
 
-          if (startIndex < sourceArray.length) {
-            return sourceArray.slice(
+    // recommendProblems 사용하여 배열 업데이트 처리를 위한 함수
+    const updateArrayFromRecommend = (recommendArr, ci) => {
+      let totalPerChunk = [4, 4, 2]; // 각 배열에 대한 추출 개수 설정
+      let result = [];
+      let counter = 0; // 현재까지 추출한 문제의 총 개수를 추적
+
+      for (let i = 0; i < recommendArr.length; i++) {
+        let perChunk = totalPerChunk[i]; // 현재 배열에 대한 추출 개수
+        let sourceArray = recommendArr[i];
+        let startIndex = ci * perChunk;
+        let endIndex = startIndex + perChunk;
+
+        if (startIndex < sourceArray.length) {
+          result.push(
+            ...sourceArray.slice(
               startIndex,
               Math.min(endIndex, sourceArray.length)
-            );
-          }
-          return [];
-        })
-        .flat(); // 2차원 배열을 1차원 배열로 평탄화
-    };
-    // recommendProblems를 사용하여 배열 업데이트
-    updArr = updateArrayFromRecommend(
-      [
-        recommendProblems[0], // userWrongProblems 대응
-        recommendProblems[1], // killerRound 대응
-        recommendProblems[2], // userBookMark 대응
-      ],
-      10,
-      ci
-    ); // 전체 문제를 10개 단위로 나누어 현재 인덱스에 따라 해당하는 문제들을 표시
+            )
+          );
+          counter += endIndex - startIndex; // 추출된 개수를 카운터에 추가
+        }
 
+        if (counter >= 10) break; // 총 10개를 추출했으면 반복 종료
+      }
+
+      return result;
+    };
+
+    updArr = updateArrayFromRecommend(recommendProblems, ci);
+    if (updArr[0].img === null) return;
     setCurrentProblems(updArr); // 현재 문제 상태 업데이트
     setIsLoading(false);
   }, [recommendProblems, currentIndex]); // currentIndex 의존성 추가
@@ -326,7 +324,19 @@ const RecommendationQuestion = () => {
         <Episode>{`${item.id.slice(0, 2)}회차 ${parseInt(
           item.id.slice(2)
         )}번`}</Episode>
-        <ProblemImage src={item.img} alt={`문제 ${item.id}`} />
+
+        {/* 이미지 클릭 시 크게 표시*/}
+        <ProblemImage
+          src={item.img}
+          alt={`문제 ${item.id}`}
+          onClick={() => {
+            swal({
+              icon: item.img,
+              button: '닫기',
+              className: 'custom-swal',
+            });
+          }}
+        />
       </Card>
     );
   };
@@ -346,7 +356,7 @@ const RecommendationQuestion = () => {
           </CardContainer>
 
           <MoveButtonContainer>
-            {currentIndex === 1 ? (
+            {currentIndex <= 1 ? (
               <DisabledButton>
                 <div>이전</div>
               </DisabledButton>

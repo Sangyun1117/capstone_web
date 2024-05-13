@@ -8,6 +8,15 @@
   width: 100%;
 }
 
+.header-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  position: absolute;
+  top: 5em;
+  width: 100%;
+}
+
 .topContainer {
   display: flex;
   flex-direction: row;
@@ -20,6 +29,8 @@
 .menu {
   position: relative;
   display: inline-block;
+  margin-right: -130px; /* 메뉴 사이의 우측 간격을 설정 */
+  z-index: 2000; /* 메뉴 아이템을 더 높은 z-index로 설정 */
 }
 
 .menu-content {
@@ -28,7 +39,7 @@
   background-color: #f9f9f9;
   min-width: 160px;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-  z-index: 1;
+  z-index: 2001; /* 메뉴 콘텐츠가 메뉴 버튼보다 더 높은 z-index를 가지도록 설정 */
 }
 
 .menu:hover .menu-content {
@@ -40,6 +51,11 @@
   font-size: 25px;
   margin-right: 20px; /* 간격 설정 */
   margin-left: 20px;
+}
+
+.link-item {
+  text-decoration: none; /* 밑줄 제거 */
+  color: black; /* 글씨색 검은색으로 설정 */
 }
 
 .sub-item {
@@ -126,3 +142,36 @@
   height: 50px; /* 이미지 높이 설정 */
   width: auto; /* 너비는 자동으로 설정됩니다. */
 }
+
+.white-background-button {
+  --background: #fff;
+  --text: #275efe;
+  --shadow: 0 2px 8px -1px rgba(18, 22, 33, 0.04);
+  --shadow-hover: 0 4px 20px -2px rgba(18, 22, 33, 0.12);
+}
+
+.white-background-button {
+  padding: 16px 32px;
+  font-family: 'Roboto';
+  font-weight: 500;
+  line-height: var(--font-size);
+  border-radius: 24px;
+  display: block;
+  outline: none;
+  appearance: none;
+  border: none;
+  text-decoration: none;
+  font-size: var(--font-size);
+  letter-spacing: 0.5px;
+  background: var(--background);
+  color: var(--text);
+  box-shadow: var(--shadow);
+  transform: translateY(var(--y)) translateZ(0);
+  transition: transform var(--duration) ease, box-shadow var(--duration) ease;
+}
+
+.white-background-button:hover {
+  --y: var(--move-hover);
+  --shadow: var(--shadow-hover);
+}
+

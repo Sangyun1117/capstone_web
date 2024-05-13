@@ -195,10 +195,6 @@ const PracticeResult = () => {
 
         // 오답 문제 유형 저장
         const typeIndexArray = problem.data.type;
-        console.log('problem: ');
-        console.log(problem.data);
-        console.log('error test: ');
-        console.log(typeIndexArray);
         for (let i = 0; i < typeIndexArray.length; i++) {
           const typeIndex = getTypeIndex(typeIndexArray[i]);
           if (typeIndex !== -1) {
@@ -317,6 +313,12 @@ const PracticeResult = () => {
           }
         } else {
           console.log('No such document!');
+          // 문서가 존재하지 않는 경우, 새 문서 생성
+          await setDoc(wrongRef, {
+            era: new Array(9).fill(0),
+            type: new Array(11).fill(0),
+          });
+          console.log('Document successfully created with initial data.');
           fetchData();
         }
       } catch (error) {
@@ -325,7 +327,7 @@ const PracticeResult = () => {
     };
 
     fetchData();
-  }, [isLoggedIn]);
+  }, []);
 
   // 상태변수에 기존 데이터 저장
   function updateStateFromSnapshot(data, key, setStateFunction, newValues) {

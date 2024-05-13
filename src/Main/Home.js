@@ -78,6 +78,7 @@ const ImageEnd4Click = () => {
 
 const Home = () => (
   <div className="container">
+    {/* <<<<<<< HEAD
     <div className="topContainer">
       <div className="menu">
         <div className="item">문제풀이</div>
@@ -138,6 +139,8 @@ const Home = () => (
         </Link>
       </div>
     </div>
+=======
+>>>>>>> 20feff0d89890b74205478cd095e40c7fbe0894c */}
     <div>
       <div>
         <img src={MainImage} alt="배경이미지" className="main-image" />

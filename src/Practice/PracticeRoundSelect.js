@@ -28,7 +28,7 @@ const Title = styled.div`
   border-radius: 5px;
   font-weight: 600;
   font-size: 1.5em;
-  width: 20%;
+  min-width: 25%;
   height: 50px;
 `;
 
