@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { HashLoader } from 'react-spinners';
 import { useSelector } from 'react-redux';
 import swal from 'sweetalert';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
@@ -150,8 +151,9 @@ const RecommendationQuestion = () => {
 
   const [answerShown, setAnswerShown] = useState([]); // 정답 보임 여부
   const [isLoading, setIsLoading] = useState(false); // 로딩 여부
-  const userEmail = useSelector((state) => state.userEmail); // 유저 이메일
 
+  const navigate = useNavigate();
+  const userEmail = useSelector((state) => state.userEmail); // 유저 이메일
   // 배열 섞는 함수
   function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -202,6 +204,11 @@ const RecommendationQuestion = () => {
   };
 
   useEffect(() => {
+    // 로그아웃 상태인 경우 로그인 화면으로 이동
+    if (!userEmail) {
+      navigate('/login'); // 사용자를 로그인 페이지로 리디렉션
+      return;
+    }
     fetchProblemsAndAnswers(); // 모든 문제, 정답 정보 가져오기
   }, [userEmail]);
 
