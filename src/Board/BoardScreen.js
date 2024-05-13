@@ -61,29 +61,30 @@ const WriteButton = styled.button`
   width: 4%;
   min-width: 70px;
   height: 50px;
-  cursor: pointer;
   font-weight: 600;
   text-align: center;
   line-height: 50px;
   color: #fff;
   border-radius: 5px;
-  transition: all 0.2s;
   background-color: #4dccc6;
+  margin-right: 10px;
+
+  cursor: pointer;
+  transition: all 0.2s;
   box-shadow: 0px 0px 0px 0px #01939a;
   border: none;
   font-size: 2em;
   &:hover {
     box-shadow: 0px 0px 0px 5px #01939a;
   }
-  margin-right: 10px;
 `;
 
 const BoardScreen = () => {
+  const navigate = useNavigate();
   const [currentTab, setCurrentTab] = useState('questionBoard'); // 현재 탭
   const [search, setSearch] = useState(''); // 검색 텍스트
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
   const userEmail = useSelector((state) => state.userEmail);
-  const navigate = useNavigate();
 
   const QuestionBoard = () => (
     <BoardScreenUI title="질문" boardName="questionBoard" search={search} />
