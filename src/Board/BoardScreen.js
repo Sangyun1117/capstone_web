@@ -8,7 +8,6 @@ const Container = styled.div`
   display: flex;
   position: relative;
   flex-direction: row;
-  top: 5em;
   left: 20%;
   width: 60%;
   min-width: 30em;
