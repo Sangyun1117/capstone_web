@@ -152,8 +152,9 @@ const PostDetail = () => {
 
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
   const userEmail = useSelector((state) => state.userEmail);
-  const serverPath = 'http://192.168.0.3:8080/';
   //const serverPath = 'http://223.194.133.15:8080/';
+  //const serverPath = 'http://192.168.0.3:8080/';
+  const serverPath = 'http://192.168.126.1:8080/';
 
   useEffect(() => {
     if (userEmail) {
@@ -348,6 +349,23 @@ const PostDetail = () => {
               </div>
             </Card>
           ))}
+
+        <Line />
+
+        <InputRow>
+          <CommentInput // 댓글 입력창
+            placeholder={
+              isLoggedIn ? '댓글 작성하기' : '로그인하고 댓글을 작성해보세요!'
+            }
+            onChange={(e) => setComment(e.target.value)}
+            value={comment}
+            readOnly={!isLoggedIn}
+          />
+          <SubmitButton onClick={handleSubmit}>
+            전송
+            {/* <Icon name="comment" size={24} color="#35439c" /> */}
+          </SubmitButton>
+        </InputRow>
       </BottomContainer>
     </Container>
   );
