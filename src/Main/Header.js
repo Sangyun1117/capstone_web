@@ -31,6 +31,15 @@ const Header = () => {
     window.location.reload(); // 페이지를 새로고침합니다.
   };
 
+  const handleLinkClick = (path) => (e) => {
+    e.preventDefault(); // 기본 링크 동작 방지
+    if (!isLoggedIn) {
+      navigate('/login'); // 로그아웃 상태면 로그인 페이지로 리다이렉트
+    } else {
+      navigate(path); // 로그인 상태면 전달받은 경로로 이동
+    }
+  };
+
   return (
     <div className="header">
       <Link to="/">
@@ -46,7 +55,12 @@ const Header = () => {
           <div className="sub-item">유형별 풀이</div>
           <div className="sub-item">킬러문제</div>
           <div className="sub-item">
-            <Link to="recommendationQuestion">추천문제</Link>
+            <a
+              href="recommendationQuestion"
+              onClick={handleLinkClick('recommendationQuestion')}
+            >
+              추천문제
+            </a>
           </div>
         </div>
       </div>

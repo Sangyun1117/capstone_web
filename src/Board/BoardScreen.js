@@ -45,7 +45,7 @@ const UIContainer = styled.div`
   align-items: center;
   width: 50%;
   height: 5em;
-`
+`;
 
 const CommentInput = styled.input`
   width: 100%;
@@ -84,7 +84,6 @@ const BoardScreen = () => {
   const [currentTab, setCurrentTab] = useState('questionBoard'); // 현재 탭
   const [search, setSearch] = useState(''); // 검색 텍스트
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
-  const userEmail = useSelector((state) => state.userEmail);
 
   const QuestionBoard = () => (
     <BoardScreenUI title="질문" boardName="questionBoard" search={search} />
@@ -97,7 +96,7 @@ const BoardScreen = () => {
   );
 
   return (
-    <>  
+    <>
       <Container>
         <NavLinkContainer>
           <StyledLink
@@ -105,7 +104,7 @@ const BoardScreen = () => {
             style={{
               borderBottom:
                 currentTab === 'questionBoard' ? '2px solid #008b8b' : 'none',
-                fontSize: currentTab === 'questionBoard' ? '1.2em' : '1em',
+              fontSize: currentTab === 'questionBoard' ? '1.2em' : '1em',
             }}
           >
             질문
@@ -115,7 +114,7 @@ const BoardScreen = () => {
             style={{
               borderBottom:
                 currentTab === 'tipBoard' ? '2px solid #008b8b' : 'none',
-                fontSize: currentTab === 'tipBoard' ? '1.2em' : '1em',
+              fontSize: currentTab === 'tipBoard' ? '1.2em' : '1em',
             }}
           >
             공부 팁
@@ -125,7 +124,7 @@ const BoardScreen = () => {
             style={{
               borderBottom:
                 currentTab === 'reviewBoard' ? '2px solid #008b8b' : 'none',
-                fontSize: currentTab === 'reviewBoard' ? '1.2em' : '1em',
+              fontSize: currentTab === 'reviewBoard' ? '1.2em' : '1em',
             }}
           >
             시험 후기

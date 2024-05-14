@@ -30,13 +30,11 @@ import Modal from 'react-modal';
 import EventMap from './Map/EventMap';
 
 Modal.setAppElement('#root');
-Chart.register(ChartDataLabels);  //차트 레이블 추가 코드
+Chart.register(ChartDataLabels); //차트 레이블 추가 코드
 const App = () => (
-
   <>
-  
     <Header />
-    
+
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/about" element={<About />} />

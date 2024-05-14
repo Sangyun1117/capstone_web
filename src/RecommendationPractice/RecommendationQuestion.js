@@ -153,6 +153,7 @@ const RecommendationQuestion = () => {
   const [isLoading, setIsLoading] = useState(false); // 로딩 여부
 
   const navigate = useNavigate();
+  const isLoggedIn = useSelector((state) => state.isLoggedIn);
   const userEmail = useSelector((state) => state.userEmail); // 유저 이메일
   // 배열 섞는 함수
   function shuffleArray(array) {
@@ -204,11 +205,6 @@ const RecommendationQuestion = () => {
   };
 
   useEffect(() => {
-    // 로그아웃 상태인 경우 로그인 화면으로 이동
-    if (!userEmail) {
-      navigate('/login'); // 사용자를 로그인 페이지로 리디렉션
-      return;
-    }
     fetchProblemsAndAnswers(); // 모든 문제, 정답 정보 가져오기
   }, [userEmail]);
 
