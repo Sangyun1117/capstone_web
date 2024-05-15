@@ -25,11 +25,12 @@ const ContentContainer = styled.div`
 `;
 
 const TitleArea = styled.div`
-  font-size: 24px;
-  font-weight: 400;
+  font-size: 30px;
+  font-weight: 500;
   margin-bottom: 20px;
-  padding: 5px;
+  padding: 10px;
   border-radius: 10px;
+  background-color: #e6e6fa;
 `;
 
 const TopUIContainer = styled.div`
@@ -118,11 +119,11 @@ const SubmitButton = styled.button`
 
   cursor: pointer;
   transition: all 0.2s;
-  box-shadow: 0px 0px 0px 0px red;
+  box-shadow: 0px 0px 0px 0px black;
   border: none;
   font-size: 1em;
   &:hover {
-    box-shadow: 0px 0px 0px 5px red;
+    box-shadow: 0px 0px 0px 5px black;
   }
 `;
 
@@ -145,7 +146,6 @@ const CommentInput = styled.input`
 const PostDetail = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { boardName, post } = location.state;
   const [comment, setComment] = useState('');
   const [commentList, setCommentList] = useState([]);
   const [userName, setUserName] = useState();
@@ -156,6 +156,7 @@ const PostDetail = () => {
   const serverPath = 'http://192.168.0.3:8080/';
   //const serverPath = 'http://192.168.126.1:8080/';
   //const serverPath = 'http://localhost:8080/';
+  const { boardName, post } = location.state;
 
   useEffect(() => {
     if (userEmail) {
@@ -166,11 +167,10 @@ const PostDetail = () => {
   // 댓글 가져오기
   const fetchComments = () => {
     axios
-      .get(serverPath + 'comments', { params: { postId: post.id } })
+      .get(serverPath + 'comments', { params: { postId: post.postId } })
       .then((response) => {
         const data = response.data;
         if (data) {
-          console.log('data: ' + data);
           const comments = Object.keys(data).map((key) => ({
             commentId: data[key].commentId,
             userEmail: data[key].userEmail,
@@ -189,8 +189,6 @@ const PostDetail = () => {
     fetchComments();
   }, []);
 
-  //const scrolldivRef = useRef();
-
   const handleSubmit = () => {
     // 댓글 저장
     if (comment.trim() === '') {
@@ -199,9 +197,9 @@ const PostDetail = () => {
     }
     const commentId = userName + '_' + Date.now();
 
-    // post와 post.id가 존재하는지 확인
-    if (!post || !post.id) {
-      console.error('Post or post.id is undefined.');
+    // post와 post.postId가 존재하는지 확인
+    if (!post || !post.postId) {
+      console.error('Post or post.postId is undefined.');
       return;
     }
 
@@ -209,7 +207,7 @@ const PostDetail = () => {
       commentId: commentId,
       userEmail: userEmail,
       comment: comment,
-      postId: post.id,
+      postId: post.postId,
     };
 
     axios
@@ -317,10 +315,7 @@ const PostDetail = () => {
           value={comment}
           readOnly={!isLoggedIn}
         />
-        <SubmitButton onClick={handleSubmit}>
-          전송
-          {/* <Icon name="comment" size={24} color="#35439c" /> */}
-        </SubmitButton>
+        <SubmitButton onClick={handleSubmit}>전송</SubmitButton>
       </InputRow>
 
       {commentList.length > 0 && <Line />}
@@ -350,23 +345,6 @@ const PostDetail = () => {
               </div>
             </Card>
           ))}
-
-        <Line />
-
-        <InputRow>
-          <CommentInput // 댓글 입력창
-            placeholder={
-              isLoggedIn ? '댓글 작성하기' : '로그인하고 댓글을 작성해보세요!'
-            }
-            onChange={(e) => setComment(e.target.value)}
-            value={comment}
-            readOnly={!isLoggedIn}
-          />
-          <SubmitButton onClick={handleSubmit}>
-            전송
-            {/* <Icon name="comment" size={24} color="#35439c" /> */}
-          </SubmitButton>
-        </InputRow>
       </BottomContainer>
     </Container>
   );

@@ -18,10 +18,14 @@ const Container = styled.div`
 `;
 
 const BodyInput = styled.textarea`
-  margin: 1%;
+  margin: 2%;
   height: 60%;
   width: 95%,
   left: 1.5%,
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  font-size: 20px;
+  font-weight: 500;
 `;
 
 const SubmitButton = styled.button`
@@ -68,7 +72,7 @@ const PostCreate = () => {
   // 작성한 글을 db에 반영
   const handleSubmit = () => {
     const postType = post ? 1 : 0; // 직성모드(0), 수정모드(1)
-    const postId = post ? post.id : userEmail + '_' + Date.now();
+    const postId = post ? post.postId : userEmail + '_' + Date.now();
 
     // 새 글 데이터
     const newPost = {
@@ -88,8 +92,10 @@ const PostCreate = () => {
         // 이전 화면으로 돌아간다.
         if (post) {
           navigate('/postDetail', {
-            post: newPost,
-            boardName: boardName,
+            state: {
+              boardName: boardName,
+              post: newPost,
+            },
           });
         } else navigate('/boardScreen');
       })
@@ -104,20 +110,23 @@ const PostCreate = () => {
         required
         fullWidth
         id="outlined-required"
-        label="제목을 입력하세요"
+        value={title}
         onChange={(e) => setTitle(e.target.value)}
         style={{
           margin: '1.5% 1%',
           backgroundColor: 'white',
           width: '98%',
+          borderRadius: '10px',
+          backgroundColor: '#e6e6fa',
         }}
       />
-      <SubmitButton onClick={handleSubmit}>등록</SubmitButton>
+
       <BodyInput
         rows="10"
         value={body}
         onChange={(e) => setBody(e.target.value)}
       />
+      <SubmitButton onClick={handleSubmit}>등록</SubmitButton>
     </Container>
   );
 };
