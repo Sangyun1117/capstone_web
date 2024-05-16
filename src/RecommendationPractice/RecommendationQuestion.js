@@ -143,7 +143,7 @@ const DisabledButton = styled.button`
 
 const RecommendationQuestion = () => {
   const [currentProblems, setCurrentProblems] = useState([]); // 현재 페이지에 표시될 문제들
-  const [currentIndex, setCurrentIndex] = useState(0); // 현재 시작 인덱스
+  const [currentIndex, setCurrentIndex] = useState(1); // 현재 시작 인덱스
   const [allProblems, setAllProblems] = useState([]); // 모든 문제 정보
   const [allAnswers, setAllAnswers] = useState([]); // 모든 답안 정보
 
@@ -352,7 +352,7 @@ const RecommendationQuestion = () => {
           </CardContainer>
 
           <MoveButtonContainer>
-            {currentIndex <= 1 ? (
+            {currentIndex === 1 ? (
               <DisabledButton>
                 <div>이전</div>
               </DisabledButton>
