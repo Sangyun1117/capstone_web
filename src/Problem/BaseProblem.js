@@ -15,9 +15,9 @@ import { firestore } from '../firebaseConfig';
 import { Container, Box, Typography, Button } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
-import { useNavigate } from 'react-router-dom';
 import 'react-minimal-side-navigation/lib/ReactMinimalSideNavigation.css';
 import { ProblemSideBar } from './SideBar';
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function BaseProblem({ param, detail }) {
   //const param = 'era';
@@ -245,16 +245,15 @@ export default function BaseProblem({ param, detail }) {
       <Box
         style={{
           width: '50%',
-          paddingBottom: '10%',
+          minWidth: '700px',
         }}
       >
-        <Box>
+        <Box style={{ paddingTop: '8%' }}>
           {detail ? (
             <Typography
               style={{
                 fontSize: '25px',
                 paddingLeft: '8%',
-                paddingTop: '5%',
                 fontWeight: 'bold',
                 textDecoration: 'underline',
               }}
@@ -266,7 +265,6 @@ export default function BaseProblem({ param, detail }) {
               style={{
                 fontSize: '25px',
                 paddingLeft: '8%',
-                paddingTop: '5%',
                 fontWeight: 'bold',
                 textDecoration: 'underline',
               }}
@@ -365,13 +363,13 @@ export default function BaseProblem({ param, detail }) {
               key={imageUrl}
               src={imageUrl}
               alt="Image"
-              style={{ width: '50%', aspectRatio: 1, marginBottom: 10 }}
+              style={{ width: '50%', height: 'auto', marginBottom: 10 }}
               resizeMode="contain"
             />
           )}
           {isWebAnswerOpen && (
             <Box
-              style={{ width: '50%', overflowY: 'auto', maxHeight: '400px' }}
+              style={{ width: '50%', overflowY: 'auto', maxHeight: '600px' }}
             >
               <Typography>
                 정답 : <span style={{ color: 'red' }}>{answer?.answer}번</span>

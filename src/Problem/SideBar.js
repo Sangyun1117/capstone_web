@@ -11,6 +11,7 @@ export function ProblemSideBar() {
     <Box
       style={{
         width: '15%',
+        minWidth: '200px',
         paddingLeft: '5%',
         paddingTop: '8%',
         paddingRight: '5%',
@@ -136,6 +137,7 @@ export function MyPageSideBar() {
     <Box
       style={{
         width: '15%',
+        minWidth: '200px',
         paddingLeft: '5%',
         paddingTop: '8%',
         paddingRight: '5%',
@@ -173,7 +175,8 @@ export function MediaSideBar() {
     <Box
       style={{
         width: '15%',
-        paddingLeft: '10%',
+        minWidth: '200px',
+        paddingLeft: '5%',
         paddingTop: '8%',
         paddingRight: '5%',
       }}

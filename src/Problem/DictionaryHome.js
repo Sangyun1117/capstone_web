@@ -91,7 +91,8 @@ export default function DictionaryHome() {
       <MediaSideBar />
       <Box
         style={{
-          width: '40%',
+          width: '50%',
+          minWidth: '600px',
         }}
       >
         <Box
@@ -99,7 +100,7 @@ export default function DictionaryHome() {
             display: 'flex',
             flexDirection: 'row',
             alignItems: 'center',
-            paddingTop: '5%',
+            paddingTop: '8%',
           }}
         >
           <Typography
@@ -151,7 +152,10 @@ export default function DictionaryHome() {
           </FormControl>
         </Box>
 
-        <List dense={true} style={{ paddingTop: '10%' }}>
+        <List
+          dense={true}
+          style={{ paddingTop: '7%', paddingLeft: '10%', paddingRight: '10%' }}
+        >
           {currentItems.length > 0 ? (
             currentItems.map((word, index) => (
               <ListItem key={index}>
