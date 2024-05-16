@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { firestore } from '../firebaseConfig';
 import { Box, Typography, Button } from '@mui/material';
-import { query, collection, getDocs } from 'firebase/firestore';
+import { query, collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -10,9 +11,11 @@ import ListItemText from '@mui/material/ListItemText';
 import IconButton from '@mui/material/IconButton';
 import { MyPageSideBar } from './SideBar';
 import Modal from 'react-modal';
+import '../css/Problem.css';
 
 export default function BasicProblemList({ param }) {
-  const userEmail = 'aaa@aaa.com';
+  const userEmail = useSelector((state) => state.userEmail);
+  const isLoggedIn = useSelector((state) => state.isLoggedIn);
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -31,6 +34,22 @@ export default function BasicProblemList({ param }) {
     setProblemDeleteModalOpen(false);
   };
 
+  const deleteProblem = async (clickedProblem) => {
+    closeProblemDeleteModal();
+    const newData = data.filter((problem) => problem !== clickedProblem);
+    setData(newData);
+
+    await deleteDoc(doc(firestore, 'users', userEmail, param, clickedProblem));
+
+    const indexOfLastItem = currentPage * MAX_ITEM;
+    const indexOfFirstItem = indexOfLastItem - MAX_ITEM;
+    const newCurrentItems = newData.slice(indexOfFirstItem, indexOfLastItem);
+    // 현재 페이지에 아이템이 없고, 현재 페이지가 첫 페이지가 아니면 이전 페이지로 이동
+    if (newCurrentItems.length === 0 && currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
+    }
+  };
+
   const getData = async () => {
     var datas = [];
     const q = query(collection(firestore, 'users', userEmail, param));
@@ -42,7 +61,7 @@ export default function BasicProblemList({ param }) {
   };
 
   useEffect(() => {
-    getData();
+    if (isLoggedIn) getData();
   }, []);
 
   const indexOfLastItem = currentPage * MAX_ITEM;
@@ -84,21 +103,29 @@ export default function BasicProblemList({ param }) {
       <MyPageSideBar />
       <Box
         style={{
-          width: '40%',
+          width: '50%',
+          minWidth: '600px',
         }}
       >
         <Typography
           style={{
             fontSize: '25px',
             paddingLeft: '8%',
-            paddingTop: '5%',
+            paddingTop: '8%',
             fontWeight: 'bold',
             textDecoration: 'underline',
           }}
         >
           {param === 'bookMark' ? '북마크' : '오답노트'}
         </Typography>
-        <List dense={true} style={{ paddingTop: '10%' }}>
+        <List
+          dense={true}
+          style={{
+            paddingTop: '7%',
+            paddingLeft: '10%',
+            paddingRight: '10%',
+          }}
+        >
           {currentItems.length > 0 ? (
             currentItems.map((problem, index) => (
               <ListItem
@@ -134,7 +161,7 @@ export default function BasicProblemList({ param }) {
             ))
           ) : (
             <ListItem>
-              <ListItemText primary="작성 글이 없습니다" />
+              <ListItemText primary="저장된 문제가 없습니다." />
             </ListItem>
           )}
         </List>
@@ -193,41 +220,55 @@ export default function BasicProblemList({ param }) {
           </Button>
         </Box>
       </Box>
-      {/* <ProblemDeleteModal
+      <ProblemDeleteModal
         isOpen={isProblemDeleteModalOpen}
         onClose={closeProblemDeleteModal}
-        problemName={deleteSelectedProblem}
-      ></ProblemDeleteModal> */}
+        clickedProblem={deleteSelectedProblem}
+        deleteProblem={deleteProblem}
+      ></ProblemDeleteModal>
     </Box>
   );
 }
 
-// const ProblemDeleteModal = ({ isOpen, onClose, problemName }) => {
-//   if (!isOpen) {
-//     return null; // 카드 모달이 닫혀있으면 아무것도 렌더링하지 않음
-//   }
-//   return (
-//     <Modal
-//       isOpen={isOpen}
-//       onRequestClose={onClose}
-//       className="delete-modal"
-//       overlayClassName="modal-overlay"
-//     >
-//       <h3 style={{ fontSize: '18px' }}>
-//         <span style={{ color: 'red' }}>{problemName}</span>을 삭제하시겠습니까?
-//       </h3>
-//       <div className="modal-button">
-//         <Button
-//           variant="outlined"
-//           onClick={onClose}
-//           style={{ marginRight: '10px' }}
-//         >
-//           취소
-//         </Button>
-//         <Button variant="outlined" color="error">
-//           삭제
-//         </Button>
-//       </div>
-//     </Modal>
-//   );
-// };
+const ProblemDeleteModal = ({
+  isOpen,
+  onClose,
+  clickedProblem,
+  deleteProblem,
+}) => {
+  if (!isOpen) {
+    return null; // 카드 모달이 닫혀있으면 아무것도 렌더링하지 않음
+  }
+  return (
+    <Modal
+      isOpen={isOpen}
+      onRequestClose={onClose}
+      className="delete-modal"
+      overlayClassName="modal-overlay"
+    >
+      <h3 style={{ fontSize: '18px', paddingBottom: '20px' }}>
+        <span style={{ color: 'red' }}>
+          {Math.floor(parseInt(clickedProblem) / 100)}회{' '}
+          {parseInt(clickedProblem) % 100}번
+        </span>
+        을 삭제하시겠습니까?
+      </h3>
+      <div className="modal-button">
+        <Button
+          variant="outlined"
+          onClick={onClose}
+          style={{ marginRight: '10px' }}
+        >
+          취소
+        </Button>
+        <Button
+          variant="outlined"
+          color="error"
+          onClick={() => deleteProblem(clickedProblem)}
+        >
+          삭제
+        </Button>
+      </div>
+    </Modal>
+  );
+};
