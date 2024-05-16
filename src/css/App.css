@@ -9,6 +9,7 @@
   align-items: center;
   min-height: 5em;
   width: 100%;
+  min-width: 1200px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
   z-index: 99;
 }
