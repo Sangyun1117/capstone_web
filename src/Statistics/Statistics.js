@@ -14,6 +14,14 @@ const Statistics = () => {
   const [total, setTotal] = useState(0);
   const [wrongProblemsCount, setWrongProblemsCount] = useState(0);
 
+  const moveera = () => {
+    navigate('/eraProblem/era1'); // navigate 함수를 호출하여 경로를 변경합니다.
+  };
+
+  const movetype = () => {
+    navigate('/eraProblem/era1'); // navigate 함수를 호출하여 경로를 변경합니다.
+  };
+
   //로그인 관리
   useEffect(() => {
     const userEmail = localStorage.getItem('userEmail'); // 로컬 스토리지에서 userEmail을 가져옴
@@ -166,9 +174,8 @@ const Statistics = () => {
           <strong style={{ fontWeight: 'bold', fontSize: '17px' }}>{minEraLabel}</strong>시대와
           <strong style={{ fontWeight: 'bold', fontSize: '17px' }}> {minTypeLabel}</strong>유형의 학습이 부족합니다.
         </p>
-        <button className="statistics-button" onClick={() => alert(`${minEraLabel} 공부 페이지로 이동합니다.`)}>{`${minEraLabel} 공부하러 가기`}</button>
-        <button className="statistics-button" onClick={() => alert(`${minTypeLabel} 공부 페이지로 이동합니다.`)}>{`${minTypeLabel} 공부하러 가기`}</button>
-
+        <button className="statistics-button" onClick={() => navigate(`/eraProblem/era${minValueIndex+1}`)}>{`${minEraLabel} 공부하러 가기`}</button>
+        <button className="statistics-button" onClick={() => navigate(`/typeProblem/type${minTypeIndex+1}`)}>{`${minTypeLabel} 공부하러 가기`}</button>
       </div>
 
       {/* 시대별 통계 섹션 */}
