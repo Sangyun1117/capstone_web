@@ -79,7 +79,6 @@ const Header = () => {
           <div className="sub-item">
             <Link to="bookmarkProblem">북마크</Link>
           </div>
-          <div className="sub-item">플래너</div>
           <div className="sub-item">
             <Link to="statistics">통계</Link>
           </div>
