@@ -4,8 +4,10 @@ import { useNavigate, Link } from 'react-router-dom';
 import { setUserEmail, setLoggedIn } from '../state';
 import { useDispatch } from 'react-redux';
 import '../css/App.css';
-const logo =
-  'https://firebasestorage.googleapis.com/v0/b/capstone-ac206.appspot.com/o/%EC%9B%B9%ED%99%88%EB%9D%BC%EB%B2%A8.jpg?alt=media&token=63425a12-b57b-4035-aa33-f5b11a2f5067';
+import logo from '../Images/logo.png'
+
+// const logo =
+//   'https://firebasestorage.googleapis.com/v0/b/capstone-ac206.appspot.com/o/%EC%9B%B9%ED%99%88%EB%9D%BC%EB%B2%A8.jpg?alt=media&token=63425a12-b57b-4035-aa33-f5b11a2f5067';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -43,7 +45,7 @@ const Header = () => {
   return (
     <div className="header">
       <Link to="/">
-        <img src={logo} alt="Logo" style={{ marginLeft: '1em' }} />
+        <img src={logo} alt="Logo" style={{ marginLeft:40  }} />
       </Link>
       <div className="menu">
         <div className="item">문제풀이</div>
