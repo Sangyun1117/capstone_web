@@ -18,140 +18,163 @@
         "longitude": 127.9780,
         "era": -1500,
         "title": "청동기 시작(-2100~-1600)",
-        "description": "한반도 전역 청동기 시작"
+        "description": "한반도 전역 청동기 시작",
+        "dictionType": "concept",
+        "dictionEra": "전삼국",
+        "dictionTitle": "청동기시대",
+        "eid": "E0056357"
       },
       {
         "latitude": 38.5665,
         "longitude": 126.9780,
         "era": -1500,
         "title": "철기 시작(-1000~-300)",
-        "description": "한반도 전역 철기 시작"
+        "description": "한반도 전역 철기 시작",
+        "eid": "E0056111"
       },
       {
         "latitude": 42.47932,
         "longitude": 129.5136 ,
         "era": -238,
         "title": "부여 건국(-238)",
-        "description": "두만강 인근 부여 건국"
+        "description": "두만강 인근 부여 건국",
+        "eid": "E0024368"
       },
       {
         "latitude": 40.77070,
         "longitude": 125.4678 ,
         "era": -37,
         "title": "고구려 건국(-37)",
-        "description": "압록강 유역 고구려 건국"
+        "description": "압록강 유역 고구려 건국",
+        "eid": "E0003323"
       },
       {
         "latitude": 37.51317,
         "longitude": 126.9843,
         "era": -18,
         "title": "백제 건국(-18)",
-        "description": "온조가 한강유역 백제 건국"
+        "description": "온조가 한강유역 백제 건국",
+        "eid": "E0022355"
       },
       {
         "latitude": 35.81604,
         "longitude": 129.2270,
         "era": -57,
         "title": "신라 건국(-57)",
-        "description": "혁거세 경주평야에 신라 건국"
+        "description": "혁거세 경주평야에 신라 건국",
+        "eid": "E0032800"
       },
       {
         "latitude": 35.26953,
         "longitude": 128.8360,
         "era": 47,
         "title": "금관가야 건국(47)",
-        "description": "김해시 인근에 금관가야 건국"
+        "description": "김해시 인근에 금관가야 건국",
+        "eid": "E0007597"
       },
       {
         "latitude": 39.04080,
         "longitude": 125.7590,
         "era": 371,
         "title": "고국원왕 전사(371)",
-        "description": "백제와 전쟁 중 평양성에서 전사"
+        "description": "백제와 전쟁 중 평양성에서 전사",
+        "eid": "E0003339"
       },
       {
         "latitude": 37.58849,
         "longitude": 126.9667,
         "era": 392,
         "title": "고구려 백제 침공(392)",
-        "description": "고구려 광개토대왕 백제 침공"
+        "description": "고구려 광개토대왕 백제 침공",
+        "eid": "E0005057"
       },
       {
         "latitude": 36.78270,
         "longitude": 127.2250,
         "era": 414,
         "title": "광개토대왕릉비 건립(414)",
-        "description": "장수왕 광개토대왕릉비 건립"
+        "description": "장수왕 광개토대왕릉비 건립",
+        "eid": "E0048605"
       },
       {
         "latitude": 42.29848,
         "longitude": 128.6146,
         "era": 494,
         "title": "부여 멸망(494)",
-        "description": "고구려에게 부여 멸망"
+        "description": "고구려에게 부여 멸망",
+        "eid": "E0024368"
       },
       {
         "latitude": 35.16620,
         "longitude": 128.4882,
         "era": 562,
         "title": "대가야 병합(562)",
-        "description": "신라가 대가야 병합"
+        "description": "신라가 대가야 병합",
+        "eid": "E0013970"
       },
       {
         "latitude": 39.57766,
         "longitude": 125.4986,
         "era": 612,
         "title": "살수대첩(612)",
-        "description": "고구려와 수의 전쟁. 한국사 3대 대첩 중 하나"
+        "description": "고구려와 수의 전쟁. 한국사 3대 대첩 중 하나",
+        "eid": "E0026415"
       },
       {
         "latitude": 39.03886,
         "longitude": 125.7546,
         "era": 642,
         "title": "연개소문 정변(642)",
-        "description": "연개소문의 정변. 보장왕 즉위"
+        "description": "연개소문의 정변. 보장왕 즉위",
+        "eid": "E0036672"
       },
       {
         "latitude": 40.781475,
         "longitude": 122.779739,
         "era": 642,
         "title": "안시성 전투(642)",
-        "description": "당나라와 고구려의 전투"
+        "description": "당나라와 고구려의 전투",
+        "eid": "E0034848"
       },
       {
         "latitude": 37.57832,
         "longitude": 127.0033,
         "era": 660,
         "title": "백제 멸망(660)",
-        "description": "나당 연합군의 공격으로 백제 멸망"
+        "description": "나당 연합군의 공격으로 백제 멸망",
+        "eid": "E0065183"
       },
       {
         "latitude": 36.00835,
         "longitude": 126.7352,
         "era": 663,
         "title": "백강전투(663)",
-        "description": "한, 중, 일이 참전한 최초의 국제전."
+        "description": "한, 중, 일이 참전한 최초의 국제전.",
+        "eid": "E0021968"
       },
       {
         "latitude": 41.37848,
         "longitude": 125.3789,
         "era": 668,
         "title": "고구려 멸망(668)",
-        "description": "나당 연합군의 공격으로 고구려 멸망"
+        "description": "나당 연합군의 공격으로 고구려 멸망",
+        "eid": "E0003323"
       },
       {
         "latitude": 38.01477,
         "longitude": 127.0835,
         "era": 675,
         "title": "매소성 전투(675)",
-        "description": "신라와 당나라의 한반도 쟁패"
+        "description": "신라와 당나라의 한반도 쟁패",
+        "eid": "E0017963"
       },
       {
         "latitude": 36.02069,
         "longitude": 126.6932,
         "era": 676,
         "title": "기벌포 전투(676)",
-        "description": "신라와 당나라의 한반도 쟁패. 통일신라 탄생"
+        "description": "신라와 당나라의 한반도 쟁패. 통일신라 탄생",
+        "eid": "E0008239"
       }
       
       

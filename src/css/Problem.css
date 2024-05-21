@@ -61,3 +61,23 @@
     top: 0;
     left: 0;
   }
+
+  .list-item {
+    cursor: pointer;
+  }
+  
+  .list-item:hover {
+    text-decoration: underline;
+  }
+  
+  .even-item {
+    background-color: #f0f0f0; /* 회색 배경색 */
+  }
+
+  .sidebar-container {
+    width: 15%;
+    min-width: 200px;
+    padding-left: 5%;
+    padding-top: 8%;
+    margin-right: 5%;
+  }

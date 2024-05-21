@@ -3,20 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { Box, Typography } from '@mui/material';
 import { Navigation } from 'react-minimal-side-navigation';
 import 'react-minimal-side-navigation/lib/ReactMinimalSideNavigation.css';
+import '../css/Problem.css';
 
 export function ProblemSideBar() {
   const navigate = useNavigate(); // 네비게이션 훅 사용
 
   return (
-    <Box
-      style={{
-        width: '15%',
-        minWidth: '200px',
-        paddingLeft: '5%',
-        paddingTop: '8%',
-        paddingRight: '5%',
-      }}
-    >
+    <Box className="sidebar-container">
       <Typography style={{ paddingLeft: '10%', fontSize: '150%' }}>
         문제풀이
       </Typography>
@@ -134,15 +127,7 @@ export function ProblemSideBar() {
 export function MyPageSideBar() {
   const navigate = useNavigate(); // 네비게이션 훅 사용
   return (
-    <Box
-      style={{
-        width: '15%',
-        minWidth: '200px',
-        paddingLeft: '5%',
-        paddingTop: '8%',
-        paddingRight: '5%',
-      }}
-    >
+    <Box className="sidebar-container">
       <Typography style={{ paddingLeft: '10%', fontSize: '150%' }}>
         나의 풀이정보
       </Typography>
@@ -161,7 +146,7 @@ export function MyPageSideBar() {
           },
           {
             title: '통계',
-            itemId: '/about',
+            itemId: '/statistics',
           },
         ]}
       />
@@ -172,15 +157,7 @@ export function MyPageSideBar() {
 export function MediaSideBar() {
   const navigate = useNavigate(); // 네비게이션 훅 사용
   return (
-    <Box
-      style={{
-        width: '15%',
-        minWidth: '200px',
-        paddingLeft: '5%',
-        paddingTop: '8%',
-        paddingRight: '5%',
-      }}
-    >
+    <Box className="sidebar-container">
       <Typography style={{ paddingLeft: '10%', fontSize: '150%' }}>
         미디어
       </Typography>
@@ -191,11 +168,11 @@ export function MediaSideBar() {
         items={[
           {
             title: '역사이야기',
-            itemId: '/about',
+            itemId: '/historyTales',
           },
           {
             title: '즐겨찾는영상',
-            itemId: '/home',
+            itemId: '/likedVideos',
           },
           {
             title: '게임',
