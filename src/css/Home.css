@@ -97,6 +97,8 @@
   align-items: center;
   flex-direction: column; /* 요소들을 세로로 정렬 */
   margin: 20px;
+  text-decoration: none;
+  color: black;
 }
 
 .image-container img,
@@ -115,15 +117,9 @@
   border-bottom: 1px solid black; /* 하단에 선 그리기 */
 }
 
-.image-bottom1,
-.image-bottom2 {
-  height: 150px; /* 높이 설정 */
-  width: auto; /* 너비를 자동으로 설정하여 원래 크기 유지 */
-}
-.image-bottom3 {
-  height: 150px; /* 높이 설정 */
-  width: auto; /* 너비를 자동으로 설정하여 원래 크기 유지 */
-  padding-left: 130px;
+.image-bottom {
+  height: 150px;
+  width: auto;
 }
 
 .end-container {

@@ -242,6 +242,8 @@ const PostDetail = () => {
         console.log('Data removed successfully.');
         if (url.includes('comments/')) {
           fetchComments(); // 댓글 삭제한 경우 댓글 목록을 새로고침
+        } else if (url.includes('posts/')) {
+          navigate('/boardScreen'); // 글 삭제한 경우 게시판 화면으로 돌아감
         }
       })
       .catch((error) => {

@@ -69,7 +69,7 @@ export function ProblemSideBar() {
             itemId: 'type',
             subNav: [
               {
-                title: '사건',
+                title: '문화',
                 itemId: '/typeProblem/type1',
               },
               {
@@ -77,11 +77,11 @@ export function ProblemSideBar() {
                 itemId: '/typeProblem/type2',
               },
               {
-                title: '인물',
+                title: '사건',
                 itemId: '/typeProblem/type3',
               },
               {
-                title: '문화',
+                title: '인물',
                 itemId: '/typeProblem/type4',
               },
               {
@@ -97,11 +97,11 @@ export function ProblemSideBar() {
                 itemId: '/typeProblem/type7',
               },
               {
-                title: '조약',
+                title: '기구',
                 itemId: '/typeProblem/type8',
               },
               {
-                title: '기구',
+                title: '조약',
                 itemId: '/typeProblem/type9',
               },
               {
