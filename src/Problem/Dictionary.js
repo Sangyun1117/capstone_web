@@ -1,5 +1,5 @@
 //import { ENCY_KOREA_KEY } from '../config/encyKoreaKey';
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Typography, Button } from '@mui/material';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
@@ -9,39 +9,26 @@ import { MediaSideBar } from './SideBar';
 export default function Dictionary() {
   const location = useLocation();
   const { id } = location.state;
-  //const [articles, setArticles] = useState([]);
-  const [word, setWord] = useState(null);
+  const aleradyContent = location.state.content;
+  const [content, setContent] = useState(null);
 
-  // useEffect(() => {
-  //   fetch('http://localhost:8080/articles/1')
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       setArticles(data.articles);
-  //       console.log('Received data:', data); // 데이터를 콘솔에 출력
-  //     })
-  //     .catch((error) => console.error('Error:', error));
-  // }, []);
-
-  // useEffect(() => {
-  //   fetch('http://localhost:8080/search/세종') //E0030144
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       setCharacter(data.article);
-  //       console.log('Received data:', data); // 데이터를 콘솔에 출력
-  //     })
-  //     .catch((error) => console.error('Error:', error));
-  // }, []);
-
-  useEffect(() => {
+  const getContent = () => {
     fetch('http://localhost:8080/character/' + id) //E0030144
       .then((response) => response.json())
       .then((data) => {
-        setWord(data.article);
+        setContent(data.article);
         console.log('Received data:', data); // 데이터를 콘솔에 출력
       })
       .catch((error) => console.error('Error:', error));
 
     console.log('id' + id);
+  };
+  useEffect(() => {
+    if (aleradyContent) {
+      setContent(aleradyContent);
+    } else {
+      getContent();
+    }
   }, []);
 
   const components = {
@@ -126,7 +113,6 @@ export default function Dictionary() {
       }}
     >
       <MediaSideBar />
-
       <Box
         style={{
           width: '60%',
@@ -134,17 +120,9 @@ export default function Dictionary() {
           paddingBottom: '5%',
         }}
       >
-        {/*Array.isArray(articles) &&
-        articles.map((article) => (
-          <div key={article.eid}>
-            <p>
-              {article.eid} {article.headword}
-            </p>
-          </div>
-        ))*/}
-        {word && (
+        {content && (
           <div>
-            <h1>{word.headword}</h1>
+            <h1>{content.headword}</h1>
             <hr />
             <div
               style={{
@@ -166,7 +144,7 @@ export default function Dictionary() {
                 }}
               >
                 <img
-                  src={word.headMedia.url}
+                  src={content.headMedia.url}
                   alt=""
                   style={{
                     width: '100%', // 이미지의 너비를 부모 요소에 맞춤
@@ -174,13 +152,17 @@ export default function Dictionary() {
                     objectFit: 'contain', // 이미지 비율을 유지하면서 전체 내용이 보이도록 조정
                   }}
                 />
-                <p>△{word.headMedia.caption}</p>
+                {content.headMedia.caption && (
+                  <p>△{content.headMedia.caption}</p>
+                )}
               </div>
 
               <div>
-                <p style={{ marginBottom: '3%' }}>이름 : {word.headword}</p>
-                <p style={{ marginBottom: '3%' }}>정의 : {word.definition} </p>
-                {word.attributes.map((attribute, index) => {
+                <p style={{ marginBottom: '3%' }}>이름 : {content.headword}</p>
+                <p style={{ marginBottom: '3%' }}>
+                  정의 : {content.definition}{' '}
+                </p>
+                {content.attributes.map((attribute, index) => {
                   return (
                     <p key={index} style={{ marginBottom: '3%' }}>
                       {attribute.attrName} : {attribute.attrValue}
@@ -189,10 +171,10 @@ export default function Dictionary() {
                 })}
               </div>
             </div>
-            {word.summary && <h1>요약</h1>}
-            <p>{word.summary}</p>
+            {content.summary && <h1>요약</h1>}
+            <p>{content.summary}</p>
             <ReactMarkdown
-              children={word.body}
+              children={content.body}
               rehypePlugins={[rehypeRaw]}
               components={components}
             />

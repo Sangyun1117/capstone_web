@@ -15,6 +15,7 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import { MediaSideBar } from './SideBar';
+import '../css/Problem.css';
 
 export default function DictionaryHome() {
   // const userEmail = 'aaa@aaa.com';
@@ -148,17 +149,26 @@ export default function DictionaryHome() {
               <MenuItem value={'character'}>인물</MenuItem>
               <MenuItem value={'incident'}>사건</MenuItem>
               <MenuItem value={'agency'}>단체</MenuItem>
+              <MenuItem value={'concept'}>개념</MenuItem>
             </Select>
           </FormControl>
         </Box>
 
         <List
           dense={true}
-          style={{ paddingTop: '7%', paddingLeft: '10%', paddingRight: '10%' }}
+          style={{
+            paddingTop: '7%',
+            paddingLeft: '10%',
+            paddingRight: '10%',
+            paddingBottom: '5%',
+          }}
         >
           {currentItems.length > 0 ? (
             currentItems.map((word, index) => (
-              <ListItem key={index}>
+              <ListItem
+                className={`list-item ${index % 2 === 1 ? 'even-item' : ''}`}
+                key={index}
+              >
                 <ListItemText
                   onClick={() =>
                     navigate('/dictionary', {
@@ -169,7 +179,7 @@ export default function DictionaryHome() {
                   }
                   style={{ cursor: 'pointer' }}
                 >
-                  <span style={{ paddingRight: '5%' }}>
+                  <span style={{ paddingRight: '10%' }}>
                     {index + 1 + (currentPage - 1) * MAX_ITEM}
                   </span>
                   {word.name}

@@ -12,25 +12,20 @@ import {
 } from 'firebase/firestore';
 import React, { useState, useEffect } from 'react';
 import { firestore } from '../firebaseConfig';
-import {
-  Container,
-  Box,
-  Typography,
-  Button,
-  getFormControlLabelUtilityClasses,
-} from '@mui/material';
+import { Box, Typography, Button } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import 'react-minimal-side-navigation/lib/ReactMinimalSideNavigation.css';
 import { MyPageSideBar } from './SideBar';
 import { useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 export default function SampleProblem() {
   const location = useLocation();
   const { data, index } = location.state;
   //const param = 'era';
-  const isLoggedIn = true;
-  const userEmail = 'aaa@aaa.com';
+  const userEmail = useSelector((state) => state.userEmail);
+  const isLoggedIn = useSelector((state) => state.isLoggedIn);
   //const { param } = route.params;
   const [page, setPage] = useState(index);
   const [imageUrl, setImageUrl] = useState(null);
