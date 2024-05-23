@@ -9,6 +9,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar as BoldStar } from '@fortawesome/free-solid-svg-icons'; // 굵은 별
 import { faStar as VoidStar } from '@fortawesome/free-regular-svg-icons'; // 빈 별
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'; // 화살표
 import { firestore } from '../firebaseConfig';
 import { HashLoader } from 'react-spinners';
 import { useSelector } from 'react-redux';
@@ -49,36 +50,35 @@ const BookmarkButton = styled.button`
   background-color: #bbd2ec;
   border: none;
 `;
-const ProblemImage = styled.img`
-  object-fit: contain;
-  width: 500px;
-  height: auto;
-
-  cursor: pointer;
-  transition: all 0.2s;
-  box-shadow: 0px 0px 0px 0px #838abd;
-  border: none;
-  font-size: 1em;
-  &:hover {
-    box-shadow: 0px 0px 0px 5px #838abd;
-  }
-`;
 const BottomContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
-  margin: 7%;
+  margin: 3%;
+`;
+const ProblemImage = styled.img`
+  object-fit: contain;
+  width: 400px;
+  height: auto;
+
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0px 0px 0px 0px #838abd;
+  border: 10px solid white;
+  border-radius: 10px;
+  font-size: 1em;
+  &:hover {
+    box-shadow: 0px 0px 0px 5px #838abd;
+  }
 `;
 const SelectContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   width: 50%;
-  height: 200px;
-  margin: 20px;
-  padding: 20px;
+  height: 70px;
 `;
 const SelectButton = styled.button`
   margin: 20px;
@@ -97,21 +97,23 @@ const SelectButton = styled.button`
     box-shadow: 0px 0px 0px 5px white;
   }
 `;
-const MoveButtonContainer = styled.div`
+const ImageContainer = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   width: 50%;
-  height: 70px;
+  margin-top: 50px;
 `;
 const MoveButton = styled.button`
   width: 70px;
   height: 70px;
-  margin: 20px;
   background-color: #838abd;
   color: white;
-  border-radius: 10px;
+  border-radius: 35px;
   font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   cursor: pointer;
   transition: all 0.2s;
@@ -122,16 +124,18 @@ const MoveButton = styled.button`
     box-shadow: 0px 0px 0px 5px white;
   }
 `;
-
-const DisabledButton = styled.button`
-  width: 70px;
-  height: 70px;
-  margin: 20px;
-  background-color: #495057;
-  color: #868e96;
+const ArrowButton = styled(MoveButton)`
+  width: 50px;
+  height: 50px;
+  background-color: ${(props) =>
+    props.disabled ? '#495057' : '#838abd'}; // 비활성화 색상 변경
+  border-radius: 25px;
+`;
+const SubmitButton = styled(MoveButton)`
+  background-color: #838abd;
+  color: white;
   border-radius: 10px;
-  border: none;
-  font-weight: 500;
+  margin-top: 20px;
 `;
 
 const Line = styled.div`
@@ -392,20 +396,6 @@ const ProblemDetail = () => {
           </TopContainer>
 
           <BottomContainer>
-            {problems.length > 0 && (
-              <ProblemImage
-                src={problems[currentIndex].data.img}
-                alt="문제 이미지"
-                onClick={() => {
-                  swal({
-                    icon: problems[currentIndex].data.img,
-                    button: '닫기',
-                    className: 'custom-swal',
-                  });
-                }}
-              />
-            )}
-
             <SelectContainer>
               {[1, 2, 3, 4, 5].map((number) => (
                 <SelectButton
@@ -422,32 +412,37 @@ const ProblemDetail = () => {
                 </SelectButton>
               ))}
             </SelectContainer>
-            <Line />
-            <MoveButtonContainer>
-              {currentIndex === 0 ? (
-                <DisabledButton>
-                  <div>이전</div>
-                </DisabledButton>
-              ) : (
-                <MoveButton onClick={handlePrev}>
-                  <div>이전</div>
-                </MoveButton>
+
+            <ImageContainer>
+              <ArrowButton onClick={handlePrev} disabled={currentIndex === 0}>
+                <IoIosArrowBack color="white" />
+              </ArrowButton>
+
+              {problems.length > 0 && (
+                <ProblemImage
+                  src={problems[currentIndex].data.img}
+                  alt="문제 이미지"
+                  onClick={() => {
+                    swal({
+                      icon: problems[currentIndex].data.img,
+                      button: '닫기',
+                      className: 'custom-swal',
+                    });
+                  }}
+                />
               )}
 
-              <MoveButton onClick={handleSubmit}>
-                <div>제출</div>
-              </MoveButton>
+              <ArrowButton
+                onClick={handleNext}
+                disabled={currentIndex === problems.length - 1}
+              >
+                <IoIosArrowForward color="white" />
+              </ArrowButton>
+            </ImageContainer>
 
-              {currentIndex === problems.length - 1 ? (
-                <DisabledButton>
-                  <div>다음</div>
-                </DisabledButton>
-              ) : (
-                <MoveButton onClick={handleNext}>
-                  <div>다음</div>
-                </MoveButton>
-              )}
-            </MoveButtonContainer>
+            <SubmitButton onClick={handleSubmit}>
+              <div>제출</div>
+            </SubmitButton>
           </BottomContainer>
         </>
       )}

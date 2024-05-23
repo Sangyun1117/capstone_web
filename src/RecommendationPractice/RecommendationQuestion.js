@@ -60,12 +60,12 @@ const AnswerButton = styled.button`
   top: 0;
   right: 0;
   margin: 10px;
+  padding: 5px;
   background-color: #f0f0f0;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  width: 80px;
-  min-height: 50px
+  width: 90px;
 
   cursor: pointer;
   transition: all 0.2s;
@@ -85,7 +85,8 @@ const ProblemImage = styled.img`
   cursor: pointer;
   transition: all 0.2s;
   box-shadow: 0px 0px 0px 0px #838abd;
-  border: none;
+  border: 10px solid white;
+  border-radius: 10px;
   font-size: 1em;
   &:hover {
     box-shadow: 0px 0px 0px 5px #838abd;
