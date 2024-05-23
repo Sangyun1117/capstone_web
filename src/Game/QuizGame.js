@@ -9,6 +9,8 @@ import { Button } from 'antd';
 import Modal from 'react-modal';
 import UnsolvedScreen from './UnsolvedScreen';
 import { MediaSideBar } from '../Problem/SideBar';
+import { CloseOutlined } from '@ant-design/icons';
+import { FloatButton } from 'antd';
 
 const Container = styled.div`
   display: flex;
@@ -109,6 +111,11 @@ const Line = styled.div`
   height: 10px;
   margin: 0.5%;
   border-radius: 20px;
+`;
+const FixedButton = styled(FloatButton)`
+  position: absolute;
+  right: 50px;
+  top: 40px;
 `;
 
 const QuizGame = () => {
@@ -242,16 +249,18 @@ const QuizGame = () => {
       setSolveCount(0);
       stopTimer();
 
-      const buttons =
-        unsolved.length > 0
-          ? {
-              cancel: '나가기',
-              catch: {
-                text: '넘긴 문제 보기',
-                value: 'catch',
-              },
-            }
-          : {};
+      const buttons = {
+        // '나가기' 버튼은 항상 표시되도록 수정
+        cancel: '나가기',
+      };
+
+      // '넘긴 문제 보기' 버튼은 unsolved.length > 0인 경우에만 추가
+      if (unsolved.length > 0) {
+        buttons.catch = {
+          text: '넘긴 문제 보기',
+          value: 'catch',
+        };
+      }
 
       swal({
         title: '문제가 소진되었습니다.',
@@ -259,6 +268,7 @@ const QuizGame = () => {
         icon: 'info',
         buttons: buttons,
         dangerMode: true,
+        closeOnClickOutside: false,
       }).then((value) => {
         switch (value) {
           case 'catch':
@@ -370,6 +380,21 @@ const QuizGame = () => {
     </div>
   ));
 
+  // 모달에서 나가기 버튼 누른 경우 알림창
+  const showAlert = () => {
+    console.log('test');
+    swal({
+      title: '정말로 나가시겠습니까?',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    }).then((willContinue) => {
+      if (willContinue) {
+        navigate('/');
+      }
+    });
+  };
+
   return (
     <div>
       <MediaSideBar />
@@ -448,15 +473,22 @@ const QuizGame = () => {
                   bottom: 'auto',
                   marginRight: '-50%',
                   transform: 'translate(-50%, -50%)',
-                  width: '40%', // 너비 설정
-                  height: '60%', // 높이 설정
+                  width: '40%',
+                  height: '60%',
 
-                  borderRadius: '10px', // 테두리 둥글기 설정
+                  borderRadius: '10px',
                   boxShadow: '0 4px 6px rgba(0, 0, 0, 0.5)', // 그림자 효과 추가
+                  display: 'flex', // flex 레이아웃 사용
+                  flexDirection: 'column',
                 },
               }}
             >
-              <UnsolvedScreen unsolved={unsolved} />
+              <FixedButton icon={<CloseOutlined />} onClick={showAlert}>
+                나가기
+              </FixedButton>
+              <div style={{ overflowY: 'auto' }}>
+                <UnsolvedScreen unsolved={unsolved} />
+              </div>
             </Modal>
           </>
         )}

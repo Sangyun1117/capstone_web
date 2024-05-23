@@ -1,9 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { Card, Typography, FloatButton } from 'antd';
-import { CloseOutlined } from '@ant-design/icons';
-import swal from 'sweetalert';
+import { Card, Typography } from 'antd';
 
 const Container = styled.div`
   display: flex;
@@ -15,23 +13,10 @@ const Container = styled.div`
   padding: 20px;
 `;
 
-const { Title, Text } = Typography;
+const { Title } = Typography;
 
 const UnsolvedScreen = ({ unsolved }) => {
   const navigate = useNavigate();
-
-  const showAlert = () => {
-    swal({
-      title: '정말로 나가시겠습니까?',
-      icon: 'warning',
-      buttons: true,
-      dangerMode: true,
-    }).then((willContinue) => {
-      if (willContinue) {
-        navigate('/');
-      }
-    });
-  };
 
   const renderItem = (item) => {
     return (
@@ -49,16 +34,13 @@ const UnsolvedScreen = ({ unsolved }) => {
 
   return (
     <Container>
-      <FloatButton
-        icon={<CloseOutlined />}
-        onClick={showAlert}
-        style={{ right: 40, top: 40 }}
-      >
-        나가기
-      </FloatButton>
       <Title
         level={2}
-        style={{ backgroundColor: 'white', borderRadius: '5px' }}
+        style={{
+          backgroundColor: 'white',
+          borderRadius: '5px',
+          padding: '5px',
+        }}
       >
         넘긴 문제 정답
       </Title>
