@@ -141,15 +141,6 @@ const SubmitButton = styled(MoveButton)`
   margin-top: 20px;
 `;
 
-const Line = styled.div`
-  display: flex;
-  background-color: #7bb4e3;
-  width: 80%;
-  height: 10px;
-  margin: 30px;
-  border-radius: 20px;
-`;
-
 const ProblemDetail = () => {
   const location = useLocation();
   const { examDocId } = location.state;
@@ -378,82 +369,83 @@ const ProblemDetail = () => {
   };
 
   return (
+    <Box>
+      <ProblemSideBar />
+      <Container>
+        {isLoading ? (
+          <HashLoader style={{ display: 'flex' }} />
+        ) : (
+          <>
+            <TopContainer>
+              <IdText>{formattedId}</IdText>
+              {isLoggedIn ? (
+                <BookmarkButton onClick={() => handleBookmark(currentIndex)}>
+                  <FontAwesomeIcon
+                    icon={
+                      indexBookMark.includes(currentIndex) ? BoldStar : VoidStar
+                    }
+                    size="4x"
+                    color={
+                      indexBookMark.includes(currentIndex) ? 'gold' : 'gray'
+                    }
+                  />
+                </BookmarkButton>
+              ) : null}
+            </TopContainer>
 
- <Box>
-  <ProblemSideBar />
-    <Container>
-      {isLoading ? (
-        <HashLoader style={{ display: 'flex' }} />
-      ) : (
-        <>
-          <TopContainer>
-            <IdText>{formattedId}</IdText>
-            {isLoggedIn ? (
-              <BookmarkButton onClick={() => handleBookmark(currentIndex)}>
-                <FontAwesomeIcon
-                  icon={
-                    indexBookMark.includes(currentIndex) ? BoldStar : VoidStar
-                  }
-                  size="4x"
-                  color={indexBookMark.includes(currentIndex) ? 'gold' : 'gray'}
-                />
-              </BookmarkButton>
-            ) : null}
-          </TopContainer>
+            <BottomContainer>
+              <SelectContainer>
+                {[1, 2, 3, 4, 5].map((number) => (
+                  <SelectButton
+                    key={number}
+                    onClick={() => handleSelect(number)}
+                    style={{
+                      backgroundColor:
+                        userChoices[problems[currentIndex].id] === number
+                          ? '#523383'
+                          : '#978ff9',
+                    }}
+                  >
+                    <div>{number}</div>
+                  </SelectButton>
+                ))}
+              </SelectContainer>
 
-          <BottomContainer>
-            <SelectContainer>
-              {[1, 2, 3, 4, 5].map((number) => (
-                <SelectButton
-                  key={number}
-                  onClick={() => handleSelect(number)}
-                  style={{
-                    backgroundColor:
-                      userChoices[problems[currentIndex].id] === number
-                        ? '#523383'
-                        : '#978ff9',
-                  }}
+              <ImageContainer>
+                <ArrowButton onClick={handlePrev} disabled={currentIndex === 0}>
+                  <IoIosArrowBack color="white" />
+                </ArrowButton>
+
+                {problems.length > 0 && (
+                  <ProblemImage
+                    src={problems[currentIndex].data.img}
+                    alt="문제 이미지"
+                    onClick={() => {
+                      swal({
+                        icon: problems[currentIndex].data.img,
+                        button: '닫기',
+                        className: 'custom-swal',
+                      });
+                    }}
+                  />
+                )}
+
+                <ArrowButton
+                  onClick={handleNext}
+                  disabled={currentIndex === problems.length - 1}
                 >
-                  <div>{number}</div>
-                </SelectButton>
-              ))}
-            </SelectContainer>
+                  <IoIosArrowForward color="white" />
+                </ArrowButton>
+              </ImageContainer>
 
-            <ImageContainer>
-              <ArrowButton onClick={handlePrev} disabled={currentIndex === 0}>
-                <IoIosArrowBack color="white" />
-              </ArrowButton>
-
-              {problems.length > 0 && (
-                <ProblemImage
-                  src={problems[currentIndex].data.img}
-                  alt="문제 이미지"
-                  onClick={() => {
-                    swal({
-                      icon: problems[currentIndex].data.img,
-                      button: '닫기',
-                      className: 'custom-swal',
-                    });
-                  }}
-                />
-              )}
-
-              <ArrowButton
-                onClick={handleNext}
-                disabled={currentIndex === problems.length - 1}
-              >
-                <IoIosArrowForward color="white" />
-              </ArrowButton>
-            </ImageContainer>
-
-            <SubmitButton onClick={handleSubmit}>
-              <div>제출</div>
-            </SubmitButton>
-          </BottomContainer>
-        </>
-      )}
-    </Container>
-</Box>
+              <SubmitButton onClick={handleSubmit}>
+                <div>제출</div>
+              </SubmitButton>
+            </BottomContainer>
+          </>
+        )}
+      </Container>
+    </Box>
   );
 };
 

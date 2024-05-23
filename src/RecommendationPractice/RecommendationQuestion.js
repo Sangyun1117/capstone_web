@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import { HashLoader } from 'react-spinners';
 import { useSelector } from 'react-redux';
 import swal from 'sweetalert';
-import { useNavigate } from 'react-router-dom';
 import { Box } from '@mui/material';
 import { ProblemSideBar } from '../Problem/SideBar';
 
@@ -152,10 +151,7 @@ const RecommendationQuestion = () => {
   const [answerShown, setAnswerShown] = useState([]); // 정답 보임 여부
   const [isLoading, setIsLoading] = useState(false); // 로딩 여부
 
-  const navigate = useNavigate();
-  const isLoggedIn = useSelector((state) => state.isLoggedIn);
   const userEmail = useSelector((state) => state.userEmail); // 유저 이메일
-
   const prevProblemsRef = useRef(currentProblems); // 추천문제 업데이트 감지용 useRef
 
   // 배열 섞는 함수
@@ -189,7 +185,7 @@ const RecommendationQuestion = () => {
   };
 
   useEffect(() => {
-    if(userEmail === null) return;
+    if (userEmail === null) return;
 
     const fetchUserRelatedData = async () => {
       // 유저 오답, 킬러문제, 북마크 문제 가져오기 및 섞기
@@ -208,7 +204,7 @@ const RecommendationQuestion = () => {
 
       // 모든 문제를 하나의 배열에 저장
       let recommendDatas = [...a1, ...a2, ...a3];
-      
+
       // 배열을 섞는다
       shuffleArray(recommendDatas);
       setRecommendProblems(recommendDatas);
@@ -219,45 +215,53 @@ const RecommendationQuestion = () => {
   // 현재 인덱스가 변경되면 해당 인덱스부터 10개 문제를 보이게 한다.
   useEffect(() => {
     if (recommendProblems.length === 0) return;
-  
+
     let ci = 0;
     if (currentIndex !== 0) ci = currentIndex - 1;
-  
+
     // recommendProblems 사용하여 배열 업데이트 처리를 위한 함수
     const updateArrayFromRecommend = async (recommendArr, ci) => {
       // 시작 인덱스와 끝 인덱스를 계산하여 10개 문제를 선택
       const startIndex = ci * 10;
       const endIndex = startIndex + 10;
-      const choiceTen = recommendArr.slice(startIndex, Math.min(endIndex, recommendArr.length));
-  
+      const choiceTen = recommendArr.slice(
+        startIndex,
+        Math.min(endIndex, recommendArr.length)
+      );
+
       // 선택된 10문제의 이미지와 답 정보를 가져온다.
       const fetchProblemsAndAnswers = async (array) => {
-        return Promise.all(array.map(async (id) => {
-          const round = parseInt(id.toString().substring(0, 2), 10);
-          return fetchRoundData(round, id);
-        }));
+        return Promise.all(
+          array.map(async (id) => {
+            const round = parseInt(id.toString().substring(0, 2), 10);
+            return fetchRoundData(round, id);
+          })
+        );
       };
-  
+
       const recommendData = await fetchProblemsAndAnswers(choiceTen);
       return recommendData;
     };
-  
+
     const fetchAndSetProblems = async () => {
       const updArr = await updateArrayFromRecommend(recommendProblems, ci);
       if (updArr[0] === null) return;
       setCurrentProblems(updArr); // 현재 문제 상태 업데이트
     };
-  
+
     fetchAndSetProblems();
-  }, [recommendProblems, currentIndex]);  
+  }, [recommendProblems, currentIndex]);
 
   useEffect(() => {
     setIsLoading(true);
-  
+
     if (currentProblems.length !== 0) {
       // currentProblems가 이전 상태와 다른지 비교.
       // 다르면 추천문제가 업데이트 되었다는 것을 의미하므로 로딩을 종료한다.
-      if (JSON.stringify(prevProblemsRef.current) !== JSON.stringify(currentProblems)) {
+      if (
+        JSON.stringify(prevProblemsRef.current) !==
+        JSON.stringify(currentProblems)
+      ) {
         setIsLoading(false);
       }
       // 이전 상태를 업데이트
@@ -310,7 +314,6 @@ const RecommendationQuestion = () => {
     );
   };
 
-  // 여기서 UI를 렌더링하거나 recommendedProblems를 사용할 수 있음
   return (
     <Box>
       <ProblemSideBar />

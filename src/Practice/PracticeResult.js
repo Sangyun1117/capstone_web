@@ -133,8 +133,6 @@ const PracticeResult = () => {
   const [totalScore, setTotalScrore] = useState(100);
   const navigate = useNavigate();
 
-  //let newWrongTypes = initialState.wrongTypes;
-
   // 로그인 정보
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
   const userEmail = useSelector((state) => state.userEmail);
