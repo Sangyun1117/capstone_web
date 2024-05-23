@@ -23,7 +23,7 @@ const Container = styled.div`
   align-items: center;
   min-height: 100%;
   width: 60%;
-  min-width: 30em;
+  min-width: 600px;
   background-color: #bbd2ec;
   top: 5em;
   left: 20%;
@@ -61,6 +61,7 @@ const BottomContainer = styled.div`
 const ProblemImage = styled.img`
   object-fit: contain;
   width: 400px;
+  min-width: 200px;
   height: auto;
 
   cursor: pointer;
@@ -101,15 +102,14 @@ const ImageContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 50%;
   margin-top: 50px;
 `;
 const MoveButton = styled.button`
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
   background-color: #838abd;
   color: white;
-  border-radius: 35px;
+  border-radius: 30px;
   font-weight: 500;
   display: flex;
   justify-content: center;
@@ -125,13 +125,14 @@ const MoveButton = styled.button`
   }
 `;
 const ArrowButton = styled(MoveButton)`
-  width: 50px;
-  height: 50px;
+  font-size: 2em;
   background-color: ${(props) =>
     props.disabled ? '#495057' : '#838abd'}; // 비활성화 색상 변경
-  border-radius: 25px;
+  margin: 20px;
 `;
 const SubmitButton = styled(MoveButton)`
+  width: 70px;
+  height: 70px;
   background-color: #838abd;
   color: white;
   border-radius: 10px;
