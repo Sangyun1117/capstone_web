@@ -92,7 +92,7 @@ export default function DictionaryHome() {
       <MediaSideBar />
       <Box
         style={{
-          width: '50%',
+          width: '60%',
           minWidth: '600px',
         }}
       >
@@ -148,7 +148,7 @@ export default function DictionaryHome() {
             >
               <MenuItem value={'character'}>인물</MenuItem>
               <MenuItem value={'incident'}>사건</MenuItem>
-              <MenuItem value={'agency'}>단체</MenuItem>
+              <MenuItem value={'artifact'}>유물</MenuItem>
               <MenuItem value={'concept'}>개념</MenuItem>
             </Select>
           </FormControl>

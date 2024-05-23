@@ -241,11 +241,11 @@ export default function BaseProblem({ param, detail }) {
         flexDirection: 'row',
       }}
     >
-      <ProblemSideBar />
+      <ProblemSideBar itemType={param} />
       {displayProblem ? (
         <Box
           style={{
-            width: '50%',
+            width: '60%',
             minWidth: '700px',
           }}
         >

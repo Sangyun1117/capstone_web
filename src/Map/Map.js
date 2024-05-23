@@ -78,7 +78,7 @@ const Map = () => {
   };
 
   return (
-    <div style={{ width: '70%' }}>
+    <div style={{ width: '100%' }}>
       {' '}
       {/* 부모 요소의 너비 설정 */}
       <div>

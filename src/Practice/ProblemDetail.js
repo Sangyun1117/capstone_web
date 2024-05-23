@@ -9,12 +9,15 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar as BoldStar } from '@fortawesome/free-solid-svg-icons'; // 굵은 별
 import { faStar as VoidStar } from '@fortawesome/free-regular-svg-icons'; // 빈 별
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'; // 화살표
 import { firestore } from '../firebaseConfig';
 import { HashLoader } from 'react-spinners';
 import { useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import swal from 'sweetalert';
+import { Box } from '@mui/material';
+import { ProblemSideBar } from '../Problem/SideBar';
 
 const Container = styled.div`
   display: flex;
@@ -22,7 +25,7 @@ const Container = styled.div`
   align-items: center;
   min-height: 100%;
   width: 60%;
-  min-width: 30em;
+  min-width: 600px;
   background-color: #bbd2ec;
   top: 5em;
   left: 20%;
@@ -49,36 +52,36 @@ const BookmarkButton = styled.button`
   background-color: #bbd2ec;
   border: none;
 `;
-const ProblemImage = styled.img`
-  object-fit: contain;
-  width: 500px;
-  height: auto;
-
-  cursor: pointer;
-  transition: all 0.2s;
-  box-shadow: 0px 0px 0px 0px #838abd;
-  border: none;
-  font-size: 1em;
-  &:hover {
-    box-shadow: 0px 0px 0px 5px #838abd;
-  }
-`;
 const BottomContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
-  margin: 7%;
+  margin: 3%;
+`;
+const ProblemImage = styled.img`
+  object-fit: contain;
+  width: 400px;
+  min-width: 200px;
+  height: auto;
+
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0px 0px 0px 0px #838abd;
+  border: 10px solid white;
+  border-radius: 10px;
+  font-size: 1em;
+  &:hover {
+    box-shadow: 0px 0px 0px 5px #838abd;
+  }
 `;
 const SelectContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   width: 50%;
-  height: 200px;
-  margin: 20px;
-  padding: 20px;
+  height: 70px;
 `;
 const SelectButton = styled.button`
   margin: 20px;
@@ -97,21 +100,22 @@ const SelectButton = styled.button`
     box-shadow: 0px 0px 0px 5px white;
   }
 `;
-const MoveButtonContainer = styled.div`
+const ImageContainer = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 50%;
-  height: 70px;
+  justify-content: space-between;
+  margin-top: 50px;
 `;
 const MoveButton = styled.button`
-  width: 70px;
-  height: 70px;
-  margin: 20px;
+  width: 60px;
+  height: 60px;
   background-color: #838abd;
   color: white;
-  border-radius: 10px;
+  border-radius: 30px;
   font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   cursor: pointer;
   transition: all 0.2s;
@@ -122,16 +126,19 @@ const MoveButton = styled.button`
     box-shadow: 0px 0px 0px 5px white;
   }
 `;
-
-const DisabledButton = styled.button`
+const ArrowButton = styled(MoveButton)`
+  font-size: 2em;
+  background-color: ${(props) =>
+    props.disabled ? '#495057' : '#838abd'}; // 비활성화 색상 변경
+  margin: 20px;
+`;
+const SubmitButton = styled(MoveButton)`
   width: 70px;
   height: 70px;
-  margin: 20px;
-  background-color: #495057;
-  color: #868e96;
+  background-color: #838abd;
+  color: white;
   border-radius: 10px;
-  border: none;
-  font-weight: 500;
+  margin-top: 20px;
 `;
 
 const Line = styled.div`
@@ -371,87 +378,83 @@ const ProblemDetail = () => {
   };
 
   return (
-    <Container>
-      {isLoading ? (
-        <HashLoader style={{ display: 'flex' }} />
-      ) : (
-        <>
-          <TopContainer>
-            <IdText>{formattedId}</IdText>
-            {isLoggedIn ? (
-              <BookmarkButton onClick={() => handleBookmark(currentIndex)}>
-                <FontAwesomeIcon
-                  icon={
-                    indexBookMark.includes(currentIndex) ? BoldStar : VoidStar
-                  }
-                  size="4x"
-                  color={indexBookMark.includes(currentIndex) ? 'gold' : 'gray'}
-                />
-              </BookmarkButton>
-            ) : null}
-          </TopContainer>
+    <Box>
+      <ProblemSideBar />
+      <Container>
+        {isLoading ? (
+          <HashLoader style={{ display: 'flex' }} />
+        ) : (
+          <>
+            <TopContainer>
+              <IdText>{formattedId}</IdText>
+              {isLoggedIn ? (
+                <BookmarkButton onClick={() => handleBookmark(currentIndex)}>
+                  <FontAwesomeIcon
+                    icon={
+                      indexBookMark.includes(currentIndex) ? BoldStar : VoidStar
+                    }
+                    size="4x"
+                    color={
+                      indexBookMark.includes(currentIndex) ? 'gold' : 'gray'
+                    }
+                  />
+                </BookmarkButton>
+              ) : null}
+            </TopContainer>
 
-          <BottomContainer>
-            {problems.length > 0 && (
-              <ProblemImage
-                src={problems[currentIndex].data.img}
-                alt="문제 이미지"
-                onClick={() => {
-                  swal({
-                    icon: problems[currentIndex].data.img,
-                    button: '닫기',
-                    className: 'custom-swal',
-                  });
-                }}
-              />
-            )}
+            <BottomContainer>
+              <SelectContainer>
+                {[1, 2, 3, 4, 5].map((number) => (
+                  <SelectButton
+                    key={number}
+                    onClick={() => handleSelect(number)}
+                    style={{
+                      backgroundColor:
+                        userChoices[problems[currentIndex].id] === number
+                          ? '#523383'
+                          : '#978ff9',
+                    }}
+                  >
+                    <div>{number}</div>
+                  </SelectButton>
+                ))}
+              </SelectContainer>
 
-            <SelectContainer>
-              {[1, 2, 3, 4, 5].map((number) => (
-                <SelectButton
-                  key={number}
-                  onClick={() => handleSelect(number)}
-                  style={{
-                    backgroundColor:
-                      userChoices[problems[currentIndex].id] === number
-                        ? '#523383'
-                        : '#978ff9',
-                  }}
+              <ImageContainer>
+                <ArrowButton onClick={handlePrev} disabled={currentIndex === 0}>
+                  <IoIosArrowBack color="white" />
+                </ArrowButton>
+
+                {problems.length > 0 && (
+                  <ProblemImage
+                    src={problems[currentIndex].data.img}
+                    alt="문제 이미지"
+                    onClick={() => {
+                      swal({
+                        icon: problems[currentIndex].data.img,
+                        button: '닫기',
+                        className: 'custom-swal',
+                      });
+                    }}
+                  />
+                )}
+
+                <ArrowButton
+                  onClick={handleNext}
+                  disabled={currentIndex === problems.length - 1}
                 >
-                  <div>{number}</div>
-                </SelectButton>
-              ))}
-            </SelectContainer>
-            <Line />
-            <MoveButtonContainer>
-              {currentIndex === 0 ? (
-                <DisabledButton>
-                  <div>이전</div>
-                </DisabledButton>
-              ) : (
-                <MoveButton onClick={handlePrev}>
-                  <div>이전</div>
-                </MoveButton>
-              )}
+                  <IoIosArrowForward color="white" />
+                </ArrowButton>
+              </ImageContainer>
 
-              <MoveButton onClick={handleSubmit}>
+              <SubmitButton onClick={handleSubmit}>
                 <div>제출</div>
-              </MoveButton>
-
-              {currentIndex === problems.length - 1 ? (
-                <DisabledButton>
-                  <div>다음</div>
-                </DisabledButton>
-              ) : (
-                <MoveButton onClick={handleNext}>
-                  <div>다음</div>
-                </MoveButton>
-              )}
-            </MoveButtonContainer>
-          </BottomContainer>
-        </>
-      )}
-    </Container>
+              </SubmitButton>
+            </BottomContainer>
+          </>
+        )}
+      </Container>
+    </Box>
   );
 };
 

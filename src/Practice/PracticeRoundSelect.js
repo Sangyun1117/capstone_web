@@ -4,7 +4,8 @@ import { firestore } from '../firebaseConfig';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { HashLoader } from 'react-spinners';
-
+import { ProblemSideBar } from '../Problem/SideBar';
+import { Box } from '@mui/material';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -109,20 +110,25 @@ const PracticeRoundSelect = () => {
   };
 
   return (
-    <Container>
-      <Title>기출문제 회차선택</Title>
-      {isLoading ? (
-        <HashLoader style={{ display: 'flex' }} />
-      ) : (
-        <>
-          <CardContainer>
-            {examRounds.map((item) => (
-              <React.Fragment key={item.id}>{renderItem(item)}</React.Fragment>
-            ))}
-          </CardContainer>
-        </>
-      )}
-    </Container>
+    <Box>
+      <ProblemSideBar />
+      <Container>
+        <Title>기출문제 회차선택</Title>
+        {isLoading ? (
+          <HashLoader style={{ display: 'flex' }} />
+        ) : (
+          <>
+            <CardContainer>
+              {examRounds.map((item) => (
+                <React.Fragment key={item.id}>
+                  {renderItem(item)}
+                </React.Fragment>
+              ))}
+            </CardContainer>
+          </>
+        )}
+      </Container>
+    </Box>
   );
 };
 

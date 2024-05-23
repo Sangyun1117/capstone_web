@@ -5,7 +5,7 @@ import { Navigation } from 'react-minimal-side-navigation';
 import 'react-minimal-side-navigation/lib/ReactMinimalSideNavigation.css';
 import '../css/Problem.css';
 
-export function ProblemSideBar() {
+export function ProblemSideBar({ itemType }) {
   const navigate = useNavigate(); // 네비게이션 훅 사용
 
   return (
@@ -118,7 +118,12 @@ export function ProblemSideBar() {
             title: '킬러문제',
             itemId: '/killerProblem',
           },
+          {
+            title: '추천문제',
+            itemId: '/recommendationQuestion',
+          },
         ]}
+        activeItemId={itemType}
       />
     </Box>
   );
@@ -181,6 +186,10 @@ export function MediaSideBar() {
           {
             title: '용어사전',
             itemId: '/dictionaryHome',
+          },
+          {
+            title: '역사지도',
+            itemId: '/eventMap',
           },
         ]}
       />

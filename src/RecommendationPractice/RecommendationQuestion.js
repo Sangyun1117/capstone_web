@@ -6,6 +6,8 @@ import { HashLoader } from 'react-spinners';
 import { useSelector } from 'react-redux';
 import swal from 'sweetalert';
 import { useNavigate } from 'react-router-dom';
+import { Box } from '@mui/material';
+import { ProblemSideBar } from '../Problem/SideBar';
 
 const Container = styled.div`
   display: flex;
@@ -60,12 +62,12 @@ const AnswerButton = styled.button`
   top: 0;
   right: 0;
   margin: 10px;
+  padding: 5px;
   background-color: #f0f0f0;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  width: 80px;
-  min-height: 50px
+  width: 90px;
 
   cursor: pointer;
   transition: all 0.2s;
@@ -85,7 +87,8 @@ const ProblemImage = styled.img`
   cursor: pointer;
   transition: all 0.2s;
   box-shadow: 0px 0px 0px 0px #838abd;
-  border: none;
+  border: 10px solid white;
+  border-radius: 10px;
   font-size: 1em;
   &:hover {
     box-shadow: 0px 0px 0px 5px #838abd;
@@ -339,41 +342,46 @@ const RecommendationQuestion = () => {
 
   // 여기서 UI를 렌더링하거나 recommendedProblems를 사용할 수 있음
   return (
-    <Container>
-      <Title>추천 문제</Title>
-      {isLoading ? (
-        <HashLoader style={{ display: 'flex' }} />
-      ) : (
-        <>
-          <CardContainer>
-            {currentProblems.map((item) => (
-              <React.Fragment key={item.id}>{renderItem(item)}</React.Fragment>
-            ))}
-          </CardContainer>
+    <Box>
+      <ProblemSideBar />
+      <Container>
+        <Title>추천 문제</Title>
+        {isLoading ? (
+          <HashLoader style={{ display: 'flex' }} />
+        ) : (
+          <>
+            <CardContainer>
+              {currentProblems.map((item) => (
+                <React.Fragment key={item.id}>
+                  {renderItem(item)}
+                </React.Fragment>
+              ))}
+            </CardContainer>
 
-          <MoveButtonContainer>
-            {currentIndex === 1 ? (
-              <DisabledButton>
-                <div>이전</div>
-              </DisabledButton>
-            ) : (
-              <MoveButton onClick={() => handlelMove(-1)}>
-                <div>이전</div>
-              </MoveButton>
-            )}
-            {currentProblems.length < 10 ? (
-              <DisabledButton>
-                <div>다음</div>
-              </DisabledButton>
-            ) : (
-              <MoveButton onClick={() => handlelMove(1)}>
-                <div>다음</div>
-              </MoveButton>
-            )}
-          </MoveButtonContainer>
-        </>
-      )}
-    </Container>
+            <MoveButtonContainer>
+              {currentIndex === 1 ? (
+                <DisabledButton>
+                  <div>이전</div>
+                </DisabledButton>
+              ) : (
+                <MoveButton onClick={() => handlelMove(-1)}>
+                  <div>이전</div>
+                </MoveButton>
+              )}
+              {currentProblems.length < 10 ? (
+                <DisabledButton>
+                  <div>다음</div>
+                </DisabledButton>
+              ) : (
+                <MoveButton onClick={() => handlelMove(1)}>
+                  <div>다음</div>
+                </MoveButton>
+              )}
+            </MoveButtonContainer>
+          </>
+        )}
+      </Container>
+    </Box>
   );
 };
 

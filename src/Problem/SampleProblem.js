@@ -266,6 +266,7 @@ export default function SampleProblem() {
             justifyContent: 'center',
             alignItems: 'center',
             paddingTop: '5%',
+            paddingBottom: '2%',
           }}
         >
           {imageUrl && (
@@ -273,15 +274,17 @@ export default function SampleProblem() {
               key={imageUrl}
               src={imageUrl}
               alt="Image"
-              style={{ width: '50%', aspectRatio: 1, marginBottom: 10 }}
+              style={{ width: '50%', height: 'auto', marginBottom: 10 }}
               resizeMode="contain"
             />
           )}
           {isWebAnswerOpen && (
             <Box
-              style={{ width: '50%', overflowY: 'auto', maxHeight: '400px' }}
+              style={{ width: '60%', overflowY: 'auto', maxHeight: '600px' }}
             >
-              <Typography>정답 : {answer?.answer}번</Typography>
+              <Typography>
+                정답 : <span style={{ color: 'red' }}>{answer?.answer}번</span>
+              </Typography>
               <Typography
                 style={{ borderBottomWidth: 1, borderBottomColor: 'black' }}
               >
