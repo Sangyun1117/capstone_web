@@ -87,7 +87,7 @@
       "era": 414,
       "title": "광개토대왕릉비 건립(414)",
       "description": "장수왕 광개토대왕릉비 건립",
-      "eid": "E0048605"
+      "eid": "E0005058"
     },
     {
       "key": 11,
@@ -185,7 +185,8 @@
       "longitude": 128.1604,
       "era": 698,
       "title": "발해 건국(698)",
-      "description": "대조영 동모산에 발해 건국"
+      "description": "대조영 동모산에 발해 건국",
+      "eid": "E0021626"
     },
     {
       "key": 22,
@@ -193,7 +194,8 @@
       "longitude": 129.3296,
       "era": 751,
       "title": "불국사, 석굴암 설립(751)",
-      "description": "불국사, 석굴암 설립"
+      "description": "불국사, 석굴암 설립",
+      "eid": "E0024933"
     },
     {
       "key": 23,
@@ -201,375 +203,413 @@
       "longitude": 126.7369,
       "era": 828,
       "title": "청해진 설치(828)",
-      "description": "장보고 청해진 설치"
+      "description": "장보고 청해진 설치",
+      "eid": "E0056856"
     },
     {
       "key": 24,
-      "latitude": 34.36007,
-      "longitude": 126.7369,
-      "era": 828,
-      "title": "청해진 설치(828)",
-      "description": "장보고 청해진 설치"
-    },
-    {
-      "key": 25,
       "latitude": 35.58155,
       "longitude": 127.0703040,
       "era": 900,
       "title": "후백제 건국(900)",
-      "description": "견훤 후백제 건국"
+      "description": "견훤 후백제 건국",
+      "eid":"E0065738"
     },
     {
-      "key": 26,
+      "key": 25,
       "latitude": 38.26376,
       "longitude": 127.4584,
       "era": 901,
       "title": "후고구려 건국(901)",
-      "description": "궁예 후고구려 건국"
+      "description": "궁예 후고구려 건국",
+      "eid":"E0006789"
     },
     {
-      "key": 27,
+      "key": 26,
       "latitude": 38.16376,
       "longitude": 127.4584,
       "era": 918,
       "title": "고려 건국(918)",
-      "description": "왕건 고려 건국"
+      "description": "왕건 고려 건국",
+      "eid": "E0003424"
     },
     {
-      "key": 28,
+      "key": 27,
       "latitude": 43.07006,
       "longitude": 128.1604,
       "era": 926,
       "title": "발해 멸망(926)",
-      "description": "거란의 공격으로 발해 멸망"
+      "description": "거란의 공격으로 발해 멸망",
+      "eid": "E0021626"
     },
     {
-      "key": 29,
+      "key": 28,
       "latitude": 36.01542,
       "longitude": 128.6924251,
       "era": 927,
       "title": "공산 전투(927)",
-      "description": "후백제 후삼국의 주도권 장악"
+      "description": "후백제 후삼국의 주도권 장악",
+      "eid": "E0004338"
     },
     {
-      "key": 30,
+      "key": 29,
       "latitude": 36.59076,
       "longitude": 128.7606,
       "era": 930,
       "title": "고창 전투(930)",
-      "description": "고려의 후삼국 통일 주도권 장악"
+      "description": "고려의 후삼국 통일 주도권 장악",
+      "eid":"E0003996"
     },
     { 
-      "key": 31,
+      "key": 30,
       "latitude": 38.11021,
       "longitude": 127.2752,
       "era": 936,
       "title": "고려 건국(936)",
-      "description": "왕건 후삼국 통일 후 고려 건국"
+      "description": "왕건 후삼국 통일 후 고려 건국",
+      "eid": "E0003424"
     },
     {
-      "key": 32,
+      "key": 31,
       "latitude": 39.62794,
       "longitude": 125.5127,
       "era": 993,
       "title": "거란 1차 침입(993)",
-      "description": "서희의 외교담판응로 강동 6주 획득"
+      "description": "서희의 외교담판응로 강동 6주 획득",
+      "eid":"E0028321"
     },
     {
-      "key": 33,
+      "key": 32,
       "latitude": 39.97933,
       "longitude": 125.2662,
       "era": 1019,
       "title": "귀주대첩(1019)",
-      "description": "강감찬의 귀주대첩. 3대 대첩 중 하나"
+      "description": "강감찬의 귀주대첩. 3대 대첩 중 하나",
+      "eid":"E0006043"
     },
     {
-      "key": 34,
+      "key": 33,
       "latitude": 37.98444,
       "longitude": 126.5430,
       "era": 1126,
       "title": "이자겸의 난(1126)",
-      "description": "이자겸-척준경의 권력 집중으로 일어난 내전"
+      "description": "이자겸-척준경의 권력 집중으로 일어난 내전",
+      "eid":"E0063417"
     },
     {
-      "key": 35,
+      "key": 34,
       "latitude": 39.04237,
       "longitude": 125.7291,
       "era": 1135,
       "title": "서경 천도 운동(1135)",
-      "description": "묘청의 서경 천도 운동"
+      "description": "묘청의 서경 천도 운동",
+      "eid":"E0018893"
     },
     {
-      "key": 36,
+      "key": 35,
       "latitude": 38.08595,
       "longitude": 126.6685,
       "era": 1170,
       "title": "무신정변(1170)",
-      "description": "정중부 등 무인을 중심으로 일어난 정변"
+      "description": "정중부 등 무인을 중심으로 일어난 정변",
+      "eid":"E0019113"
     },
     {
-      "key": 37,
+      "key": 36,
       "latitude": 35.80156,
       "longitude": 128.0985,
       "era": 1251,
       "title": "팔만대장경 완성(1251)",
-      "description": "팔만대장경 완성. 현재 해인사에 보관"
+      "description": "팔만대장경 완성. 현재 해인사에 보관",
+      "eid":"E0062710"
     },
     {
-      "key": 38,
+      "key": 37,
       "latitude": 39.90041,
       "longitude": 124.7063,
       "era": 1359,
       "title": "홍건적 등장(1359)",
-      "description": "원 에서 홍건적이 넘어와 고려를 약탈"
+      "description": "원 에서 홍건적이 넘어와 고려를 약탈",
+      "eid":"E0063941"
     },
     {
-      "key": 39,
+      "key": 38,
       "latitude": 40.137000,
       "longitude": 124.446000,
       "era": 1388,
       "title": "위화도 회군(1388)",
-      "description": "이성계 요동정벌 중 위화도에서 회군"
+      "description": "이성계 요동정벌 중 위화도에서 회군",
+      "eid":"E0041212"
     },
     {
-      "key": 40,
+      "key": 39,
       "latitude": 37.57840,
       "longitude": 126.9769,
       "era": 1392,
       "title": "조선 건국(1392)",
-      "description": "이성계 조건 건국"
+      "description": "이성계 조건 건국",
+      "eid":"E0051904"
     },
     {
-      "key": 41,
+      "key": 40,
       "latitude": 34.60713,
       "longitude": 129.3318570,
       "era": 1419,
       "title": "대마도 정벌(1419)",
-      "description": "세종 대마도 정벌"
+      "description": "세종 대마도 정벌",
+      "eid":"E0014343"
     },
     {
-      "key": 42,
+      "key": 41,
       "latitude": 34.81185,
       "longitude": 128.7156,
       "era": 1510,
       "title": "삼포왜란(1510)",
-      "description": "부산포, 제포, 염포에서 왜인들의 반란"
+      "description": "부산포, 제포, 염포에서 왜인들의 반란",
+      "eid":"E0026916"
     },
     {
-      "key": 43,
+      "key": 42,
       "latitude": 35.17805,
       "longitude": 129.1564930,
       "era": 1592,
       "title": "임진왜란 발발(1592)",
-      "description": "도요토미 정권 조선 침략"
+      "description": "도요토미 정권 조선 침략",
+      "eid":"E0047674"
     },
     {
-      "key": 44,
+      "key": 43,
       "latitude": 34.86885,
       "longitude": 128.4709,
       "era": 1592,
       "title": "한산도 대첩(1592)",
-      "description": "이순신의 한산도 대첩. 3대 대첩 중 하나"
+      "description": "이순신의 한산도 대첩. 3대 대첩 중 하나",
+      "eid":"E0061676"
     },
     {
-      "key": 45,
+      "key": 44,
       "latitude": 34.57320,
       "longitude": 126.3040201,
       "era": 1597,
-      "title": "명랑해전(1597)",
-      "description": "판옥선 13척으로 일본을 이긴 해전"
+      "title": "명량해전(1597)",
+      "description": "판옥선 13척으로 일본을 이긴 해전",
+      "eid":"E0018250"
     },
     {
-      "key": 46,
+      "key": 45,
       "latitude": 34.923344,
       "longitude": 127.850450,
       "era": 1598,
       "title": "노량해전(1598)",
-      "description": "이순신이 전사한  해전-"
+      "description": "이순신이 전사한  해전-",
+      "eid":"E0012716"
     },
     {
-      "key": 47,
+      "key": 46,
       "latitude": 40.14965,
       "longitude": 124.7211,
       "era": 1627,
       "title": "정묘호란(1627)",
-      "description": "후금의 명 정복을 위한 변수 제거 목적 침입"
+      "description": "후금의 명 정복을 위한 변수 제거 목적 침입",
+      "eid":"E0050194"
     },
     {
-      "key": 48,
+      "key": 47,
       "latitude": 40.38519,
       "longitude": 124.9098,
       "era": 1636,
       "title": "병자호란 (1636)",
-      "description": "청나라의 조선 침입. 조선의 친명배금 원인"
+      "description": "청나라의 조선 침입. 조선의 친명배금 원인",
+      "eid":"E0023151"
     },
     {
-      "key": 49,
+      "key": 48,
       "latitude": 38.21577,
       "longitude": 124.8076,
       "era": 1832,
       "title": "로드 암허스트호 등장(1832)",
-      "description": "영국의 최초 통상요구"
+      "description": "영국의 최초 통상요구",
+      "eid":"E0052405"
     },
     {
-      "key": 50,
+      "key": 49,
       "latitude": 37.60542,
       "longitude": 126.5414,
       "era": 1866,
       "title": "병인양요(1866)",
-      "description": "병인박해에 대한 프랑스의 항의"
+      "description": "병인박해에 대한 프랑스의 항의",
+      "eid":"E0023142"
     },
     {
-      "key": 51,
+      "key": 50,
       "latitude": 39.03814,
       "longitude": 125.8651,
       "era": 1866,
       "title": "제너럴 셔먼호 사건(1866)",
-      "description": "프랑스의 군함이 대동강에 불법 침입"
+      "description": "프랑스의 군함이 대동강에 불법 침입",
+      "eid":"E0051255"
     },
     {
-      "key": 52,
+      "key": 51,
       "latitude": 37.61088,
       "longitude": 126.5480,
       "era": 1871,
       "title": "신미양요(1871)",
-      "description": "제너럴 셔몬호를 구실로 프랑스의 조선 침공"
+      "description": "제너럴 셔몬호를 구실로 프랑스의 조선 침공",
+      "eid":"E0032961"
     },
     {
-      "key": 53,
+      "key": 52,
       "latitude": 37.63305,
       "longitude": 126.5323,
       "era": 1875,
       "title": "운요호 사건(1875)",
-      "description": "일본의 습격. 강화도 조약 체결"
+      "description": "일본의 습격. 강화도 조약 체결",
+      "eid":"E0040358"
     },
     {
-      "key": 54,
+      "key": 53,
       "latitude": 37.58001,
       "longitude": 128.4708566,
       "era": 1882,
       "title": "임오군란(1882)",
-      "description": "신식군대에 차별받은 구식군대의 군란"
+      "description": "신식군대에 차별받은 구식군대의 군란",
+      "eid":"E0047565"
     },
     {
-      "key": 55,
+      "key": 54,
       "latitude": 37.57446,
       "longitude": 126.9826,
       "era": 1884,
       "title": "갑신정변(1884)",
-      "description": "개화파가 서구식 근대화를 위해 일으킨 정변"
+      "description": "개화파가 서구식 근대화를 위해 일으킨 정변",
+      "eid":"E0000922"
     },
     {
-      "key": 56,
+      "key": 55,
       "latitude": 35.4964,
       "longitude": 126.7999,
       "era": 1894,
       "title": "동학농민운동(1894)",
-      "description": "전라도의 군수의 부정부패에 대한 반란"
+      "description": "전라도의 군수의 부정부패에 대한 반란",
+      "eid":"E0016865"
     },
     {
-      "key": 57,
+      "key": 56,
       "latitude": 37.57673,
       "longitude": 126.9767,
       "era": 1897,
       "title": "대한제국 수립(1897)",
-      "description": "고종 즉위, 대한제국 수립"
+      "description": "고종 즉위, 대한제국 수립",
+      "eid":"E0015187"
     },
     {
-      "key": 58,
+      "key": 57,
       "latitude": 37.57791,
       "longitude": 126.9742,
       "era": 1905,
       "title": "을사늑약 체결(1905)",
-      "description": "일본이 조선의 외교권을 강제로 박탈한 조약"
+      "description": "일본이 조선의 외교권을 강제로 박탈한 조약",
+      "eid":"E0042958"
     },
     {
-      "key": 59,
+      "key": 58,
       "latitude": 37.56811,
       "longitude": 126.9716,
       "era": 1907,
       "title": "고종 강제 퇴위(1907)",
-      "description": "일본의 헤이그 특사 책임의 추긍에 고종 퇴위"
+      "description": "일본의 헤이그 특사 책임의 추긍에 고종 퇴위",
+      "eid":"E0003939"
     },
     {
-      "key": 60,
+      "key": 59,
       "latitude": 38.21487,
       "longitude": 127.2901 ,
       "era": 1910,
       "title": "한일병합조약 채결(1910)",
-      "description": "대한민국 국권 피탈의 마지막 과정. 식민지 시작"
+      "description": "대한민국 국권 피탈의 마지막 과정. 식민지 시작",
+      "eid":"E0061926"
     },
     {
-      "key": 61,
+      "key": 60,
       "latitude": 37.06215,
       "longitude": 127.1742 ,
       "era": 1919,
       "title": "3.1 운동(1919)",
-      "description": "일본에 저항하는 전국적인 독립운동"
+      "description": "일본에 저항하는 전국적인 독립운동",
+      "eid":"E0026772"
     },
     {
-      "key": 62,
+      "key": 61,
       "latitude": 37.58390,
       "longitude": 126.9775 ,
       "era": 1911,
       "title": "105인 사건(1911)",
-      "description": "조선총독부의 날조로 신민회 105인이 체포된 사건"
+      "description": "조선총독부의 날조로 신민회 105인이 체포된 사건",
+      "eid":"E0022233"
     },
     {
-      "key": 63,
+      "key": 62,
       "latitude": 36.81997,
       "longitude": 127.9409 ,
       "era": 1948,
       "title": "대한민국 정부 수립(1948)",
-      "description": "남한 단독 정부 수립. 이승만 정부 시작"
+      "description": "남한 단독 정부 수립. 이승만 정부 시작",
+      "eid":"E0015002"
     },
     {
-      "key": 64,
+      "key": 63,
       "latitude": 38.30253,
       "longitude": 127.4340,
       "era": 1988,
       "title": "6.25전쟁(1988)",
-      "description": "북한의 남침"
+      "description": "북한의 남침",
+      "eid":"E0042143"
     },
     {
-      "key": 65,
+      "key": 64,
       "latitude": 37.57728,
       "longitude": 126.9763,
       "era": 1960,
       "title": "4.19혁명(1960)",
-      "description": "3.15부정선거로 일어난 민주 혁명"
+      "description": "3.15부정선거로 일어난 민주 혁명",
+      "eid":"E0025902"
     },
     {
-      "key": 66,
+      "key": 65,
       "latitude": 37.41567,
       "longitude": 127.7626,
       "era": 1961,
       "title": "5.16 군사정변(1961)",
-      "description": "박정희를 위시한 군부의 권력 찬탈 의도"
+      "description": "박정희를 위시한 군부의 권력 찬탈 의도",
+      "eid":"E0038494"
     },
     {
-      "key": 67,
+      "key": 66,
       "latitude": 35.16897,
       "longitude": 128.8375,
       "era": 1979,
       "title": "부마항쟁(1979)",
-      "description": "유신철폐, 독재타도를 외치는 민주 항쟁"
+      "description": "유신철폐, 독재타도를 외치는 민주 항쟁",
+      "eid":"E0024157"
     },
     {
-      "key": 68,
+      "key": 67,
       "latitude": 37.56558,
       "longitude": 126.9779,
       "era": 1987,
       "title": "6월 민주항쟁(1987)",
-      "description": "전두환 정부에 맞서 전국에서 일어난 일련의 민주화 운동"
+      "description": "전두환 정부에 맞서 전국에서 일어난 일련의 민주화 운동",
+      "eid":"E0068343"
     },
     {
-      "key": 69,
+      "key": 68,
       "latitude": 37.51595,
       "longitude": 127.0724,
       "era": 1988,
       "title": "88 서울 올림픽 개막(1988)",
-      "description": "1988년 서울에서 올림픽 개막"
+      "description": "1988년 서울에서 올림픽 개막",
+      "eid":"E0028046"
     }
     
     
