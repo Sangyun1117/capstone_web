@@ -6,6 +6,8 @@ import { HashLoader } from 'react-spinners';
 import { useSelector } from 'react-redux';
 import swal from 'sweetalert';
 import { useNavigate } from 'react-router-dom';
+import { Box } from '@mui/material';
+import { ProblemSideBar } from '../Problem/SideBar';
 
 const Container = styled.div`
   display: flex;
@@ -310,41 +312,46 @@ const RecommendationQuestion = () => {
 
   // 여기서 UI를 렌더링하거나 recommendedProblems를 사용할 수 있음
   return (
-    <Container>
-      <Title>추천 문제</Title>
-      {isLoading ? (
-        <HashLoader style={{ display: 'flex' }} />
-      ) : (
-        <>
-          <CardContainer>
-            {currentProblems.map((item) => (
-              <React.Fragment key={item.id}>{renderItem(item)}</React.Fragment>
-            ))}
-          </CardContainer>
+    <Box>
+      <ProblemSideBar />
+      <Container>
+        <Title>추천 문제</Title>
+        {isLoading ? (
+          <HashLoader style={{ display: 'flex' }} />
+        ) : (
+          <>
+            <CardContainer>
+              {currentProblems.map((item) => (
+                <React.Fragment key={item.id}>
+                  {renderItem(item)}
+                </React.Fragment>
+              ))}
+            </CardContainer>
 
-          <MoveButtonContainer>
-            {currentIndex === 1 ? (
-              <DisabledButton>
-                <div>이전</div>
-              </DisabledButton>
-            ) : (
-              <MoveButton onClick={() => handlelMove(-1)}>
-                <div>이전</div>
-              </MoveButton>
-            )}
-            {currentProblems.length < 10 ? (
-              <DisabledButton>
-                <div>다음</div>
-              </DisabledButton>
-            ) : (
-              <MoveButton onClick={() => handlelMove(1)}>
-                <div>다음</div>
-              </MoveButton>
-            )}
-          </MoveButtonContainer>
-        </>
-      )}
-    </Container>
+            <MoveButtonContainer>
+              {currentIndex === 1 ? (
+                <DisabledButton>
+                  <div>이전</div>
+                </DisabledButton>
+              ) : (
+                <MoveButton onClick={() => handlelMove(-1)}>
+                  <div>이전</div>
+                </MoveButton>
+              )}
+              {currentProblems.length < 10 ? (
+                <DisabledButton>
+                  <div>다음</div>
+                </DisabledButton>
+              ) : (
+                <MoveButton onClick={() => handlelMove(1)}>
+                  <div>다음</div>
+                </MoveButton>
+              )}
+            </MoveButtonContainer>
+          </>
+        )}
+      </Container>
+    </Box>
   );
 };
 

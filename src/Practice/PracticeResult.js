@@ -12,6 +12,8 @@ import {
 import { firestore } from '../firebaseConfig';
 import styled from 'styled-components';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { Box } from '@mui/material';
+import { ProblemSideBar } from '../Problem/SideBar';
 
 const Container = styled.div`
   display: flex;
@@ -403,50 +405,54 @@ const PracticeResult = () => {
     : choicesArray;
 
   return (
-    <Container>
-      <Title>총점: {totalScore}</Title>
-      <ShowButton onClick={() => setShowOnlyWrong(!showOnlyWrong)}>
-        {showOnlyWrong ? '전부 표시' : '틀린 문제만 표시'}
-      </ShowButton>
+    <Box>
+      <ProblemSideBar />
 
-      <ListContainer>
-        {filteredData.map((item) => {
-          const [index, value] = item;
-          const answer = answers.find((answer) => answer.id === index);
+      <Container>
+        <Title>총점: {totalScore}</Title>
+        <ShowButton onClick={() => setShowOnlyWrong(!showOnlyWrong)}>
+          {showOnlyWrong ? '전부 표시' : '틀린 문제만 표시'}
+        </ShowButton>
 
-          // 틀린 문제만 보이는 경우
-          if (showOnlyWrong && wrongIndexes[index] === 0) {
-            return null;
-          }
+        <ListContainer>
+          {filteredData.map((item) => {
+            const [index, value] = item;
+            const answer = answers.find((answer) => answer.id === index);
 
-          return (
-            <ListItem key={index}>
-              <ListRow>
-                <div
-                  style={{ fontWeight: '600', fontSize: '1.2em' }}
-                >{`${parseInt(index.slice(-2))}번`}</div>
-                <div
-                  style={{
-                    margin: '10px',
-                    color: wrongIndexes[parseInt(index.slice(-2)) - 1]
-                      ? 'blue'
-                      : 'red',
-                  }}
-                >
-                  {`선택: ${value}`}
-                </div>
-                <div style={{ margin: '10px' }}>{`정답: ${
-                  answer ? answer.data.answer : '정답 정보 없음'
-                }`}</div>
-              </ListRow>
-              <CommantButton onClick={() => handleCommentary(index)}>
-                해설
-              </CommantButton>
-            </ListItem>
-          );
-        })}
-      </ListContainer>
-    </Container>
+            // 틀린 문제만 보이는 경우
+            if (showOnlyWrong && wrongIndexes[index] === 0) {
+              return null;
+            }
+
+            return (
+              <ListItem key={index}>
+                <ListRow>
+                  <div
+                    style={{ fontWeight: '600', fontSize: '1.2em' }}
+                  >{`${parseInt(index.slice(-2))}번`}</div>
+                  <div
+                    style={{
+                      margin: '10px',
+                      color: wrongIndexes[parseInt(index.slice(-2)) - 1]
+                        ? 'blue'
+                        : 'red',
+                    }}
+                  >
+                    {`선택: ${value}`}
+                  </div>
+                  <div style={{ margin: '10px' }}>{`정답: ${
+                    answer ? answer.data.answer : '정답 정보 없음'
+                  }`}</div>
+                </ListRow>
+                <CommantButton onClick={() => handleCommentary(index)}>
+                  해설
+                </CommantButton>
+              </ListItem>
+            );
+          })}
+        </ListContainer>
+      </Container>
+    </Box>
   );
 };
 

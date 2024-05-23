@@ -12,7 +12,6 @@ import IconButton from '@mui/material/IconButton';
 import { MyPageSideBar } from './SideBar';
 import Modal from 'react-modal';
 import '../css/Problem.css';
-import { Height } from '@mui/icons-material';
 
 export default function BasicProblemList({ param }) {
   const userEmail = useSelector((state) => state.userEmail);
@@ -104,7 +103,7 @@ export default function BasicProblemList({ param }) {
       <MyPageSideBar />
       <Box
         style={{
-          width: '50%',
+          width: '60%',
           minWidth: '600px',
         }}
       >

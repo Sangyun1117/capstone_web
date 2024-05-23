@@ -16,6 +16,8 @@ import { useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import swal from 'sweetalert';
+import { Box } from '@mui/material';
+import { ProblemSideBar } from '../Problem/SideBar';
 
 const Container = styled.div`
   display: flex;
@@ -376,6 +378,9 @@ const ProblemDetail = () => {
   };
 
   return (
+
+ <Box>
+  <ProblemSideBar />
     <Container>
       {isLoading ? (
         <HashLoader style={{ display: 'flex' }} />
@@ -448,6 +453,7 @@ const ProblemDetail = () => {
         </>
       )}
     </Container>
+</Box>
   );
 };
 

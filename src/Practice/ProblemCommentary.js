@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
 
+import { ProblemSideBar } from '../Problem/SideBar';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -10,8 +11,9 @@ const Container = styled.div`
   min-height: calc(100vh - 5em);
   min-width: 800px;
   background-color: #bbd2ec;
+  top: 5em;
   left: 20%;
-  position: relative;
+  position: absolute;
 `;
 
 const Title = styled.h1`
@@ -83,34 +85,38 @@ const ProblemCommentary = () => {
   };
 
   return (
-    <Container>
-      <Title>{formattedId} 해설</Title>
-      <BodyContainer>
-        <img
-          src={problem.data.img}
-          alt="Problem Image"
-          style={{
-            objectFit: 'contain',
-            width: '30%',
-            minWidth: '350px',
-            height: 'auto',
-          }}
-        />
+    <div>
+      <ProblemSideBar />
 
-        <BoxContainer>
-          <Box style={{ backgroundColor: '#e0f7fa' }}>
-            <SemiTitle>정답: {answer.data.answer}</SemiTitle>
-            <SemiTitle>정답 해설</SemiTitle>
-            <p>{answer.data.commentary}</p>
-          </Box>
+      <Container>
+        <Title>{formattedId} 해설</Title>
+        <BodyContainer>
+          <img
+            src={problem.data.img}
+            alt="Problem Image"
+            style={{
+              objectFit: 'contain',
+              width: '30%',
+              minWidth: '350px',
+              height: 'auto',
+            }}
+          />
 
-          <Box style={{ backgroundColor: '#ffebee' }}>
-            <SemiTitle>오답 해설</SemiTitle>
-            {splitText(answer.data.wrongCommentary)}
-          </Box>
-        </BoxContainer>
-      </BodyContainer>
-    </Container>
+          <BoxContainer>
+            <Box style={{ backgroundColor: '#e0f7fa' }}>
+              <SemiTitle>정답: {answer.data.answer}</SemiTitle>
+              <SemiTitle>정답 해설</SemiTitle>
+              <p>{answer.data.commentary}</p>
+            </Box>
+
+            <Box style={{ backgroundColor: '#ffebee' }}>
+              <SemiTitle>오답 해설</SemiTitle>
+              {splitText(answer.data.wrongCommentary)}
+            </Box>
+          </BoxContainer>
+        </BodyContainer>
+      </Container>
+    </div>
   );
 };
 

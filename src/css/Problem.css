@@ -1,83 +1,87 @@
 .delete-modal {
-    width: 280px;
-    height: 80px;
-  
-    z-index: 999;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  
-    background-color: white;
-    border: 1px solid gray;
-    border-radius: 8px;
-    color: black;
-    padding: 18px;
-  }
-  .modal-head {
-    width: 100%;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgb(78, 154, 229);
-  }
-  .modal-title {
-    font-size: 25px;
-    font-style: italic;
-    font-weight: bold;
-  }
-  
-  .modal-button {
-    width: 100%;
-    display: flex;
-    justify-content: right;
-  }
-  
-  .modal-close {
-    width: 100%;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgb(78, 154, 229);
-    transition: background-color 0.3s ease;
-    cursor: pointer;
-  }
-  .modal-close-text {
-    font-size: 25px;
-    font-style: italic;
-    font-weight: bold;
-  }
-  .modal-close:hover {
-    background-color: red;
-  }
-  .modal-overlay {
-    background-color: rgba(0, 0, 0, 0.4);
-    width: 100vw;
-    height: 100vh;
-    z-index: 99;
-    position: fixed;
-    top: 0;
-    left: 0;
-  }
+  width: 280px;
+  height: 80px;
 
-  .list-item {
-    cursor: pointer;
-  }
-  
-  .list-item:hover {
-    text-decoration: underline;
-  }
-  
-  .even-item {
-    background-color: #f0f0f0; /* 회색 배경색 */
-  }
+  z-index: 999;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
-  .sidebar-container {
-    width: 15%;
-    min-width: 200px;
-    padding-left: 5%;
-    padding-top: 8%;
-    margin-right: 5%;
-  }
+  background-color: white;
+  border: 1px solid gray;
+  border-radius: 8px;
+  color: black;
+  padding: 18px;
+}
+.modal-head {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(78, 154, 229);
+}
+.modal-title {
+  font-size: 25px;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.modal-button {
+  width: 100%;
+  display: flex;
+  justify-content: right;
+}
+
+.modal-close {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(78, 154, 229);
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+.modal-close-text {
+  font-size: 25px;
+  font-style: italic;
+  font-weight: bold;
+}
+.modal-close:hover {
+  background-color: red;
+}
+.modal-overlay {
+  background-color: rgba(0, 0, 0, 0.4);
+  width: 100vw;
+  height: 100vh;
+  z-index: 99;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.list-item {
+  cursor: pointer;
+}
+
+.list-item:hover {
+  text-decoration: underline;
+}
+
+.even-item {
+  background-color: #f0f0f0; /* 회색 배경색 */
+}
+
+.sidebar-container {
+  position: sticky;
+  top: 10%;
+  
+  width: 15%;
+  height: 100%;
+  min-width: 200px;
+  margin-left: 5%;
+  margin-top: 5%;
+  margin-right: 5%;
+}

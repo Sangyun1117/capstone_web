@@ -8,6 +8,7 @@ import swal from 'sweetalert';
 import { Button } from 'antd';
 import Modal from 'react-modal';
 import UnsolvedScreen from './UnsolvedScreen';
+import { MediaSideBar } from '../Problem/SideBar';
 
 const Container = styled.div`
   display: flex;
@@ -370,92 +371,97 @@ const QuizGame = () => {
   ));
 
   return (
-    <Container>
-      {isLoading ? (
-        <HashLoader />
-      ) : (
-        <>
-          <TopBar>
-            <Timer>
-              <span style={timer <= 10 ? { color: 'red' } : { color: 'black' }}>
-                {timer > 60
-                  ? `남은 시간: ${Math.floor(timer / 60)}분 ${timer % 60}초`
-                  : `남은 시간: ${timer}초`}
-              </span>
-            </Timer>
-            <Score>
-              <span>점수: {score}</span>
-            </Score>
-          </TopBar>
+    <div>
+      <MediaSideBar />
+      <Container>
+        {isLoading ? (
+          <HashLoader />
+        ) : (
+          <>
+            <TopBar>
+              <Timer>
+                <span
+                  style={timer <= 10 ? { color: 'red' } : { color: 'black' }}
+                >
+                  {timer > 60
+                    ? `남은 시간: ${Math.floor(timer / 60)}분 ${timer % 60}초`
+                    : `남은 시간: ${timer}초`}
+                </span>
+              </Timer>
+              <Score>
+                <span>점수: {score}</span>
+              </Score>
+            </TopBar>
 
-          <BodyContainer>
-            <div
+            <BodyContainer>
+              <div
+                style={{
+                  position: 'fixed',
+                  top: '10em',
+                  width: '60%',
+                  minWidth: '30em',
+                  left: '19.5%',
+                }}
+              >
+                <Button
+                  type="primary"
+                  danger
+                  onClick={() => handleNextButton()}
+                  style={{
+                    position: 'absolute',
+                    right: '0.5em',
+                    fontWeight: '600',
+                  }}
+                >
+                  문제 넘기기
+                </Button>
+              </div>
+              <Guess>
+                <span style={{ fontSize: '2em' }}>{guess}</span>
+              </Guess>
+              <Line />
+              <Explanation>
+                <span
+                  style={{
+                    fontSize:
+                      currentKeyword?.data.explanation?.length > 70
+                        ? '1.1em'
+                        : '1.3em',
+                  }}
+                >
+                  {currentKeyword?.data.explanation}
+                </span>
+              </Explanation>
+              <Line />
+              <Keypad>{buttons}</Keypad>
+            </BodyContainer>
+            <Modal
+              isOpen={isModalOpen}
+              onRequestClose={() => setIsModalOpen(false)}
+              contentLabel="넘긴 문제 정답"
+              shouldCloseOnOverlayClick={false}
               style={{
-                position: 'fixed',
-                top: '10em',
-                width: '60%',
-                minWidth: '30em',
-                left: '19.5%',
+                content: {
+                  top: '50%',
+                  left: '50%',
+                  right: 'auto',
+                  bottom: 'auto',
+                  marginRight: '-50%',
+                  transform: 'translate(-50%, -50%)',
+                  width: '40%', // 너비 설정
+                  height: '60%', // 높이 설정
+
+                  borderRadius: '10px', // 테두리 둥글기 설정
+                  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.5)', // 그림자 효과 추가
+                },
               }}
             >
-              <Button
-                type="primary"
-                danger
-                onClick={() => handleNextButton()}
-                style={{
-                  position: 'absolute',
-                  right: '0.5em',
-                  fontWeight: '600',
-                }}
-              >
-                문제 넘기기
-              </Button>
-            </div>
-            <Guess>
-              <span style={{ fontSize: '2em' }}>{guess}</span>
-            </Guess>
-            <Line />
-            <Explanation>
-              <span
-                style={{
-                  fontSize:
-                    currentKeyword?.data.explanation?.length > 70
-                      ? '1.1em'
-                      : '1.3em',
-                }}
-              >
-                {currentKeyword?.data.explanation}
-              </span>
-            </Explanation>
-            <Line />
-            <Keypad>{buttons}</Keypad>
-          </BodyContainer>
-          <Modal
-            isOpen={isModalOpen}
-            onRequestClose={() => setIsModalOpen(false)}
-            contentLabel="넘긴 문제 정답"
-            shouldCloseOnOverlayClick={false}
-            style={{
-              content: {
-                top: '50%',
-                left: '50%',
-                right: 'auto',
-                bottom: 'auto',
-                marginRight: '-50%',
-                transform: 'translate(-50%, -50%)',
-                width: '40%', // 너비 설정
-                height: '60%', // 높이 설정
-
-                borderRadius: '10px', // 테두리 둥글기 설정
-                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.5)', // 그림자 효과 추가
-              },
-            }}
-          >
-            <UnsolvedScreen unsolved={unsolved} />
-          </Modal>
-        </>
-      )}
-    </Container>
+              <UnsolvedScreen unsolved={unsolved} />
+            </Modal>
+          </>
+        )}
+      </Container>
+    </div>
   );
 };
 export default QuizGame;
