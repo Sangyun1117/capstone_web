@@ -10,7 +10,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: calc(100% - 5em);
+  height: 100vh;
   width: 60%;
   min-width: 30em;
   background-color: #bbd2ec;
@@ -37,7 +37,7 @@ const CardContainer = styled.div`
   display: flex;
   position: absolute;
   flex-direction: column;
-  top: 30%;
+  top: 20%;
   width: 50%;
 `;
 

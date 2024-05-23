@@ -1,5 +1,4 @@
 import { Route, Routes } from 'react-router-dom';
-import './css/App.css';
 import { Provider } from 'react-redux';
 import store from './state';
 import Home from './Main/Home';
