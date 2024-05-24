@@ -256,7 +256,7 @@ const PracticeResult = () => {
             await setDoc(itemRef, {});
           });
 
-          console.log('All items saved successfully.');
+          console.log('All wrong ploblems saved successfully.');
         } catch (error) {
           console.error('Data could not be saved. ' + error);
         }

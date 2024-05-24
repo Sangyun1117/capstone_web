@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+﻿﻿import React, { useState, useEffect } from 'react';
 import {
   collection,
   getDocs,
@@ -148,8 +148,9 @@ const ProblemDetail = () => {
   const [answers, setAnswers] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [userChoices, setUserChoices] = useState({});
-  const [originBookMark, setOriginBookMark] = useState([]); // 필터링 안된 기존 북마크 저장
   const [indexBookMark, setIndexBookMark] = useState([]); // 북마크 인덱스 저장
+  const [finalBookMark, setFinalBookMark] = useState([]); // 최종적으로 db에 반영할 북마크
+  const [isBookmarkSaved, setIsBookmarkSaved] = useState(false); // 최종 북마크 저장 확인
 
   const navigate = useNavigate();
 
@@ -242,15 +243,11 @@ const ProblemDetail = () => {
 
       // 6101, 6103, 6201, 6335, ... 등 북마크 중 회차에 맞는 id만 필터링
       const filteredIds = [];
-      const originIds = [];
       querySnapshot.forEach((doc) => {
         if (doc.id.substring(0, 2) === examDocId.substring(0, 2)) {
           filteredIds.push(doc.id);
-        } else {
-          originIds.push(doc.id);
         }
       });
-      setOriginBookMark(originIds);
 
       // 북마크를 인덱스 형태로 추가 저장. 예) 6101 -> 0, 6102 -> 1, ...
       const indexArray = filteredIds.map((id) => {
@@ -270,13 +267,8 @@ const ProblemDetail = () => {
   // 북마크 저장
   useEffect(() => {
     const bookmarkSave = async () => {
-      if (!isLoggedIn) return;
-      if (indexBookMark.length === 0) {
-        return;
-      }
-
       try {
-        originBookMark.forEach(async (item) => {
+        const savePromises = finalBookMark.map(async (item) => {
           const itemRef = doc(
             firestore,
             'users',
@@ -288,16 +280,35 @@ const ProblemDetail = () => {
           await setDoc(itemRef, {});
         });
 
-        console.log('All items saved successfully.');
+        await Promise.all(savePromises);
+
+        console.log('FINAL: BOOKMARK SAVED.');
+        setIsBookmarkSaved(true); // 모든 북마크 저장이 완료되면 상태 업데이트
       } catch (error) {
         console.error('Data could not be saved. ' + error);
+        setIsBookmarkSaved(true); // 오류가 발생해도 상태 업데이트
       }
     };
 
-    if (originBookMark.length > 0) {
+    if (finalBookMark.length > 0 && isLoggedIn) {
       bookmarkSave();
     }
-  }, [originBookMark]);
+  }, [finalBookMark]);
+
+  // 최종적으로 북마크 저장 완료 후 결과 화면으로 이동
+  useEffect(() => {
+    if (isBookmarkSaved) {
+      const examId = examDocId;
+      navigate('/practiceResult', {
+        state: {
+          userChoices,
+          problems,
+          answers,
+          examId,
+        },
+      });
+    }
+  }, [isBookmarkSaved]);
 
   // 북마크 선택 시 상태 변경
   const handleBookmark = (index) => {
@@ -337,20 +348,8 @@ const ProblemDetail = () => {
       const saveBookMarkArray = indexBookMark.map((id) => {
         return id + examDocId * 100 + 1;
       });
-      setOriginBookMark((prevOriginBookMark) => [
-        ...prevOriginBookMark,
-        ...saveBookMarkArray,
-      ]);
+      setFinalBookMark(saveBookMarkArray);
     }
-    const examId = examDocId;
-    navigate('/practiceResult', {
-      state: {
-        userChoices,
-        problems,
-        answers,
-        examId,
-      },
-    });
   };
 
   // 제출 확인 창
