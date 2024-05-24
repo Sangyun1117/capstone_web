@@ -16,7 +16,6 @@ const Container = styled.div`
 const { Title } = Typography;
 
 const UnsolvedScreen = ({ unsolved }) => {
-  const navigate = useNavigate();
 
   const renderItem = (item) => {
     return (
