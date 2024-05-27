@@ -16,9 +16,8 @@ const Container = styled.div`
   width: 60%;
   min-width: 30em;
   background-color: #bbd2ec;
-  top: 5em;
-  left: 20%;
-  position: absolute;
+  margin-right: 15%;
+  position: relative;
   padding-bottom: 5em;
 `;
 
@@ -315,7 +314,7 @@ const RecommendationQuestion = () => {
   };
 
   return (
-    <Box>
+    <Box style={{ display: 'flex', flexDirection: 'row' }}>
       <ProblemSideBar />
       <Container>
         <Title>추천 문제</Title>
