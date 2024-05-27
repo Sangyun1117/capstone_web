@@ -11,12 +11,12 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   height: 100vh;
+  min-height: calc(100% - 5em);
   width: 60%;
   min-width: 30em;
   background-color: #bbd2ec;
-  top: 5em;
-  left: 20%;
-  position: absolute;
+  margin-right: 15%;
+  position: relative;
 `;
 
 const Title = styled.div`
@@ -110,7 +110,7 @@ const PracticeRoundSelect = () => {
   };
 
   return (
-    <Box>
+    <Box style={{ display: 'flex', flexDirection: 'row' }}>
       <ProblemSideBar />
       <Container>
         <Title>기출문제 회차선택</Title>

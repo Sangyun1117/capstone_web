@@ -27,9 +27,8 @@ const Container = styled.div`
   width: 60%;
   min-width: 600px;
   background-color: #bbd2ec;
-  top: 5em;
-  left: 20%;
-  position: absolute;
+  margin-right: 15%;
+  position: relative;
 `;
 const TopContainer = styled.div`
   display: flex;
@@ -368,7 +367,7 @@ const ProblemDetail = () => {
   };
 
   return (
-    <Box>
+    <Box style={{ display: 'flex', flexDirection: 'row' }}>
       <ProblemSideBar />
       <Container>
         {isLoading ? (

@@ -23,9 +23,8 @@ const Container = styled.div`
   min-width: 30em;
   height: 5000px;
   background-color: #bbd2ec;
-  top: 5em;
-  left: 20%;
-  position: absolute;
+  margin-right: 15%;
+  position: relative;
 `;
 const Title = styled.div`
   display: flex;
@@ -403,7 +402,7 @@ const PracticeResult = () => {
     : choicesArray;
 
   return (
-    <Box>
+    <Box style={{ display: 'flex', flexDirection: 'row' }}>
       <ProblemSideBar />
 
       <Container>
