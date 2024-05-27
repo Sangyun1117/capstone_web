@@ -136,21 +136,21 @@ const ArrowButton = styled(MoveButton)`
   }
 `;
 const SubmitButton = styled(MoveButton)`
-  width: 70px;
-  height: 70px;
+  width: 100px;
+  height: 60px;
   background-color: #838abd;
   color: white;
   border-radius: 10px;
-  margin-top: 20px;
+  margin-top: 30px;
+  margin-bottom: 20px;
 `;
 
 const ProblemDetail = () => {
   const location = useLocation();
-  const { examDocId } = location.state;
-  const [problems, setProblems] = useState([]);
-  const [answers, setAnswers] = useState([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [userChoices, setUserChoices] = useState({});
+  const { examDocId } = location.state; // 회차 정보
+  const [problems, setProblems] = useState([]); // 문제 정보
+  const [currentIndex, setCurrentIndex] = useState(0); // 현재 문제번호
+  const [userChoices, setUserChoices] = useState({}); // 선택한 답 리스트
   const [indexBookMark, setIndexBookMark] = useState([]); // 북마크 인덱스 저장
   const [finalBookMark, setFinalBookMark] = useState([]); // 최종적으로 db에 반영할 북마크
   const [isBookmarkSaved, setIsBookmarkSaved] = useState(false); // 최종 북마크 저장 확인
@@ -173,51 +173,47 @@ const ProblemDetail = () => {
     }
   }, [userEmail]);
 
-  // 문제, 답 가져오기
+  // 문제 정보 가져오기
   useEffect(() => {
     const fetchProblems = async () => {
       try {
-        setIsLoading(true);
-        const list = [];
+        const plist = [];
         const problemCollection = collection(
           firestore,
           'exam round',
           examDocId,
           examDocId
         );
+
         const problemSnapshot = await getDocs(problemCollection);
         problemSnapshot.forEach((problemDoc) => {
-          list.push({ id: problemDoc.id, data: problemDoc.data() });
+          plist.push({ id: problemDoc.id, data: problemDoc.data() });
         });
-        setProblems(list);
-
-        const alist = [];
-        const answerCollection = collection(
-          firestore,
-          'answer round',
-          examDocId,
-          examDocId
-        );
-        const answerSnapshot = await getDocs(answerCollection);
-        answerSnapshot.forEach((answerDoc) => {
-          alist.push({ id: answerDoc.id, data: answerDoc.data() });
-        });
-        setAnswers(alist);
+        setProblems(plist);
 
         const initialChoices = {};
-        list.forEach((problem) => {
+        plist.forEach((problem) => {
           initialChoices[problem.id] = 1;
         });
         setUserChoices(initialChoices);
-        setIsLoading(false);
       } catch (err) {
-        console.error('Error fetching data: ', err);
-        setIsLoading(false);
+        console.error('Error fetching problem data: ', err);
       }
     };
 
-    fetchProblems();
+    const fetchData = async () => {
+      setIsLoading(true);
+      await fetchProblems();
+      setIsLoading(false);
+    };
+    
+    fetchData();
   }, [examDocId]);
+
+  useEffect(() => {
+    console.log('useEffect: problems: ');
+    console.log(problems);
+  }, [problems])
 
   // 북마크 가져오기
   const fetchBookmarks = async () => {
@@ -246,6 +242,7 @@ const ProblemDetail = () => {
       console.error('Error fetching bookmarks: ', error);
     }
   };
+
   useEffect(() => {
     fetchBookmarks();
   }, [userId]);
@@ -284,13 +281,11 @@ const ProblemDetail = () => {
   // 최종적으로 북마크 저장 완료 후 결과 화면으로 이동
   useEffect(() => {
     if (isBookmarkSaved) {
-      const examId = examDocId;
       navigate('/practiceResult', {
         state: {
           userChoices,
           problems,
-          answers,
-          examId,
+          examDocId,
         },
       });
     }
@@ -334,7 +329,12 @@ const ProblemDetail = () => {
       const saveBookMarkArray = indexBookMark.map((id) => {
         return id + examDocId * 100 + 1;
       });
-      setFinalBookMark(saveBookMarkArray);
+
+      if(saveBookMarkArray.length === 0){ // 북마크 없으면 바로 네비게이트
+        setIsBookmarkSaved(true);
+      }
+
+      setFinalBookMark(saveBookMarkArray); // 북마크 저장 후 네비게이트
     }
   };
 

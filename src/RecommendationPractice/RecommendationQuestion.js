@@ -314,7 +314,7 @@ const RecommendationQuestion = () => {
   };
 
   return (
-    <Box style={{ display: 'flex', flexDirection: 'row' }}>
+    <Box style={{ display: 'flex', flexDirection: 'row', minHeight: 'calc(100vh - 5em)' }}>
       <ProblemSideBar />
       <Container>
         <Title>추천 문제</Title>

@@ -64,23 +64,26 @@ const PracticeRoundSelect = () => {
   const [isLoading, setIsLoading] = useState(true); // 로딩 상태
   const navigate = useNavigate();
 
+  const fetchExamRounds = async () => {
+    try {
+      console.log('test1');
+      setIsLoading(true);
+      const list = [];
+      const examRoundCollection = collection(firestore, 'exam round');
+      const examRoundSnapshot = await getDocs(examRoundCollection);
+      examRoundSnapshot.forEach((doc) => {
+        list.push({ id: doc.id, ref: doc.ref });
+      });
+      setExamRounds(list);
+      console.log('test2');
+      setIsLoading(false);
+    } catch (err) {
+      console.error('Error fetching data: ', err);
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchExamRounds = async () => {
-      try {
-        setIsLoading(true);
-        const list = [];
-        const examRoundCollection = collection(firestore, 'exam round');
-        const examRoundSnapshot = await getDocs(examRoundCollection);
-        examRoundSnapshot.forEach((doc) => {
-          list.push({ id: doc.id, ref: doc.ref });
-        });
-        setExamRounds(list);
-        setIsLoading(false);
-      } catch (err) {
-        console.error('Error fetching data: ', err);
-        setIsLoading(false);
-      }
-    };
     fetchExamRounds();
   }, []);
 
@@ -92,9 +95,8 @@ const PracticeRoundSelect = () => {
       answerRoundSnapshot.forEach((doc) => {
         if (doc.id == item.id) answerItem = { id: doc.id };
       });
-      console.log(item);
-      console.log(answerItem);
-      // 가져온 답안 데이터를 ProblemDetail 화면으로 전달
+
+      // 선택한 회차를 ProblemDetail 화면으로 전달
       navigate('/problemDetail', {
         state: {
           examDocId: item.id,

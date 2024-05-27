@@ -4,9 +4,9 @@ import {
   doc,
   setDoc,
   getDoc,
+  getDocs,
   updateDoc,
   collection,
-  getDocs,
   writeBatch,
 } from 'firebase/firestore';
 import { firestore } from '../firebaseConfig';
@@ -14,6 +14,7 @@ import styled from 'styled-components';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Box } from '@mui/material';
 import { ProblemSideBar } from '../Problem/SideBar';
+import { HashLoader } from 'react-spinners';
 
 const Container = styled.div`
   display: flex;
@@ -21,7 +22,7 @@ const Container = styled.div`
   align-items: center;
   width: 60%;
   min-width: 800px;
-  height: 5000px;
+  height: ${({ isLoading }) => (isLoading ? 'calc(100vh - 5em)' : '5000px')};
   background-color: #bbd2ec;
   margin-right: 15%;
   position: relative;
@@ -31,7 +32,7 @@ const Title = styled.div`
   position: absolute;
   align-items: center;
   justify-content: center;
-  top: 10px;
+  top: 20px;
   background-color: white;
   border-radius: 5px;
   font-weight: 600;
@@ -113,7 +114,9 @@ const CommantButton = styled.div`
 
 const PracticeResult = () => {
   const location = useLocation();
-  const { userChoices, problems, answers, examId } = location.state;
+  const { userChoices, problems, examDocId } = location.state;
+  const [answers, setAnswers] = useState([]); // 답 정보
+  const [isLoading, setIsLoading] = useState(true); // 로딩 상태
 
   const choicesArray = Object.entries(userChoices);
   const [showOnlyWrong, setShowOnlyWrong] = useState(false); // 오답만 보기 여부
@@ -171,8 +174,40 @@ const PracticeResult = () => {
     return types.indexOf(typeName);
   }
 
+  // 답 정보 가져오기 - answer only round는 해설 없음
+  useEffect(() => {
+    const fetchAnswers = async () => {
+      try {
+        const alist = [];
+        const answerCollection = collection(
+          firestore,
+          'answer only round',
+          examDocId,
+          examDocId
+        );
+
+        const answerSnapshot = await getDocs(answerCollection);
+        answerSnapshot.forEach((answerDoc) => {
+          alist.push({ id: answerDoc.id, data: answerDoc.data() });
+        });
+        setAnswers(alist);
+      } catch (err) {
+        console.error('Error fetching answer data: ', err);
+      }
+    };
+
+    const fetchData = async () => {
+      setIsLoading(true);
+      await fetchAnswers();
+      setIsLoading(false);
+    };
+    
+    fetchData();
+  }, [examDocId]);
+
   // 새 오답 분류 정보 저장
   useEffect(() => {
+    if(answers.length === 0) return;
     const updatedWrongEras = [...newWrongEras];
     const updatedWrongTypes = [...newWrongTypes];
     let saveWrongIndexes = new Array(50).fill(1);
@@ -209,7 +244,7 @@ const PracticeResult = () => {
     }
     setWrongIndexes(saveWrongIndexes);
     setTotalScrore(score);
-  }, [isLoggedIn]);
+  }, [isLoggedIn, answers]);
 
   // 오답 업데이트
   useEffect(() => {
@@ -224,7 +259,7 @@ const PracticeResult = () => {
         // 기존 오답 정보 삭제
         const batch = writeBatch(firestore);
         querySnapshot.forEach((item) => {
-          if (item.id.substring(0, 2) === examId) {
+          if (item.id.substring(0, 2) === examDocId) {
             const docRef = doc(
               firestore,
               'users',
@@ -240,7 +275,7 @@ const PracticeResult = () => {
 
         // 현재 오답 인덱스에 회차정보를 더해서 저장 예) 0 -> 6101, 1 -> 6102, ...
         for (let i = 0; i < 50; i++) {
-          if (wrongIndexes[i] === 0) newIds.push(examId * 100 + i + 1);
+          if (wrongIndexes[i] === 0) newIds.push(examDocId * 100 + i + 1);
         }
 
         try {
@@ -387,12 +422,11 @@ const PracticeResult = () => {
 
   // 해설 버튼 클릭 시 이동
   const handleCommentary = (index) => {
-    const answer = answers.find((answer) => answer.id === index);
     const problem = problems.find((problem) => problem.id === index);
     navigate('/problemCommentary', {
       state: {
         problem: problem,
-        answer: answer,
+        index: index,
       },
     });
   };
@@ -405,50 +439,56 @@ const PracticeResult = () => {
   return (
     <Box style={{ display: 'flex', flexDirection: 'row' }}>
       <ProblemSideBar />
+      <Container isLoading={isLoading}>
+        {isLoading ? (
+            <HashLoader style={{ display: 'flex' }} />
+          ) : (
+            <>
+              <Title>총점: {totalScore}</Title>
+              <ShowButton onClick={() => setShowOnlyWrong(!showOnlyWrong)}>
+                {showOnlyWrong ? '전부 표시' : '오답만 표시'}
+              </ShowButton>
 
-      <Container>
-        <Title>총점: {totalScore}</Title>
-        <ShowButton onClick={() => setShowOnlyWrong(!showOnlyWrong)}>
-          {showOnlyWrong ? '전부 표시' : '오답만 표시'}
-        </ShowButton>
+              <ListContainer>
+                {filteredData.map((item) => {
+                  const [index, value] = item;
+                  const answer = answers.find((answer) => answer.id === index);
 
-        <ListContainer>
-          {filteredData.map((item) => {
-            const [index, value] = item;
-            const answer = answers.find((answer) => answer.id === index);
+                  // 틀린 문제만 보이는 경우
+                  if (showOnlyWrong && wrongIndexes[index] === 0) {
+                    return null;
+                  }
 
-            // 틀린 문제만 보이는 경우
-            if (showOnlyWrong && wrongIndexes[index] === 0) {
-              return null;
-            }
-
-            return (
-              <ListItem key={index}>
-                <ListRow>
-                  <div
-                    style={{ fontWeight: '600', fontSize: '1.2em' }}
-                  >{`${parseInt(index.slice(-2))}번`}</div>
-                  <div
-                    style={{
-                      margin: '10px',
-                      color: wrongIndexes[parseInt(index.slice(-2)) - 1]
-                        ? 'blue'
-                        : 'red',
-                    }}
-                  >
-                    {`선택: ${value}`}
-                  </div>
-                  <div style={{ margin: '10px' }}>{`정답: ${
-                    answer ? answer.data.answer : '정답 정보 없음'
-                  }`}</div>
-                </ListRow>
-                <CommantButton onClick={() => handleCommentary(index)}>
-                  해설
-                </CommantButton>
-              </ListItem>
-            );
-          })}
-        </ListContainer>
+                  return (
+                    <ListItem key={index}>
+                      <ListRow>
+                        <div
+                          style={{ fontWeight: '600', fontSize: '1.2em' }}
+                        >{`${parseInt(index.slice(-2))}번`}</div>
+                        <div
+                          style={{
+                            margin: '10px',
+                            color: wrongIndexes[parseInt(index.slice(-2)) - 1]
+                              ? 'blue'
+                              : 'red',
+                          }}
+                        >
+                          {`선택: ${value}`}
+                        </div>
+                        <div style={{ margin: '10px' }}>{`정답: ${
+                          answer ? answer.data.answer : '정답 정보 없음'
+                        }`}</div>
+                      </ListRow>
+                      <CommantButton onClick={() => handleCommentary(index)}>
+                        해설
+                      </CommantButton>
+                    </ListItem>
+                  );
+                })}
+              </ListContainer>
+            </>
+          )
+        }
       </Container>
     </Box>
   );
