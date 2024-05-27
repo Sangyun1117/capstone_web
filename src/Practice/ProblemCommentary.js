@@ -11,9 +11,8 @@ const Container = styled.div`
   min-height: calc(100vh - 5em);
   min-width: 800px;
   background-color: #bbd2ec;
-  top: 5em;
-  left: 20%;
-  position: absolute;
+  margin-right: 15%;
+  position: relative;
 `;
 
 const Title = styled.h1`
@@ -85,7 +84,7 @@ const ProblemCommentary = () => {
   };
 
   return (
-    <div>
+    <div style={{ display: 'flex', flexDirection: 'row' }}>
       <ProblemSideBar />
 
       <Container>
