@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { ProblemSideBar } from '../Problem/SideBar';
 const Container = styled.div`
@@ -27,6 +27,33 @@ const Title = styled.h1`
   width: 20%;
   min-width: 300px;
   height: 50px;
+`;
+
+const BackButton = styled.button`
+display: flex;
+align-items: center;
+justify-content: center;
+position: absolute;
+right: 10px;
+top: 10px;
+width: 10vw;
+min-width: 100px;
+height: 70px;
+margin: 20px;
+background-color: #838abd;
+color: white;
+border-radius: 10px;
+font-weight: 500;
+font-size: 1.1em;
+
+cursor: pointer;
+transition: all 0.2s;
+box-shadow: 0px 0px 0px 0px white;
+border: none;
+font-size: 1em;
+&:hover {
+  box-shadow: 0px 0px 0px 5px white;
+}
 `;
 
 const BodyContainer = styled.div`
@@ -66,6 +93,7 @@ const SemiTitle = styled.h2`
 
 const ProblemCommentary = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { problem, answer } = location.state; // 문제, 답 정보
 
   const formattedId = `${problem.id.slice(0, 2)}회차 ${parseInt(
@@ -89,6 +117,7 @@ const ProblemCommentary = () => {
 
       <Container>
         <Title>{formattedId} 해설</Title>
+        <BackButton onClick={() => navigate(-1)}>돌아가기</BackButton>
         <BodyContainer>
           <img
             src={problem.data.img}

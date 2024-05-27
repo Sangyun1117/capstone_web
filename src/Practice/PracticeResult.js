@@ -20,7 +20,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   width: 60%;
-  min-width: 30em;
+  min-width: 800px;
   height: 5000px;
   background-color: #bbd2ec;
   margin-right: 15%;
@@ -46,7 +46,8 @@ const ShowButton = styled.div`
   position: absolute;
   right: 10px;
   top: 10px;
-  width: 180px;
+  width: 10vw;
+  min-width: 100px;
   height: 70px;
   margin: 20px;
   background-color: #838abd;
@@ -408,7 +409,7 @@ const PracticeResult = () => {
       <Container>
         <Title>총점: {totalScore}</Title>
         <ShowButton onClick={() => setShowOnlyWrong(!showOnlyWrong)}>
-          {showOnlyWrong ? '전부 표시' : '틀린 문제만 표시'}
+          {showOnlyWrong ? '전부 표시' : '오답만 표시'}
         </ShowButton>
 
         <ListContainer>

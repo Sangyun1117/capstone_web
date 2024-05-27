@@ -13,7 +13,7 @@ const Container = styled.div`
   height: 100vh;
   min-height: calc(100% - 5em);
   width: 60%;
-  min-width: 30em;
+  min-width: 800px;
   background-color: #bbd2ec;
   margin-right: 15%;
   position: relative;
@@ -129,6 +129,7 @@ const PracticeRoundSelect = () => {
         )}
       </Container>
     </Box>
+
   );
 };
 

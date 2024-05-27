@@ -23,9 +23,9 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 100%;
+  height: calc(100vh - 5em);
   width: 60%;
-  min-width: 600px;
+  min-width: 800px;
   background-color: #bbd2ec;
   margin-right: 15%;
   position: relative;
@@ -57,7 +57,8 @@ const BottomContainer = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  margin: 3%;
+  margin: 2%;
+  background-color: #bbd2ec;
 `;
 const ProblemImage = styled.img`
   object-fit: contain;
@@ -103,7 +104,7 @@ const ImageContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 50px;
+  margin-top: 30px;
 `;
 const MoveButton = styled.button`
   width: 60px;
@@ -130,6 +131,9 @@ const ArrowButton = styled(MoveButton)`
   background-color: ${(props) =>
     props.disabled ? '#495057' : '#838abd'}; // 비활성화 색상 변경
   margin: 20px;
+  &:hover {
+    box-shadow: ${(props) => props.disabled ? '0px 0px 0px 0px white' : '0px 0px 0px 5px white'};
+  }
 `;
 const SubmitButton = styled(MoveButton)`
   width: 70px;
@@ -222,23 +226,6 @@ const ProblemDetail = () => {
     const bookMarkRef = collection(firestore, 'users', userEmail, 'bookMark');
     try {
       const querySnapshot = await getDocs(bookMarkRef);
-
-      // 기존 회차의 북마크 정보 삭제
-      const batch = writeBatch(firestore);
-      querySnapshot.forEach((item) => {
-        if (item.id.substring(0, 2) === examDocId) {
-          const docRef = doc(
-            firestore,
-            'users',
-            userEmail,
-            'bookMark',
-            item.id
-          );
-          batch.delete(docRef);
-        }
-      });
-      await batch.commit(); // Batch 작업 실행으로 모든 문서 일괄 삭제
-      console.log('All existing bookmarks deleted.');
 
       // 6101, 6103, 6201, 6335, ... 등 북마크 중 회차에 맞는 id만 필터링
       const filteredIds = [];
