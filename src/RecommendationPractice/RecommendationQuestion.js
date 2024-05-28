@@ -172,7 +172,7 @@ const RecommendationQuestion = () => {
   // Firestore에서 특정 회차의 문제 정보와 답안 정보를 가져오는 함수
   const fetchRoundData = async (round, id) => {
     const problemRef = doc(firestore, `exam round/${round}/${round}`, id);
-    const answerRef = doc(firestore, `answer round/${round}/${round}`, id);
+    const answerRef = doc(firestore, `answer only round/${round}/${round}`, id);
 
     const problemDoc = await getDoc(problemRef);
     const answerDoc = await getDoc(answerRef);
@@ -314,7 +314,13 @@ const RecommendationQuestion = () => {
   };
 
   return (
-    <Box style={{ display: 'flex', flexDirection: 'row', minHeight: 'calc(100vh - 5em)' }}>
+    <Box
+      style={{
+        display: 'flex',
+        flexDirection: 'row',
+        minHeight: 'calc(100vh - 5em)',
+      }}
+    >
       <ProblemSideBar />
       <Container>
         <Title>추천 문제</Title>

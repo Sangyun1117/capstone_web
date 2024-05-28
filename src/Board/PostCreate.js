@@ -4,55 +4,88 @@ import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import TextField from '@mui/material/TextField';
+import { Button } from '@mui/material';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  height: calc(100% - 5em);
+  height: calc(100vh - 5em);
   width: 60%;
   min-width: 30em;
   background-color: #bbd2ec;
-  top: 5em;
-  left: 20%;
-  position: absolute;
+  padding: 2em;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  margin: auto;
 `;
 
 const BodyInput = styled.textarea`
-  margin: 2%;
+  display: flex;
+  height: 200px;
+  width: 98%;
   height: 60%;
-  width: 95%,
-  left: 1.5%,
+  margin-top: 50px;
+
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  font-size: 20px;
-  font-weight: 500;
+  padding: 1em;
+  font-size: 1em;
+  font-weight: 400;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  resize: none;
+  background-color: #e6e6fa;
 `;
 
-const SubmitButton = styled.button`
-  display: flex;
-  right: 0px;
-  justify-content: center;
-  margin: 10px;
-  margin-left: auto;
-  width: 10%;
-  min-width: 70px;
-  height: 50px;
-  cursor: pointer;
-  font-weight: 400;
-  text-align: center;
-  line-height: 50px;
-  color: #fff;
-  border-radius: 5px;
+const SubmitButton = styled(Button)`
+  && {
+    display: flex;
+    right: 0px;
+    justify-content: center;
+    margin-top: 30px;
+    margin-left: auto;
+    width: 10%;
+    min-width: 70px;
+    height: 50px;
+    cursor: pointer;
+    font-weight: 400;
+    text-align: center;
+    line-height: 50px;
+    color: #fff;
+    border-radius: 5px;
 
-  transition: all 0.2s;
-  background-color: #4dccc6;
-  box-shadow: 0px 0px 0px 0px #01939a;
-  border: none;
-  font-size: 2em;
-  &:hover {
-    box-shadow: 0px 0px 0px 5px #01939a;
+    transition: all 0.2s;
+    background-color: #4dccc6;
+    box-shadow: 0px 0px 0px 0px #01939a;
+    border: none;
+    font-size: 1em;
+    &:hover {
+      box-shadow: 0px 0px 0px 5px #01939a;
+      background-color: #43b2ac;
+    }
   }
-  margin-right: 10px;
+`;
+
+const Title = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1em;
+  background-color: white;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: 1.5em;
+  width: 25%;
+  height: 50px;
+  margin: 20px 37.5%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+`;
+
+const StyledEditorWrapper = styled.div`
+  .ck-editor__editable {
+    height: 500px;
+    overflow-y: auto; // 내용이 많아지면 스크롤 활성화
+  }
 `;
 
 // 게시판 글 생성 화면
@@ -104,8 +137,28 @@ const PostCreate = () => {
       });
   };
 
+  const getBoardDisplayName = (boardName) => {
+    switch (boardName) {
+      case 'questionBoard':
+        return '질문';
+      case 'tipBoard':
+        return '팁';
+      case 'reviewBoard':
+        return '시험 후기';
+      default:
+        return '';
+    }
+  };
+
+  const boardDisplayName = getBoardDisplayName(boardName);
+
   return (
     <Container>
+      <Title>
+        {post
+          ? `${boardDisplayName} 게시판 글 수정`
+          : `${boardDisplayName} 게시판 글 작성`}
+      </Title>
       <TextField
         required
         fullWidth
@@ -113,20 +166,33 @@ const PostCreate = () => {
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         style={{
-          margin: '1.5% 1%',
-          backgroundColor: 'white',
-          width: '98%',
-          borderRadius: '10px',
+          margin: '1em 0',
+          backgroundColor: '#ffffff',
+          borderRadius: '5px',
           backgroundColor: '#e6e6fa',
         }}
+        variant="outlined"
+        placeholder="제목을 입력하세요..."
       />
 
-      <BodyInput
+      {/* <BodyInput
         rows="10"
+        placeholder="내용을 입력하세요..."
         value={body}
         onChange={(e) => setBody(e.target.value)}
-      />
-      <SubmitButton onClick={handleSubmit}>등록</SubmitButton>
+      /> */}
+      <StyledEditorWrapper>
+        <CKEditor
+          editor={ClassicEditor}
+          data={body}
+          onChange={(event, editor) => {
+            const data = editor.getData();
+            setBody(data);
+          }}
+        />
+      </StyledEditorWrapper>
+
+      <SubmitButton onClick={handleSubmit}>등록하기</SubmitButton>
     </Container>
   );
 };
