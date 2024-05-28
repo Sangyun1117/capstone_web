@@ -7,35 +7,20 @@ import TextField from '@mui/material/TextField';
 import { Button } from '@mui/material';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import '../css/QuillEditor.css';
+import swal from 'sweetalert';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  height: calc(100% - 5em);
+  height: calc(100vh - 5em);
   width: 60%;
-  min-width: 30em;
+  min-width: 800px;
   background-color: #bbd2ec;
   padding: 2em;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
   margin: auto;
   position: relative;
-`;
-
-const BodyInput = styled.textarea`
-  display: flex;
-  height: 200px;
-  width: 98%;
-  height: 60%;
-  margin-top: 50px;
-
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  padding: 1em;
-  font-size: 1em;
-  font-weight: 400;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  resize: none;
-  background-color: #e6e6fa;
 `;
 
 const SubmitButton = styled(Button)`
@@ -81,13 +66,6 @@ const Title = styled.div`
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 `;
 
-const StyledEditorWrapper = styled.div`
-  .ck-editor__editable {
-    height: 500px;
-    overflow-y: auto; // 내용이 많아지면 스크롤 활성화
-  }
-`;
-
 // 게시판 글 생성 화면
 const PostCreate = () => {
   const location = useLocation();
@@ -99,8 +77,8 @@ const PostCreate = () => {
   const userEmail = useSelector((state) => state.userEmail);
   //const serverPath = 'http://192.168.0.3:8080/';
   //const serverPath = 'http://223.194.133.15:8080/';
-  //const serverPath = 'http://192.168.0.3:8080/';
-  const serverPath = 'http://192.168.181.1:8080/';
+  const serverPath = 'http://192.168.0.3:8080/';
+  //const serverPath = 'http://192.168.181.1:8080/';
 
   // 작성한 글을 db에 반영
   const handleSubmit = () => {
@@ -137,6 +115,20 @@ const PostCreate = () => {
       });
   };
 
+  const handleSubmitButtonClick = () => {
+    swal({
+      title: '등록 확인',
+      text: '작성한 글을 등록하시겠습니까?',
+      icon: 'warning',
+      buttons: ['취소', '확인'],
+      dangerMode: true,
+    }).then((willSubmit) => {
+      if (willSubmit) {
+        handleSubmit();
+      }
+    });
+  };
+
   const getBoardDisplayName = (boardName) => {
     switch (boardName) {
       case 'questionBoard':
@@ -154,45 +146,17 @@ const PostCreate = () => {
   const quillModules = {
     toolbar: {
       container: [
-        [{ 'header': [1, 2, 3, 4, 5, 6, false] }], // 사이즈
-        [{ 'align': [] }], // 정렬
+        [{ header: [1, 2, 3, 4, 5, 6, false] }], // 사이즈
+        [{ align: [] }], // 정렬
 
         ['bold', 'italic', 'underline', 'strike'],
-        ['image'],
-        [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'list': 'check' }],
-        [{ 'color': [] }, { 'background': [] }], // 글자색, 배경색
+        [{ list: 'ordered' }, { list: 'bullet' }, { list: 'check' }],
+        ['blockquote', 'code-block'],
+        [{ color: [] }, { background: [] }], // 글자색, 배경색
       ],
-      handlers: {
-        'image': imageHandler,
-      },
+      handlers: {},
+      fixed: true,
     },
-  };
-
-  const imageHandler = () => {
-    const input = document.createElement('input');
-    input.setAttribute('type', 'file');
-    input.setAttribute('accept', 'image/*');
-    input.click();
-
-    input.onchange = async () => {
-      const file = input.files[0];
-      const formData = new FormData();
-      formData.append('image', file);
-
-      try {
-        const response = await axios.post(serverPath + 'posts/uploadImage', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-        const imageUrl = response.data;
-        const quill = this.quill;
-        const range = quill.getSelection();
-        quill.insertEmbed(range.index, 'image', imageUrl);
-      } catch (error) {
-        console.error('Image upload failed:', error);
-      }
-    };
   };
 
   return (
@@ -218,21 +182,14 @@ const PostCreate = () => {
         placeholder="제목을 입력하세요..."
       />
 
-      {/* <BodyInput
-        rows="10"
-        placeholder="내용을 입력하세요..."
-        value={body}
-        onChange={(e) => setBody(e.target.value)}
-      /> */}
       <ReactQuill
         theme="snow"
         value={body}
         onChange={setBody}
         modules={quillModules}
-        style={{ height: '500px', overflowY: 'auto', backgroundColor: 'white' }}
       />
 
-      <SubmitButton onClick={handleSubmit}>등록하기</SubmitButton>
+      <SubmitButton onClick={handleSubmitButtonClick}>등록하기</SubmitButton>
     </Container>
   );
 };

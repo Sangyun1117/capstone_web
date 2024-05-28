@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
+import swal from 'sweetalert';
 
 const Container = styled.div`
   display: flex;
@@ -10,7 +11,7 @@ const Container = styled.div`
   min-height: 100%;
   height: auto; // 내용이 길어지면 화면이 길어지게 한다.
   width: 60%;
-  min-width: 30em;
+  min-width: 800px;
   background-color: #bbd2ec;
   top: 5em;
   left: 20%;
@@ -153,8 +154,8 @@ const PostDetail = () => {
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
   const userEmail = useSelector((state) => state.userEmail);
   //const serverPath = 'http://223.194.133.15:8080/';
-  //const serverPath = 'http://192.168.0.3:8080/';
-  const serverPath = 'http://192.168.181.1:8080/';
+  const serverPath = 'http://192.168.0.3:8080/';
+  //const serverPath = 'http://192.168.181.1:8080/';
   //const serverPath = 'http://localhost:8080/';
   const { boardName, post } = location.state;
 
@@ -224,6 +225,34 @@ const PostDetail = () => {
     setComment(''); // 인풋창 초기화
   };
 
+  const handleUpdateButtonClick = () => {
+    swal({
+      title: '수정 확인',
+      text: '작성한 글을 수정하시겠습니까?',
+      icon: 'warning',
+      buttons: ['취소', '확인'],
+      dangerMode: true,
+    }).then((willSubmit) => {
+      if (willSubmit) {
+        handleUpdate();
+      }
+    });
+  };
+
+  const handleDeleteButtonClick = (url) => {
+    swal({
+      title: '삭제 확인',
+      text: '정말 삭제하시겠습니까?',
+      icon: 'warning',
+      buttons: ['취소', '확인'],
+      dangerMode: true,
+    }).then((willSubmit) => {
+      if (willSubmit) {
+        removeData(url);
+      }
+    });
+  };
+
   // '수정' 버튼 클릭 시 수정 페이지로 이동
   const handleUpdate = () => {
     navigate('/postCreate', {
@@ -251,28 +280,17 @@ const PostDetail = () => {
       });
   };
 
-  // 삭제 확인 창
-  const removeProcess = (url) => {
-    const userConfirmed = window.confirm(
-      '삭제 확인',
-      '정말로 삭제하시겠습니까?'
-    );
-    if (userConfirmed) {
-      removeData(url);
-    }
-  };
-
   // 글 삭제
   const handleDelete = () => {
     console.log('id = ' + post.postId);
     const url = 'posts/' + post.postId;
-    removeProcess(url);
+    handleDeleteButtonClick(url);
   };
 
   // 댓글 삭제
   const handleCommentDelete = (commentId) => {
     const url = 'comments/' + commentId;
-    removeProcess(url);
+    handleDeleteButtonClick(url);
   };
 
   return (
@@ -288,7 +306,7 @@ const PostDetail = () => {
                 <StyledButton
                   shadowcolor="#7bb4e3"
                   backgroundcolor="#004EA2"
-                  onClick={handleUpdate}
+                  onClick={handleUpdateButtonClick}
                 >
                   <div>수정</div>
                 </StyledButton>

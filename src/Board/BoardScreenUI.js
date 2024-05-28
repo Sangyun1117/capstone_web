@@ -12,7 +12,7 @@ const BodyContainer = styled.div`
   align-items: center;
   height: 90%;
   width: 60%;
-  min-width: 30em;
+  min-width: 800px;
   background-color: #bbd2ec;
   top: 10em;
   left: 20%;
@@ -140,8 +140,8 @@ const BoardScreenUI = ({ boardName, search }) => {
   // 안드로이드 환경에서는 localhost로 작성하면 에러 발생하므로 ip주소 입력 필요.
   //const serverPath = 'http://192.168.0.3:8080/';
   //const serverPath = 'http://223.194.133.15:8080/';
-  //const serverPath = 'http://192.168.0.3:8080/';
-  const serverPath = 'http://192.168.181.1:8080/';
+  const serverPath = 'http://192.168.0.3:8080/';
+  //const serverPath = 'http://192.168.181.1:8080/';
   const navigate = useNavigate();
 
   // 글 검색

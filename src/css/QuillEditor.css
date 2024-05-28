@@ -1,0 +1,14 @@
+/* 툴바 스타일 */
+.ql-toolbar {
+  position: sticky;
+  top: 0; /* 뷰포트의 상단에 고정 */
+  z-index: 1000; /* 내용 위에 표시되도록 z-index 설정 */
+  background-color: lightcyan;
+}
+
+/* 에디터 내용 스타일 */
+.ql-container {
+  height: 55vh;
+  overflow-y: auto;
+  background-color: white;
+}

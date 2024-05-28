@@ -10,7 +10,7 @@ const Container = styled.div`
   flex-direction: row;
   left: 20%;
   width: 60%;
-  min-width: 30em;
+  min-width: 800px;
   background-color: #dfe9f5;
   z-index: 2;
 `;
