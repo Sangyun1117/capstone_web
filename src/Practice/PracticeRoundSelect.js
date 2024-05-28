@@ -66,7 +66,6 @@ const PracticeRoundSelect = () => {
 
   const fetchExamRounds = async () => {
     try {
-      console.log('test1');
       setIsLoading(true);
       const list = [];
       const examRoundCollection = collection(firestore, 'exam round');
@@ -75,7 +74,6 @@ const PracticeRoundSelect = () => {
         list.push({ id: doc.id, ref: doc.ref });
       });
       setExamRounds(list);
-      console.log('test2');
       setIsLoading(false);
     } catch (err) {
       console.error('Error fetching data: ', err);
@@ -131,7 +129,6 @@ const PracticeRoundSelect = () => {
         )}
       </Container>
     </Box>
-
   );
 };
 

@@ -201,13 +201,13 @@ const PracticeResult = () => {
       await fetchAnswers();
       setIsLoading(false);
     };
-    
+
     fetchData();
   }, [examDocId]);
 
   // 새 오답 분류 정보 저장
   useEffect(() => {
-    if(answers.length === 0) return;
+    if (answers.length === 0) return;
     const updatedWrongEras = [...newWrongEras];
     const updatedWrongTypes = [...newWrongTypes];
     let saveWrongIndexes = new Array(50).fill(1);
@@ -441,54 +441,53 @@ const PracticeResult = () => {
       <ProblemSideBar />
       <Container isLoading={isLoading}>
         {isLoading ? (
-            <HashLoader style={{ display: 'flex' }} />
-          ) : (
-            <>
-              <Title>총점: {totalScore}</Title>
-              <ShowButton onClick={() => setShowOnlyWrong(!showOnlyWrong)}>
-                {showOnlyWrong ? '전부 표시' : '오답만 표시'}
-              </ShowButton>
+          <HashLoader style={{ display: 'flex' }} />
+        ) : (
+          <>
+            <Title>총점: {totalScore}</Title>
+            <ShowButton onClick={() => setShowOnlyWrong(!showOnlyWrong)}>
+              {showOnlyWrong ? '전부 표시' : '오답만 표시'}
+            </ShowButton>
 
-              <ListContainer>
-                {filteredData.map((item) => {
-                  const [index, value] = item;
-                  const answer = answers.find((answer) => answer.id === index);
+            <ListContainer>
+              {filteredData.map((item) => {
+                const [index, value] = item;
+                const answer = answers.find((answer) => answer.id === index);
 
-                  // 틀린 문제만 보이는 경우
-                  if (showOnlyWrong && wrongIndexes[index] === 0) {
-                    return null;
-                  }
+                // 틀린 문제만 보이는 경우
+                if (showOnlyWrong && wrongIndexes[index] === 0) {
+                  return null;
+                }
 
-                  return (
-                    <ListItem key={index}>
-                      <ListRow>
-                        <div
-                          style={{ fontWeight: '600', fontSize: '1.2em' }}
-                        >{`${parseInt(index.slice(-2))}번`}</div>
-                        <div
-                          style={{
-                            margin: '10px',
-                            color: wrongIndexes[parseInt(index.slice(-2)) - 1]
-                              ? 'blue'
-                              : 'red',
-                          }}
-                        >
-                          {`선택: ${value}`}
-                        </div>
-                        <div style={{ margin: '10px' }}>{`정답: ${
-                          answer ? answer.data.answer : '정답 정보 없음'
-                        }`}</div>
-                      </ListRow>
-                      <CommantButton onClick={() => handleCommentary(index)}>
-                        해설
-                      </CommantButton>
-                    </ListItem>
-                  );
-                })}
-              </ListContainer>
-            </>
-          )
-        }
+                return (
+                  <ListItem key={index}>
+                    <ListRow>
+                      <div
+                        style={{ fontWeight: '600', fontSize: '1.2em' }}
+                      >{`${parseInt(index.slice(-2))}번`}</div>
+                      <div
+                        style={{
+                          margin: '10px',
+                          color: wrongIndexes[parseInt(index.slice(-2)) - 1]
+                            ? 'blue'
+                            : 'red',
+                        }}
+                      >
+                        {`선택: ${value}`}
+                      </div>
+                      <div style={{ margin: '10px' }}>{`정답: ${
+                        answer ? answer.data.answer : '정답 정보 없음'
+                      }`}</div>
+                    </ListRow>
+                    <CommantButton onClick={() => handleCommentary(index)}>
+                      해설
+                    </CommantButton>
+                  </ListItem>
+                );
+              })}
+            </ListContainer>
+          </>
+        )}
       </Container>
     </Box>
   );

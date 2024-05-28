@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { HashLoader } from 'react-spinners';
@@ -114,17 +114,21 @@ const ProblemCommentary = () => {
           'answer round',
           examDocId,
           examDocId,
-          index,
+          index
         );
 
         const answerDocSnapshot = await getDoc(answerDocRef);
         if (answerDocSnapshot.exists()) {
           const data = answerDocSnapshot.data();
+          const wrongCommentary = data.wrongCommentary
+            ? data.wrongCommentary
+            : '123';
+
           const answerObj = {
             id: answerDocSnapshot.id,
             answer: data.answer,
             commentary: data.commentary,
-            wrongCommentary: data.wrongCommentary,
+            wrongCommentary: wrongCommentary,
           };
           setAnswer(answerObj);
         } else {
@@ -140,19 +144,24 @@ const ProblemCommentary = () => {
       await fetchAnswers();
       setIsLoading(false);
     };
-    
+
     fetchData();
   }, [examDocId]);
 
   const splitText = (text) => {
     const regex = /(①|②|③|④|⑤)[^①-⑤]*/g;
-    const sentences = text.match(regex);
+    const matches = text.match(regex);
 
-    return sentences.map((sentence, index) => (
-      <div key={index}>
-        <p>{sentence.trim()}</p>
-      </div>
-    ));
+    if (matches) {
+      return matches.map((sentence, index) => (
+        <div key={index}>
+          <p>{sentence.trim()}</p>
+        </div>
+      ));
+    } else {
+      // 오답 해설 없는 경우
+      return null;
+    }
   };
 
   return (
@@ -161,40 +170,47 @@ const ProblemCommentary = () => {
       <Container>
         {isLoading ? (
           <HashLoader style={{ display: 'flex' }} />
-          ) : (
-            <>
-              <Title>{formattedId} 해설</Title>
-              <BackButton onClick={() => navigate(-1)}>돌아가기</BackButton>
-              <BodyContainer>
-                <img
-                  src={problem.data.img}
-                  alt="Problem Image"
+        ) : (
+          <>
+            <Title>{formattedId} 해설</Title>
+            <BackButton onClick={() => navigate(-1)}>돌아가기</BackButton>
+            <BodyContainer>
+              <img
+                src={problem.data.img}
+                alt="Problem Image"
+                style={{
+                  objectFit: 'contain',
+                  width: '30%',
+                  minWidth: '350px',
+                  height: 'auto',
+                }}
+              />
+
+              <BoxContainer>
+                {/* 정답 해설 부분, 오답 해설이 없을 경우 너비 조정 */}
+                <Box
                   style={{
-                    objectFit: 'contain',
-                    width: '30%',
-                    minWidth: '350px',
-                    height: 'auto',
+                    backgroundColor: '#e0f7fa',
+                    width: splitText(answer.wrongCommentary) ? '40%' : '80%',
                   }}
-                />
+                >
+                  <SemiTitle>정답: {answer.answer}</SemiTitle>
+                  <SemiTitle>정답 해설</SemiTitle>
+                  <p>{answer.commentary}</p>
+                </Box>
 
-                <BoxContainer>
-                  <Box style={{ backgroundColor: '#e0f7fa' }}>
-                    <SemiTitle>정답: {answer.answer}</SemiTitle>
-                    <SemiTitle>정답 해설</SemiTitle>
-                    <p>{answer.commentary}</p>
-                  </Box>
-
+                {/* 오답 해설 부분, splitText의 반환값이 null이 아닐 때만 렌더링 */}
+                {splitText(answer.wrongCommentary) && (
                   <Box style={{ backgroundColor: '#ffebee' }}>
                     <SemiTitle>오답 해설</SemiTitle>
                     {splitText(answer.wrongCommentary)}
                   </Box>
-                </BoxContainer>
-              </BodyContainer>
-            </>
-          )
-        }
+                )}
+              </BoxContainer>
+            </BodyContainer>
+          </>
+        )}
       </Container>
-      
     </div>
   );
 };

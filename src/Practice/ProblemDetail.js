@@ -132,7 +132,8 @@ const ArrowButton = styled(MoveButton)`
     props.disabled ? '#495057' : '#838abd'}; // 비활성화 색상 변경
   margin: 20px;
   &:hover {
-    box-shadow: ${(props) => props.disabled ? '0px 0px 0px 0px white' : '0px 0px 0px 5px white'};
+    box-shadow: ${(props) =>
+      props.disabled ? '0px 0px 0px 0px white' : '0px 0px 0px 5px white'};
   }
 `;
 const SubmitButton = styled(MoveButton)`
@@ -206,14 +207,14 @@ const ProblemDetail = () => {
       await fetchProblems();
       setIsLoading(false);
     };
-    
+
     fetchData();
   }, [examDocId]);
 
   useEffect(() => {
     console.log('useEffect: problems: ');
     console.log(problems);
-  }, [problems])
+  }, [problems]);
 
   // 북마크 가져오기
   const fetchBookmarks = async () => {
@@ -330,7 +331,8 @@ const ProblemDetail = () => {
         return id + examDocId * 100 + 1;
       });
 
-      if(saveBookMarkArray.length === 0){ // 북마크 없으면 바로 네비게이트
+      if (saveBookMarkArray.length === 0) {
+        // 북마크 없으면 바로 네비게이트
         setIsBookmarkSaved(true);
       }
 
