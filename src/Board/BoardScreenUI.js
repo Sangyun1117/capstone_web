@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import HashLoader from 'react-spinners/HashLoader';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import MyPagination from './MyPagination';
 
 const BodyContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   height: 90%;
   width: 60%;
@@ -17,15 +16,15 @@ const BodyContainer = styled.div`
   top: 10em;
   left: 20%;
   position: fixed;
+  overflow-y: auto;
 `;
 
 const PostList = styled.div`
   display: flex;
   flex-direction: column;
-
   align-items: center;
   width: 100%;
-  height: 100%;
+  height: 85%;
 `;
 
 const ListItem = styled.button`
@@ -34,10 +33,10 @@ const ListItem = styled.button`
   justify-content: center;
   align-items: left;
   width: 95%;
-  height: 50px;
-  top: 20px;
+  min-height: 50px;
+  top: 30px;
   padding: 10px 25px;
-  margin: 10px;
+  margin: 8px;
   border-radius: 5px;
   border: none;
   font-weight: 500;
@@ -137,11 +136,14 @@ const BoardScreenUI = ({ boardName, search }) => {
   const [filteredPosts, setFilteredPosts] = useState([]); // 검색으로 필터링 된 글
   const [isLoading, setIsLoading] = useState(true); // 로딩 상태
 
-  // 안드로이드 환경에서는 localhost로 작성하면 에러 발생하므로 ip주소 입력 필요.
+  const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
+  const itemsPerPage = 10; // 페이지당 글 수
+
   //const serverPath = 'http://192.168.0.3:8080/';
   //const serverPath = 'http://223.194.133.15:8080/';
   const serverPath = 'http://192.168.0.3:8080/';
   //const serverPath = 'http://192.168.181.1:8080/';
+
   const navigate = useNavigate();
 
   // 글 검색
@@ -175,6 +177,16 @@ const BoardScreenUI = ({ boardName, search }) => {
       });
   }, []);
 
+  // 페이지 변경 핸들러
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  // 현재 페이지에 해당하는 글 목록 계산
+  const indexOfLastPost = currentPage * itemsPerPage;
+  const indexOfFirstPost = indexOfLastPost - itemsPerPage;
+  const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
+
   return (
     <>
       <BodyContainer>
@@ -183,7 +195,7 @@ const BoardScreenUI = ({ boardName, search }) => {
         ) : (
           <>
             <PostList>
-              {filteredPosts.map((item, index) => (
+              {currentPosts.map((item, index) => (
                 <ListItem
                   key={item.id}
                   style={{
@@ -211,6 +223,12 @@ const BoardScreenUI = ({ boardName, search }) => {
                 </ListItem>
               ))}
             </PostList>
+            <MyPagination
+              itemsPerPage={itemsPerPage}
+              totalItems={filteredPosts.length}
+              currentPage={currentPage}
+              onPageChange={handlePageChange}
+            />
           </>
         )}
       </BodyContainer>
