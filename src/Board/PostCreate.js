@@ -5,19 +5,20 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import TextField from '@mui/material/TextField';
 import { Button } from '@mui/material';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 5em);
+  height: calc(100% - 5em);
   width: 60%;
   min-width: 30em;
   background-color: #bbd2ec;
   padding: 2em;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
   margin: auto;
+  position: relative;
 `;
 
 const BodyInput = styled.textarea`
@@ -44,8 +45,7 @@ const SubmitButton = styled(Button)`
     justify-content: center;
     margin-top: 30px;
     margin-left: auto;
-    width: 10%;
-    min-width: 70px;
+    min-width: 100px;
     height: 50px;
     cursor: pointer;
     font-weight: 400;
@@ -74,10 +74,10 @@ const Title = styled.div`
   background-color: white;
   border-radius: 5px;
   font-weight: 600;
-  font-size: 1.5em;
-  width: 25%;
-  height: 50px;
-  margin: 20px 37.5%;
+  font-size: 1.4em;
+  width: 300px;
+  padding: 10px;
+  margin: 20px calc((100% - 300px) / 2);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 `;
 
@@ -97,10 +97,10 @@ const PostCreate = () => {
   const navigate = useNavigate();
 
   const userEmail = useSelector((state) => state.userEmail);
-  const serverPath = 'http://192.168.0.3:8080/';
+  //const serverPath = 'http://192.168.0.3:8080/';
   //const serverPath = 'http://223.194.133.15:8080/';
   //const serverPath = 'http://192.168.0.3:8080/';
-  //const serverPath = 'http://192.168.126.1:8080/';
+  const serverPath = 'http://192.168.181.1:8080/';
 
   // 작성한 글을 db에 반영
   const handleSubmit = () => {
@@ -149,8 +149,51 @@ const PostCreate = () => {
         return '';
     }
   };
-
   const boardDisplayName = getBoardDisplayName(boardName);
+
+  const quillModules = {
+    toolbar: {
+      container: [
+        [{ 'header': [1, 2, 3, 4, 5, 6, false] }], // 사이즈
+        [{ 'align': [] }], // 정렬
+
+        ['bold', 'italic', 'underline', 'strike'],
+        ['image'],
+        [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'list': 'check' }],
+        [{ 'color': [] }, { 'background': [] }], // 글자색, 배경색
+      ],
+      handlers: {
+        'image': imageHandler,
+      },
+    },
+  };
+
+  const imageHandler = () => {
+    const input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
+    input.click();
+
+    input.onchange = async () => {
+      const file = input.files[0];
+      const formData = new FormData();
+      formData.append('image', file);
+
+      try {
+        const response = await axios.post(serverPath + 'posts/uploadImage', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+        const imageUrl = response.data;
+        const quill = this.quill;
+        const range = quill.getSelection();
+        quill.insertEmbed(range.index, 'image', imageUrl);
+      } catch (error) {
+        console.error('Image upload failed:', error);
+      }
+    };
+  };
 
   return (
     <Container>
@@ -181,16 +224,13 @@ const PostCreate = () => {
         value={body}
         onChange={(e) => setBody(e.target.value)}
       /> */}
-      <StyledEditorWrapper>
-        <CKEditor
-          editor={ClassicEditor}
-          data={body}
-          onChange={(event, editor) => {
-            const data = editor.getData();
-            setBody(data);
-          }}
-        />
-      </StyledEditorWrapper>
+      <ReactQuill
+        theme="snow"
+        value={body}
+        onChange={setBody}
+        modules={quillModules}
+        style={{ height: '500px', overflowY: 'auto', backgroundColor: 'white' }}
+      />
 
       <SubmitButton onClick={handleSubmit}>등록하기</SubmitButton>
     </Container>
