@@ -16,7 +16,7 @@ const Container = styled.div`
   width: 60%;
   min-width: 30em;
   background-color: #bbd2ec;
-  margin-right: 15%;
+  right: 5vw;
   position: relative;
   padding-bottom: 5em;
 `;
@@ -109,7 +109,7 @@ const MoveButtonContainer = styled.div`
   justify-content: center;
   width: 50%;
   height: 70px;
-  margin-top: 20px;
+  margin-top: 40px;
 `;
 
 const MoveButton = styled.button`

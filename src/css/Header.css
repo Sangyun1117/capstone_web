@@ -1,24 +1,37 @@
 * {
-    /*스크롤바 안나타나게 하기 위함.*/
-    margin: 0;
-    padding: 0;
-  }
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    min-height: 5em;
-    width: 100%;
-    min-width: 1200px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
-    z-index: 99;
-  }
-  
-  .right-align {
-    display: flex;
-    align-items: center;
-  }
-  
-  .header .right-align span {
-    margin-right: 1em; /* 로그인과 회원가입 사이의 간격 조절 */
-  }
+  /*스크롤바 안나타나게 하기 위함.*/
+  margin: 0;
+  padding: 0;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 5em;
+  width: 100%;
+  min-width: 1200px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* 그림자 추가 */
+  z-index: 99;
+}
+
+.navList {
+  display: flex;
+  min-width: 650px;
+}
+
+.menu {
+  margin: 10px;
+}
+
+.right-align {
+  display: flex;
+  align-items: center;
+  min-width: 250px;
+}
+
+.header .right-align span {
+  margin-right: 1em;
+  /* 로그인과 회원가입 사이의 간격 조절 */
+}

@@ -51,81 +51,83 @@ const Header = () => {
 
   return (
     <div className="header">
-      <Link to="/">
-        <img src={logo} alt="Logo" style={{ marginLeft: 40 }} />
+      <Link to="/" >
+        <img src={logo} alt="Logo" style={{ marginLeft: '40px' }} />
       </Link>
-      <div className="menu">
-        <div className="item">문제풀이</div>
-        <div className="menu-content">
-          <div className="sub-item">
-            <Link to="practiceRoundSelect">기출문제</Link>
-          </div>
-          <div className="sub-item">
-            <Link to="eraProblem/era1">시대별 풀이</Link>
-          </div>
-          <div className="sub-item">
-            <Link to="typeProblem/type1">유형별 풀이</Link>
-          </div>
-          <div className="sub-item">
-            <Link to="killerProblem">킬러문제</Link>
-          </div>
-          <div className="sub-item">
-            <a
-              href="recommendationQuestion"
-              onClick={handleLinkClick('recommendationQuestion')}
-            >
-              추천문제
-            </a>
-          </div>
-        </div>
-      </div>
-      <div className="menu">
-        <div className="item">나의 풀이정보</div>
-        <div className="menu-content">
-          <div className="sub-item">
-            <Link to="wrongProblem">오답노트</Link>
-          </div>
-          <div className="sub-item">
-            <Link to="bookmarkProblem">북마크</Link>
-          </div>
-          <div className="sub-item">
-            <Link to="statistics">통계</Link>
+      <div className="navList">
+        <div className="menu">
+          <div className="item">문제풀이</div>
+          <div className="menu-content">
+            <div className="sub-item">
+              <Link to="practiceRoundSelect">기출문제</Link>
+            </div>
+            <div className="sub-item">
+              <Link to="eraProblem/era1">시대별 풀이</Link>
+            </div>
+            <div className="sub-item">
+              <Link to="typeProblem/type1">유형별 풀이</Link>
+            </div>
+            <div className="sub-item">
+              <Link to="killerProblem">킬러문제</Link>
+            </div>
+            <div className="sub-item">
+              <a
+                href="recommendationQuestion"
+                onClick={handleLinkClick('recommendationQuestion')}
+              >
+                추천문제
+              </a>
+            </div>
           </div>
         </div>
-      </div>
+        <div className="menu">
+          <div className="item">나의 풀이정보</div>
+          <div className="menu-content">
+            <div className="sub-item">
+              <Link to="wrongProblem">오답노트</Link>
+            </div>
+            <div className="sub-item">
+              <Link to="bookmarkProblem">북마크</Link>
+            </div>
+            <div className="sub-item">
+              <Link to="statistics">통계</Link>
+            </div>
+          </div>
+        </div>
 
-      <div className="menu">
-        <div className="item">미디어</div>
-        <div className="menu-content">
-          <div className="sub-item">
-            <Link to="historyTales">역사이야기</Link>
-          </div>
-          <div className="sub-item">
-            <Link to="likedVideos">즐겨찾는 영상</Link>
-          </div>
-          <div className="sub-item">
-            <Link to="quizGame">게임</Link>
-          </div>
-          <div className="sub-item">
-            <Link to="dictionaryHome">용어사전</Link>
-          </div>
-          <div className="sub-item">
-            <Link to="eventMap">역사지도</Link>
+        <div className="menu">
+          <div className="item">미디어</div>
+          <div className="menu-content">
+            <div className="sub-item">
+              <Link to="historyTales">역사이야기</Link>
+            </div>
+            <div className="sub-item">
+              <Link to="likedVideos">즐겨찾는 영상</Link>
+            </div>
+            <div className="sub-item">
+              <Link to="quizGame">게임</Link>
+            </div>
+            <div className="sub-item">
+              <Link to="dictionaryHome">용어사전</Link>
+            </div>
+            <div className="sub-item">
+              <Link to="eventMap">역사지도</Link>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="menu">
-        <Link
-          to="boardScreen"
-          style={{ textDecoration: 'none', color: 'black' }}
-        >
-          <div className="item">게시판</div>
-        </Link>
+        <div className="menu">
+          <Link
+            to="boardScreen"
+            style={{ textDecoration: 'none', color: 'black' }}
+          >
+            <div className="item">게시판</div>
+          </Link>
+        </div>
       </div>
       <div className="right-align">
         {isLoggedIn ? (
           <>
-            <span style={{ fontSize: '12px' }}>{userEmail}님 환영합니다.</span>
+            <span style={{ fontSize: '12px' }}>{userEmail.split('@')[0]}님 환영합니다.</span>
             <button className="white-background-button" onClick={handleLogout}>
               로그아웃
             </button>
