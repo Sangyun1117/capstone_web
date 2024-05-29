@@ -248,80 +248,99 @@ const Statistics = () => {
   let minTypeLabel =
     minTypeIndex >= 0 ? dataType.labels[minTypeIndex] : '데이터 없음';
 
-    return (
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
-        <MyPageSideBar />
-    
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}> 
-          {total === 0 && (
-            <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <h1>문제풀이 데이터가 없습니다.</h1>
+  return (
+    <div style={{ display: 'flex', flexDirection: 'row' }}>
+      <MyPageSideBar />
+
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+
+
+        {total !== 0 && (
+          <div style={{ flex: 1 }}>
+            {/* 통계 정보 섹션 */}
+            <div className="statistics-info-container">
+              <h2>통계 정보</h2>
+              <p>지금까지 푼 문제 수: {total}</p>
+              <p>틀린 문제의 수: {wrongProblemsCount}</p>
+              <p>정답율: {accuracyRate}%</p>
+              <p>
+                <strong style={{ fontWeight: 'bold', fontSize: '17px' }}>
+                  {minEraLabel}
+                </strong>
+                시대와
+                <strong style={{ fontWeight: 'bold', fontSize: '17px' }}>
+                  {' '}
+                  {minTypeLabel}
+                </strong>
+                유형의 학습이 부족합니다.
+              </p>
+              <button
+                className="statistics-button"
+                onClick={() => navigate(`/eraProblem/era${minValueIndex + 1}`)}
+              >{`${minEraLabel} 공부하러 가기`}</button>
+              <button
+                className="statistics-button"
+                onClick={() => navigate(`/typeProblem/type${minTypeIndex + 1}`)}
+              >{`${minTypeLabel} 공부하러 가기`}</button>
             </div>
-          )}
-    
-          {total !== 0 && (
-            <div style={{ flex: 1 }}>
-              {/* 통계 정보 섹션 */}
-              <div className="statistics-info-container">
-                <h2>통계 정보</h2>
-                <p>지금까지 푼 문제 수: {total}</p>
-                <p>틀린 문제의 수: {wrongProblemsCount}</p>
-                <p>정답율: {accuracyRate}%</p>
-                <p>
-                  <strong style={{ fontWeight: 'bold', fontSize: '17px' }}>
-                    {minEraLabel}
-                  </strong>
-                  시대와
-                  <strong style={{ fontWeight: 'bold', fontSize: '17px' }}>
-                    {' '}
-                    {minTypeLabel}
-                  </strong>
-                  유형의 학습이 부족합니다.
-                </p>
-                <button
-                  className="statistics-button"
-                  onClick={() => navigate(`/eraProblem/era${minValueIndex + 1}`)}
-                >{`${minEraLabel} 공부하러 가기`}</button>
-                <button
-                  className="statistics-button"
-                  onClick={() => navigate(`/typeProblem/type${minTypeIndex + 1}`)}
-                >{`${minTypeLabel} 공부하러 가기`}</button>
-              </div>
-    
-              {/* 시대별 통계 섹션 */}
-              <div className="statistics-era-section">
-                <h2>시대별 통계</h2>
-                <div className="statistics-chart-container">
-                  <div className="statistics-chart">
-                    <h3>시대별 막대 그래프</h3>
-                    <Bar data={eradata} options={options} />
-                  </div>
-                  <div className="statistics-chart">
-                    <h3>시대별 원 그래프</h3>
-                    <Doughnut data={eradataCiecle} />
-                  </div>
+
+            {/* 시대별 통계 섹션 */}
+            <div className="statistics-era-section">
+              <h2>시대별 통계</h2>
+              <div className="statistics-chart-container">
+                <div className="statistics-chart">
+                  <h3>시대별 막대 그래프</h3>
+                  <Bar data={eradata} options={options} />
                 </div>
-              </div>
-    
-              {/* 유형별 통계 섹션 */}
-              <div className="statistics-type-section">
-                <h2>유형별 통계</h2>
-                <div className="statistics-chart-container">
-                  <div className="statistics-chart">
-                    <h3>유형별 막대 그래프</h3>
-                    <Bar data={dataType} options={options} />
-                  </div>
-                  <div className="statistics-chart">
-                    <h3>유형별 원 그래프</h3>
-                    <Doughnut data={dataTypeCiecle} />
-                  </div>
+                <div className="statistics-chart">
+                  <h3>시대별 원 그래프</h3>
+                  <Doughnut data={eradataCiecle} />
                 </div>
               </div>
             </div>
-          )}
-        </div>
+
+            {/* 유형별 통계 섹션 */}
+            <div className="statistics-type-section">
+              <h2>유형별 통계</h2>
+              <div className="statistics-chart-container">
+                <div className="statistics-chart">
+                  <h3>유형별 막대 그래프</h3>
+                  <Bar data={dataType} options={options} />
+                </div>
+                <div className="statistics-chart">
+                  <h3>유형별 원 그래프</h3>
+                  <Doughnut data={dataTypeCiecle} />
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {total === 0 && (
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+            <h1 style={{marginTop:100}}>문제풀이 데이터가 없습니다.</h1>
+            <div style={{marginTop: '10%'}}>
+            <button
+                className="statistics-button"
+                onClick={() => navigate(`/practiceRoundSelect`)}
+              >{`기출문제 공부하러 가기`}
+              </button>
+              <button
+                className="statistics-button"
+                onClick={() => navigate(`/eraProblem/era1`)}
+              >{`시대별 공부하러 가기`}
+              </button>
+              <button
+                className="statistics-button"
+                onClick={() => navigate(`/typeProblem/type1`)}
+              >{`유형별 공부하러 가기`}
+              </button>
+            </div>
+          </div>
+        )}
       </div>
-    );
+    </div>
+  );
 };
 
 export default Statistics;
