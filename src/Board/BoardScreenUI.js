@@ -138,11 +138,7 @@ const BoardScreenUI = ({ boardName, search }) => {
 
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
   const itemsPerPage = 9; // 페이지당 글 수
-
-  //const serverPath = 'http://192.168.0.3:8080/';
-  //const serverPath = 'http://223.194.133.15:8080/';
-  //const serverPath = 'http://192.168.0.3:8080/';
-  const serverPath = 'http://192.168.181.1:8080/';
+  const serverPath = 'http://localhost:8080/';
 
   const navigate = useNavigate();
 
@@ -194,7 +190,6 @@ const BoardScreenUI = ({ boardName, search }) => {
           <div style={{ marginTop: '30%' }}>
             <HashLoader loading={isLoading} size={50} />
           </div>
-
         ) : (
           <>
             <PostList>

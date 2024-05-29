@@ -165,7 +165,7 @@ const Title = styled.div`
 const CreateInfo = styled.div`
   display: flex;
   justify-content: space-between;
-`
+`;
 
 // 게시판 글 클릭했을 때 내용 보이는 화면
 const PostDetail = () => {
@@ -179,11 +179,7 @@ const PostDetail = () => {
   const userEmail = useSelector((state) => state.userEmail);
   const { boardName, post } = location.state;
   const postCreatingTime = formatDate(post.postId.split('_')[1]);
-
-  //const serverPath = 'http://223.194.133.15:8080/';
-  //const serverPath = 'http://192.168.0.3:8080/';
-  const serverPath = 'http://192.168.181.1:8080/';
-  //const serverPath = 'http://localhost:8080/';
+  const serverPath = 'http://localhost:8080/';
 
   // 작성 시각 변환기
   function formatDate(date) {
@@ -196,8 +192,13 @@ const PostDetail = () => {
       second: '2-digit',
       hour12: false,
     };
-    const formattedDate = new Intl.DateTimeFormat('ko-KR', options).format(date);
-    return formattedDate.replace(/\. /g, '-').replace(/\./g, '').replace(/, /g, ' ');
+    const formattedDate = new Intl.DateTimeFormat('ko-KR', options).format(
+      date
+    );
+    return formattedDate
+      .replace(/\. /g, '-')
+      .replace(/\./g, '')
+      .replace(/, /g, ' ');
   }
 
   const getBoardDisplayName = (boardName) => {
