@@ -102,17 +102,17 @@ const PostCreate = () => {
       return; // 함수 실행을 여기서 중단
     }
 
-    const postType = post ? 1 : 0; // 직성모드(0), 수정모드(1)
+    const id = post ? post.id : null;
     const postId = post ? post.postId : userEmail + '_' + Date.now();
 
     // 새 글 데이터
     const newPost = {
+      id: id,
       postId: postId,
       boardName: boardName,
       userEmail: userEmail,
       title: title,
       body: body,
-      type: postType,
     };
 
     axios
