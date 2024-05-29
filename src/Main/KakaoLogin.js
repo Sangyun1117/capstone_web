@@ -4,7 +4,7 @@ import { firestore } from '../firebaseConfig';
 import { doc, setDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth'; // Firebase Auth 사용
-
+import kakaoLoginImg from '../Images/kakaologin.png';
 
 const SocialLoginKakao = () => {
     const kakaoClientId = '52a93a7d9dad3f9f09e39cd75e331fe8';
@@ -53,7 +53,7 @@ const SocialLoginKakao = () => {
             useLoginForm={false} // 이 옵션은 react-kakao-login 라이브러리 버전에 따라 다를 수 있습니다.
             render={({ onClick }) => (
                 <img
-                    src="https://firebasestorage.googleapis.com/v0/b/capstone-ac206.appspot.com/o/%EC%9D%B4%EB%AF%B8%EC%A7%80%2F%EC%B9%B4%EC%B9%B4%EC%98%A4%EB%A1%9C%EA%B7%B8%EC%9D%B8.png?alt=media&token=e0bac597-8693-473c-a22d-af6503973f2a"
+                    src={kakaoLoginImg}
                     alt="카카오 로그인"
                     onClick={onClick}
                     style={{ cursor: 'pointer', width: '300px', height: '65px', marginTop: 20 }} // 여기에서 이미지 크기를 설정합니다.
