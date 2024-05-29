@@ -49,7 +49,7 @@ const Map = () => {
         });
 
         // 마커 클릭 이벤트에 인포윈도우를 표시하도록 설정
-        window.kakao.maps.event.addListener(marker, 'click', () => {
+        window.kakao.maps.event.addListener(marker, 'mouseover', () => {
           // 인포윈도우의 내용을 업데이트하고 해당 마커 위치에서 열기
           infowindow.setContent(
             `<div style="width:150px;text-align:center;padding:10px;">${data.title}</div><div style="width:150px;text-align:center;padding:10px; font-size:12px;">${data.description}</div>`
@@ -58,6 +58,11 @@ const Map = () => {
 
           // 선택된 마커 업데이트
           setSelectedMarker(marker);
+          //handleSideBarOpen();
+          //setSidebarEid(data.eid);
+        });
+        // 마커 클릭 이벤트에 인포윈도우를 표시하도록 설정
+        window.kakao.maps.event.addListener(marker, 'click', () => {
           handleSideBarOpen();
           setSidebarEid(data.eid);
         });
@@ -90,7 +95,7 @@ const Map = () => {
           options={[
             { value: '-9999~-18', label: '전삼국' },
             { value: '-17~697', label: '삼국' },
-            { value: '698~897', label: '남북극' },
+            { value: '698~897', label: '남북국' },
             { value: '898~935', label: '후삼국' },
             { value: '936~1391', label: '고려' },
             { value: '1392~1896', label: '조선' },

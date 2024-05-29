@@ -2,8 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './EventMap.css'; // EventMap.css 파일 임포트
 import ReactMarkdown from 'react-markdown';
-import { Button, IconButton } from '@mui/material';
-import CancelPresentationIcon from '@mui/icons-material/CancelPresentation';
+import { IconButton, Box } from '@mui/material';
+import InputIcon from '@mui/icons-material/Input';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import rehypeRaw from 'rehype-raw';
 
 const MapSideBar = ({ isOpen, onClose, eid }) => {
@@ -65,8 +66,12 @@ const MapSideBar = ({ isOpen, onClose, eid }) => {
     h1: ({ node, ...props }) => (
       <div style={{ marginTop: '10px' }}>
         <br />
-        <div style={{ fontSize: '24px', fontWeight: 'bold' }} {...props} />
-        <hr />
+        <div
+          className="map-sidebar-text"
+          style={{ fontSize: '24px', fontWeight: 'bold' }}
+          {...props}
+        />
+        <hr className="map-sidebar-border" />
       </div>
     ),
     h2: ({ node, ...props }) => (
@@ -144,8 +149,8 @@ const MapSideBar = ({ isOpen, onClose, eid }) => {
             onClick={onClose}
             style={{
               position: 'absolute',
-              top: '2%',
-              left: '83%',
+              top: '50%',
+              right: '88%',
               width: '15%',
               minWidth: '100px',
               backgroundColor: 'transparent',
@@ -155,27 +160,33 @@ const MapSideBar = ({ isOpen, onClose, eid }) => {
               zIndex: 2501,
             }}
           >
-            <CancelPresentationIcon sx={{ fontSize: 40, color: 'red' }} />
+            <ArrowForwardIosIcon sx={{ fontSize: 40, color: 'gray' }} />
           </IconButton>
-          <h1
+          <div
             style={{
               paddingTop: '20px',
               paddingBottom: '20px',
-              height: '5%',
+              height: '10%',
               width: '100%',
-              backgroundColor: 'lightBlue',
-              color: 'white',
-              textAlign: 'center',
               zIndex: 2500,
             }}
           >
-            {content.headword}
-          </h1>
+            <h1
+              style={{
+                color: '#FF9100',
+                textAlign: 'center',
+                marginBottom: '10px',
+              }}
+            >
+              {content.headword}
+              <hr className="map-sidebar-hr" />
+            </h1>
+          </div>
 
           <div
             style={{
               width: '80%',
-              height: '80%',
+              height: '75%',
               paddingLeft: '10%',
               paddingRight: '10%',
               overflowY: 'auto',
@@ -205,16 +216,17 @@ const MapSideBar = ({ isOpen, onClose, eid }) => {
               </div>
             )}
             {content.definition && (
-              <h2 style={{ marginTop: '20px' }}>
-                정의<hr></hr>
+              <h2 style={{ marginTop: '20px' }} className="map-sidebar-text">
+                정의
+                <hr className="map-sidebar-border" />
               </h2>
             )}
             <p>{content.definition}</p>
 
             {content.summary && (
-              <h2 style={{ marginTop: '20px' }}>
+              <h2 style={{ marginTop: '20px' }} className="map-sidebar-text">
                 요약
-                <hr />
+                <hr className="map-sidebar-border" />
               </h2>
             )}
             <p>{content.summary}</p>
@@ -227,14 +239,21 @@ const MapSideBar = ({ isOpen, onClose, eid }) => {
               />
             )}
           </div>
-          <h1
+          <Box
             className="map-sidebar-detail-button"
             onClick={() =>
               navigate('/dictionary', { state: { content: content } })
             }
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
           >
-            → 용어사전 가기
-          </h1>
+            <InputIcon sx={{ fontSize: 40, paddingRight: '10px' }} />
+            <h1>용어사전 가기</h1>
+          </Box>
         </div>
       )}
     </div>

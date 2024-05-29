@@ -28,12 +28,35 @@
   right: 0; /* 사이드바가 열린 상태 */
 }
 
+
+.map-sidebar-hr {
+  position: relative;
+  border: none;
+  border-top: 1px solid  #FF9100;
+  background-color: white;
+  font:24px sans-serif;    
+  text-align:center;
+  padding:10px 0 0;
+}
+.map-sidebar-hr::before {
+  position: relative;
+  top:-10px;
+  color:#FF9100;
+  content: "༺⁜࿇⁜༻";
+}
+.map-sidebar-text{
+  color:#FF9100;
+}
+.map-sidebar-border{
+  border-color:#FF9100;
+}
+
 .map-sidebar-detail-button {
   padding-top: 20px;
   padding-bottom: 20px;
   height: 5%;
   width: 100%;
-  background-color: lightGray;
+  background-color: lightblue;
   text-align: center;
   z-index: 2500;
   transition: all 0.3s ease;
@@ -41,7 +64,7 @@
 }
 
 .map-sidebar-detail-button:hover {
-  background-color: darkGray; /* 배경 색상 변경 */
-  color: white; /* 글자 색상 변경 */
+  background-color: darkblue; 
+  color: white; 
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); /* 그림자 효과 추가 */
 }

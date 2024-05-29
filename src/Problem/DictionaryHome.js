@@ -14,11 +14,10 @@ import { useNavigate } from 'react-router-dom';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-import { MediaSideBar } from './SideBar';
+import { MediaSideBar } from '../Problem/SideBar';
 import '../css/Problem.css';
 
 export default function DictionaryHome() {
-  // const userEmail = 'aaa@aaa.com';
   const navigate = useNavigate();
   const [type, setType] = useState('character');
   const [era, setEra] = useState('고려');
@@ -179,10 +178,16 @@ export default function DictionaryHome() {
                   }
                   style={{ cursor: 'pointer' }}
                 >
-                  <span style={{ paddingRight: '10%' }}>
+                  <span
+                    style={{
+                      display: 'inline-block',
+                      width: '30px',
+                      textAlign: 'center',
+                    }}
+                  >
                     {index + 1 + (currentPage - 1) * MAX_ITEM}
                   </span>
-                  {word.name}
+                  <span style={{ paddingLeft: '40px' }}>{word.name}</span>
                 </ListItemText>
               </ListItem>
             ))
