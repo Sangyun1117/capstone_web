@@ -4,7 +4,8 @@ import { Box, Typography, Button } from '@mui/material';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import { useLocation } from 'react-router-dom';
-import { MediaSideBar } from './SideBar';
+import { MediaSideBar } from '../Problem/SideBar';
+import '../css/Problem.css';
 
 export default function Dictionary() {
   const location = useLocation();
@@ -35,7 +36,11 @@ export default function Dictionary() {
     h1: ({ node, ...props }) => (
       <div style={{ paddingBottom: '0.5%' }}>
         <br />
-        <div style={{ fontSize: '2em', fontWeight: 'bold' }} {...props} />
+        <div
+          className="dictionary-text"
+          style={{ fontSize: '2em', fontWeight: 'bold' }}
+          {...props}
+        />
       </div>
     ),
     h2: ({ node, ...props }) => (
@@ -68,8 +73,13 @@ export default function Dictionary() {
       </div>
     ),
 
-    table: ({ children, ...props }) => (
-      <div style={{ textAlign: 'center', width: '100%' }}>
+    figcaption: ({ children, ...props }) => (
+      <div style={{ color: 'blue', textAlign: 'center', marginBottom: '15px' }}>
+        ▲ {children}
+      </div>
+    ),
+    table: ({ children, caption, ...props }) => (
+      <div style={{ textAlign: 'center', width: '100%', marginBottom: '15px' }}>
         <table {...props} style={{ width: '100%', borderCollapse: 'collapse' }}>
           {children}
         </table>
@@ -116,14 +126,18 @@ export default function Dictionary() {
       <Box
         style={{
           width: '60%',
+          minWidth: '800px',
           paddingTop: '5%',
           paddingBottom: '5%',
         }}
       >
         {content && (
           <div>
-            <h1>{content.headword}</h1>
-            <hr />
+            <h1 className="dictionary-text">{content.headword}</h1>
+            <div className="hr-container">
+              <hr className="dictionary-hr" />
+            </div>
+
             <div
               style={{
                 display: 'flex',
@@ -143,15 +157,30 @@ export default function Dictionary() {
                   textAlign: 'center',
                 }}
               >
-                <img
-                  src={content.headMedia.url}
-                  alt=""
-                  style={{
-                    width: '100%', // 이미지의 너비를 부모 요소에 맞춤
-                    height: '100%', // 높이도 부모 요소에 맞춤
-                    objectFit: 'contain', // 이미지 비율을 유지하면서 전체 내용이 보이도록 조정
-                  }}
-                />
+                {content.headMedia.url ? (
+                  <img
+                    src={content.headMedia.url}
+                    alt=""
+                    style={{
+                      width: '100%', // 이미지의 너비를 부모 요소에 맞춤
+                      height: '100%', // 높이도 부모 요소에 맞춤
+                      objectFit: 'contain', // 이미지 비율을 유지하면서 전체 내용이 보이도록 조정
+                    }}
+                  />
+                ) : (
+                  <div
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      backgroundColor: '#e9e9e9',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                  >
+                    이미지없음
+                  </div>
+                )}
                 {content.headMedia.caption && (
                   <p>△{content.headMedia.caption}</p>
                 )}
@@ -171,7 +200,7 @@ export default function Dictionary() {
                 })}
               </div>
             </div>
-            {content.summary && <h1>요약</h1>}
+            {content.summary && <h1 className="dictionary-text">요약</h1>}
             <p>{content.summary}</p>
             <ReactMarkdown
               children={content.body}

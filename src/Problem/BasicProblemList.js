@@ -61,8 +61,14 @@ export default function BasicProblemList({ param }) {
   };
 
   useEffect(() => {
-    if (isLoggedIn) getData();
-  }, []);
+    if (!isLoggedIn) {
+      const paramText = param === 'bookMark' ? '북마크' : '오답노트';
+      window.alert(paramText + '를 보실려면 로그인을 해주세요');
+      navigate('/login');
+    } else {
+      getData();
+    }
+  }, [userEmail]);
 
   const indexOfLastItem = currentPage * MAX_ITEM;
   const indexOfFirstItem = indexOfLastItem - MAX_ITEM;
@@ -142,7 +148,7 @@ export default function BasicProblemList({ param }) {
                   </IconButton>
                 }
               >
-                <ListItemText>
+                <ListItemText style={{ width: '20px' }}>
                   {index + 1 + (currentPage - 1) * MAX_ITEM}
                 </ListItemText>
                 <ListItemText
@@ -151,6 +157,7 @@ export default function BasicProblemList({ param }) {
                       state: {
                         data: data,
                         index: index + (currentPage - 1) * MAX_ITEM,
+                        param: param,
                       },
                     })
                   }

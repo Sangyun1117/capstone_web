@@ -19,11 +19,11 @@ import 'react-minimal-side-navigation/lib/ReactMinimalSideNavigation.css';
 import { MyPageSideBar } from './SideBar';
 import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function SampleProblem() {
   const location = useLocation();
-  const { data, index } = location.state;
-  //const param = 'era';
+  const { data, index, param } = location.state;
   const userEmail = useSelector((state) => state.userEmail);
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
   //const { param } = route.params;
@@ -166,169 +166,187 @@ export default function SampleProblem() {
       }}
     >
       <MyPageSideBar />
-      <Box
-        style={{
-          width: '50%',
-        }}
-      >
-        <Box>
-          <Typography
-            style={{
-              fontSize: '25px',
-              paddingLeft: '8%',
-              paddingTop: '5%',
-              fontWeight: 'bold',
-              textDecoration: 'underline',
-            }}
-          >
-            북마크
-          </Typography>
-        </Box>
+      {displayProblem ? (
         <Box
           style={{
-            paddingLeft: '8%',
-            paddingRight: '12%',
-            paddingTop: '1%',
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
+            width: '60%',
+            minWidth: '700px',
           }}
         >
-          <Typography style={{ fontSize: '120%' }}>
-            한국사 능력 검정 시험 {Math.floor(parseInt(displayProblem) / 100)}회{' '}
-            {parseInt(displayProblem) % 100}번
-          </Typography>
+          <Box style={{ paddingTop: '8%' }}>
+            <Typography
+              style={{
+                fontSize: '25px',
+                paddingLeft: '8%',
+                paddingTop: '5%',
+                fontWeight: 'bold',
+                textDecoration: 'underline',
+              }}
+            >
+              {param == 'bookMark' ? '북마크' : '오답노트'}
+            </Typography>
+          </Box>
+          <Box
+            style={{
+              paddingLeft: '8%',
+              paddingRight: '12%',
+              paddingTop: '1%',
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}
+          >
+            <Typography style={{ fontSize: '120%' }}>
+              한국사 능력 검정 시험 {Math.floor(parseInt(displayProblem) / 100)}
+              회 {parseInt(displayProblem) % 100}번
+            </Typography>
 
-          <Box>
-            {isLoggedIn && (
+            <Box>
+              {isLoggedIn && (
+                <Button
+                  onClick={handleBookMark}
+                  variant="outlined"
+                  color="primary"
+                >
+                  {bookMarkStar ? (
+                    <Box style={{ display: 'flex', flexDirection: 'row' }}>
+                      <StarIcon sx={{ color: '#FFFF00' }} />
+                      <Typography>북마크 해제</Typography>
+                    </Box>
+                  ) : (
+                    <Box style={{ display: 'flex', flexDirection: 'row' }}>
+                      <StarBorderIcon sx={{ color: '#000000' }} />
+                      <Typography>북마크 등록</Typography>
+                    </Box>
+                  )}
+                </Button>
+              )}{' '}
               <Button
-                onClick={handleBookMark}
+                onClick={toggleWebAnswer}
                 variant="outlined"
                 color="primary"
               >
-                {bookMarkStar ? (
-                  <Box style={{ display: 'flex', flexDirection: 'row' }}>
-                    <StarIcon sx={{ color: '#FFFF00' }} />
-                    <Typography>북마크 해제</Typography>
-                  </Box>
+                {isWebAnswerOpen ? (
+                  <Typography>해설 닫기</Typography>
                 ) : (
-                  <Box style={{ display: 'flex', flexDirection: 'row' }}>
-                    <StarBorderIcon sx={{ color: '#000000' }} />
-                    <Typography>북마크 등록</Typography>
-                  </Box>
+                  <Typography>해설 보기</Typography>
                 )}
               </Button>
-            )}{' '}
+            </Box>
+          </Box>
+          <Box
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              paddingLeft: '8%',
+              paddingTop: '1%',
+            }}
+          >
+            <span style={{ backgroundColor: 'lightBlue' }}>&nbsp;</span>
+            <Typography style={{ paddingRight: '1%' }}>&nbsp;시대: </Typography>
+            {problemEra && (
+              <Typography style={{ paddingRight: '12%' }}>
+                {problemEra}
+              </Typography>
+            )}
+            <span style={{ backgroundColor: 'lightBlue' }}>&nbsp;</span>
+            <Typography style={{ paddingRight: '1%' }}>&nbsp;유형: </Typography>
+            {problemType &&
+              problemType.map((type, index) => (
+                <Typography key={index}>
+                  {type}
+                  {index !== problemType.length - 1 && <span>,&nbsp;</span>}
+                </Typography>
+              ))}
+          </Box>
+
+          <Box
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+              paddingTop: '5%',
+              paddingBottom: '2%',
+            }}
+          >
+            {imageUrl && (
+              <img
+                key={imageUrl}
+                src={imageUrl}
+                alt="Image"
+                style={{ width: '50%', height: 'auto', marginBottom: 10 }}
+                resizeMode="contain"
+              />
+            )}
+            {isWebAnswerOpen && (
+              <Box
+                style={{ width: '60%', overflowY: 'auto', maxHeight: '600px' }}
+              >
+                <Typography>
+                  정답 :{' '}
+                  <span style={{ color: 'red' }}>{answer?.answer}번</span>
+                </Typography>
+                <Typography
+                  style={{ borderBottomWidth: 1, borderBottomColor: 'black' }}
+                >
+                  {'\n'}해설
+                </Typography>
+                <Typography>{answer?.commentary}</Typography>
+                <Typography
+                  style={{ borderBottomWidth: 1, borderBottomColor: 'black' }}
+                >
+                  {'\n'}오답 해설
+                </Typography>
+                <Typography>{answer?.wrongCommentary}</Typography>
+              </Box>
+            )}
+          </Box>
+          <hr />
+          <Box
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginTop: '1%',
+              marginBottom: '5%',
+            }}
+          >
             <Button
-              onClick={toggleWebAnswer}
-              variant="outlined"
-              color="primary"
+              onClick={handlePrevious}
+              variant="contained"
+              style={{ marginLeft: '10%' }}
             >
-              {isWebAnswerOpen ? (
-                <Typography>해설 닫기</Typography>
-              ) : (
-                <Typography>해설 보기</Typography>
-              )}
+              이전 문제
+            </Button>
+            <Typography>
+              {page + 1}/{data.length}
+            </Typography>
+            <Button
+              onClick={handleNext}
+              variant="contained"
+              style={{ marginRight: '10%' }}
+            >
+              다음 문제
             </Button>
           </Box>
         </Box>
+      ) : (
         <Box
           style={{
+            width: '60%',
+            height: '600px',
+            minWidth: '700px',
             display: 'flex',
-            flexDirection: 'row',
-            paddingLeft: '8%',
-            paddingTop: '1%',
-          }}
-        >
-          <span style={{ backgroundColor: 'lightBlue' }}>&nbsp;</span>
-          <Typography style={{ paddingRight: '1%' }}>&nbsp;시대: </Typography>
-          {problemEra && (
-            <Typography style={{ paddingRight: '12%' }}>
-              {problemEra}
-            </Typography>
-          )}
-          <span style={{ backgroundColor: 'lightBlue' }}>&nbsp;</span>
-          <Typography style={{ paddingRight: '1%' }}>&nbsp;유형: </Typography>
-          {problemType &&
-            problemType.map((type, index) => (
-              <Typography key={index}>
-                {type}
-                {index !== problemType.length - 1 && <span>,&nbsp;</span>}
-              </Typography>
-            ))}
-        </Box>
-
-        <Box
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'center',
-            paddingTop: '5%',
-            paddingBottom: '2%',
           }}
         >
-          {imageUrl && (
-            <img
-              key={imageUrl}
-              src={imageUrl}
-              alt="Image"
-              style={{ width: '50%', height: 'auto', marginBottom: 10 }}
-              resizeMode="contain"
-            />
-          )}
-          {isWebAnswerOpen && (
-            <Box
-              style={{ width: '60%', overflowY: 'auto', maxHeight: '600px' }}
-            >
-              <Typography>
-                정답 : <span style={{ color: 'red' }}>{answer?.answer}번</span>
-              </Typography>
-              <Typography
-                style={{ borderBottomWidth: 1, borderBottomColor: 'black' }}
-              >
-                {'\n'}해설
-              </Typography>
-              <Typography>{answer?.commentary}</Typography>
-              <Typography
-                style={{ borderBottomWidth: 1, borderBottomColor: 'black' }}
-              >
-                {'\n'}오답 해설
-              </Typography>
-              <Typography>{answer?.wrongCommentary}</Typography>
-            </Box>
-          )}
+          <CircularProgress />
         </Box>
-        <hr />
-        <Box
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
-          <Button
-            onClick={handlePrevious}
-            variant="contained"
-            style={{ marginLeft: '10%' }}
-          >
-            이전 문제
-          </Button>
-          <Typography>
-            {page + 1}/{data.length}
-          </Typography>
-          <Button
-            onClick={handleNext}
-            variant="contained"
-            style={{ marginRight: '10%' }}
-          >
-            다음 문제
-          </Button>
-        </Box>
-        <hr />
-      </Box>
+      )}
     </div>
   );
 }

@@ -398,6 +398,8 @@ export default function BaseProblem({ param, detail }) {
               flexDirection: 'row',
               justifyContent: 'space-between',
               alignItems: 'center',
+              marginTop: '1%',
+              marginBottom: '5%',
             }}
           >
             <Button
@@ -418,12 +420,11 @@ export default function BaseProblem({ param, detail }) {
               다음 문제
             </Button>
           </Box>
-          <hr />
         </Box>
       ) : (
         <Box
           style={{
-            width: '50%',
+            width: '60%',
             height: '600px',
             minWidth: '700px',
             display: 'flex',

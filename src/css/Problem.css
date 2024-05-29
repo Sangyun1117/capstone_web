@@ -77,11 +77,28 @@
 .sidebar-container {
   position: sticky;
   top: 10%;
-  
   width: 15%;
   height: 100%;
   min-width: 200px;
   margin-left: 5%;
   margin-top: 5%;
   margin-right: 5%;
+}
+
+.dictionary-hr {
+  position: relative;
+  border: none;
+  border-top: 1px solid  #FF9100;
+  font:26px sans-serif;    
+  text-align:center;
+  margin:30px 0 0;
+}
+.dictionary-hr::before {
+  position: relative;
+  top:-10px;
+  color:#FF9100;
+  content: "༺⁜࿇⁜༻";
+}
+.dictionary-text{
+  color:#FF9100;
 }
