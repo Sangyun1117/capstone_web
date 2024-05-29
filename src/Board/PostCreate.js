@@ -92,6 +92,16 @@ const PostCreate = () => {
 
   // 작성한 글을 db에 반영
   const handleSubmit = () => {
+    if (body.length > 5000) {
+      swal({
+        title: '경고',
+        text: '내용이 너무 깁니다.',
+        icon: 'warning',
+        dangerMode: true,
+      });
+      return; // 함수 실행을 여기서 중단
+    }
+
     const postType = post ? 1 : 0; // 직성모드(0), 수정모드(1)
     const postId = post ? post.postId : userEmail + '_' + Date.now();
 
@@ -147,7 +157,6 @@ const PostCreate = () => {
 
         ['bold', 'italic', 'underline', 'strike'],
         [{ list: 'ordered' }, { list: 'bullet' }, { list: 'check' }],
-        ['blockquote', 'code-block'],
         [{ color: [] }, { background: [] }], // 글자색, 배경색
       ],
       handlers: {},

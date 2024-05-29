@@ -5,6 +5,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import swal from 'sweetalert';
 import parse from 'html-react-parser';
+import 'react-quill/dist/quill.snow.css';
 
 const Container = styled.div`
   display: flex;
@@ -254,6 +255,15 @@ const PostDetail = () => {
       // 댓글 내용이 없으면 저장하지 않음
       return;
     }
+    if (comment.length > 500) {
+      swal({
+        title: '경고',
+        text: '댓글은 최대 500자 입니다.',
+        icon: 'warning',
+        dangerMode: true,
+      });
+      return; // 함수 실행을 여기서 중단
+    }
     const commentId = userName + '_' + Date.now();
 
     // post와 post.postId가 존재하는지 확인
@@ -382,7 +392,9 @@ const PostDetail = () => {
             ) : null}
           </ButtonContainer>
         </TopUIContainer>
-        <PostBody>{parse(post.body)}</PostBody>
+        <PostBody>
+          <div style={{ paddingLeft: '20px' }}>{parse(post.body)}</div>
+        </PostBody>
       </ContentContainer>
 
       <Line />
@@ -407,7 +419,7 @@ const PostDetail = () => {
             <Card key={index}>
               <div>
                 <CommentRow>
-                  <div>
+                  <div style={{ width: '95%' }}>
                     <div style={{ fontSize: 12 }}>
                       {item.userEmail.split('@')[0]}
                     </div>
