@@ -9,7 +9,7 @@ const BodyContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 90%;
+  height: 100%;
   width: 60%;
   min-width: 800px;
   background-color: #bbd2ec;
@@ -24,7 +24,7 @@ const PostList = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 85%;
+  height: 75%;
 `;
 
 const ListItem = styled.button`
@@ -137,12 +137,12 @@ const BoardScreenUI = ({ boardName, search }) => {
   const [isLoading, setIsLoading] = useState(true); // 로딩 상태
 
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
-  const itemsPerPage = 10; // 페이지당 글 수
+  const itemsPerPage = 9; // 페이지당 글 수
 
   //const serverPath = 'http://192.168.0.3:8080/';
   //const serverPath = 'http://223.194.133.15:8080/';
-  const serverPath = 'http://192.168.0.3:8080/';
-  //const serverPath = 'http://192.168.181.1:8080/';
+  //const serverPath = 'http://192.168.0.3:8080/';
+  const serverPath = 'http://192.168.181.1:8080/';
 
   const navigate = useNavigate();
 
@@ -191,7 +191,10 @@ const BoardScreenUI = ({ boardName, search }) => {
     <>
       <BodyContainer>
         {isLoading ? (
-          <HashLoader loading={isLoading} size={50} />
+          <div style={{ marginTop: '30%' }}>
+            <HashLoader loading={isLoading} size={50} />
+          </div>
+
         ) : (
           <>
             <PostList>

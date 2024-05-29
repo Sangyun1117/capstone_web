@@ -399,6 +399,8 @@ const PracticeResult = () => {
     if (!isLoggedIn) return;
     if (saveWrongEras[0] == -1) return; // 가장 처음 useEffect 실행 시 저장 방지
 
+    console.log('test:' + userEmail);
+
     const wrongRef = doc(
       firestore,
       'users',
@@ -475,9 +477,8 @@ const PracticeResult = () => {
                       >
                         {`선택: ${value}`}
                       </div>
-                      <div style={{ margin: '10px' }}>{`정답: ${
-                        answer ? answer.data.answer : '정답 정보 없음'
-                      }`}</div>
+                      <div style={{ margin: '10px' }}>{`정답: ${answer ? answer.data.answer : '정답 정보 없음'
+                        }`}</div>
                     </ListRow>
                     <CommantButton onClick={() => handleCommentary(index)}>
                       해설
