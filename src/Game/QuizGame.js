@@ -11,29 +11,28 @@ import UnsolvedScreen from './UnsolvedScreen';
 import { MediaSideBar } from '../Problem/SideBar';
 import { CloseOutlined } from '@ant-design/icons';
 import { FloatButton } from 'antd';
+import { Box } from '@mui/material';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100%;
-  width: 60%;
-  min-width: 30em;
+  height: calc(100vh - 5em);
+  width: 60vw;
+  min-width: 800px;
+  right: 5vw;
   background-color: #bbd2ec;
-  top: 5em;
-  left: 20%;
-  position: fixed;
+  position: relative;
 `;
 
 const TopBar = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 58%;
-  min-width: 28em;
-  height: 4%;
-  position: fixed;
-  top: 6em;
+  margin: 10px;
+  width: 95%;
+  position: absolute;
+  top: 1em;
 `;
 
 const Timer = styled.div`
@@ -43,6 +42,7 @@ const Timer = styled.div`
   border-radius: 1em;
   background-color: white;
   font-weight: 600;
+  
 `;
 
 const Score = styled.div`
@@ -58,9 +58,9 @@ const BodyContainer = styled.div`
   display: flex;
   flex-direction: column;
   position: absolute;
-  top: 10%;
-  min-width: 30em;
-  height: 100%;
+  top: 5em;
+  min-width: 800px;
+  
 `;
 
 const Guess = styled.div`
@@ -109,7 +109,7 @@ const Line = styled.div`
   display: flex;
   background-color: #7bb4e3;
   height: 10px;
-  margin: 0.5%;
+  margin: 10px;
   border-radius: 20px;
 `;
 const FixedButton = styled(FloatButton)`
@@ -396,7 +396,7 @@ const QuizGame = () => {
   };
 
   return (
-    <div>
+    <Box style={{ display: 'flex', flexDirection: 'row' }}>
       <MediaSideBar />
       <Container>
         {isLoading ? (
@@ -419,28 +419,20 @@ const QuizGame = () => {
             </TopBar>
 
             <BodyContainer>
-              <div
+              <Button
+                type="primary"
+                danger
+                onClick={() => handleNextButton()}
                 style={{
-                  position: 'fixed',
-                  top: '10em',
-                  width: '60%',
-                  minWidth: '30em',
-                  left: '19.5%',
+                  display: 'flex',
+                  position: 'absolute',
+                  right: '2.5%',
+                  top: '30px',
+                  fontWeight: '600',
                 }}
               >
-                <Button
-                  type="primary"
-                  danger
-                  onClick={() => handleNextButton()}
-                  style={{
-                    position: 'absolute',
-                    right: '0.5em',
-                    fontWeight: '600',
-                  }}
-                >
-                  문제 넘기기
-                </Button>
-              </div>
+                문제 넘기기
+              </Button>
               <Guess>
                 <span style={{ fontSize: '2em' }}>{guess}</span>
               </Guess>
@@ -493,7 +485,7 @@ const QuizGame = () => {
           </>
         )}
       </Container>
-    </div>
+    </Box>
   );
 };
 export default QuizGame;

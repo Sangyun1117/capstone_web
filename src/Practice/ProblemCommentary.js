@@ -5,21 +5,23 @@ import { HashLoader } from 'react-spinners';
 import { ProblemSideBar } from '../Problem/SideBar';
 import { doc, getDoc } from 'firebase/firestore';
 import { firestore } from '../firebaseConfig';
+import swal from 'sweetalert';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 60%;
-  min-height: calc(100vh - 5em);
+  height: auto;
+  width: 60vw;
   min-width: 800px;
+  right: 5vw;
   background-color: #bbd2ec;
-  margin-right: 15%;
   position: relative;
 `;
 
 const Title = styled.h1`
   display: flex;
+  position: absolute;
   align-items: center;
   justify-content: center;
   margin: 20px;
@@ -61,13 +63,31 @@ const BackButton = styled.button`
 
 const BodyContainer = styled.div`
   display: flex;
-  margin-top: 40px;
   flex-direction: column;
+  margin-top: 130px;
   align-items: center;
-  justify-content: center;
-  top: 7%;
   width: 80%;
+  height: auto;
 `;
+
+const ProblemImage = styled.img`
+  display: flex;
+  object-fit: contain;
+  width: 400px;
+  min-width: 350px;
+  height: auto;
+  margin-top: 30px;
+
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0px 0px 0px 0px #838abd;
+  border: 10px solid white;
+  border-radius: 10px;
+  font-size: 1em;
+  &:hover {
+    box-shadow: 0px 0px 0px 5px #838abd;
+  }
+`
 
 const BoxContainer = styled.div`
   display: flex;
@@ -175,14 +195,15 @@ const ProblemCommentary = () => {
             <Title>{formattedId} 해설</Title>
             <BackButton onClick={() => navigate(-1)}>돌아가기</BackButton>
             <BodyContainer>
-              <img
+              <ProblemImage
                 src={problem.data.img}
                 alt="Problem Image"
-                style={{
-                  objectFit: 'contain',
-                  width: '30%',
-                  minWidth: '350px',
-                  height: 'auto',
+                onClick={() => {
+                  swal({
+                    icon: problem.data.img,
+                    button: '닫기',
+                    className: 'custom-swal',
+                  });
                 }}
               />
 

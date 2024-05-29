@@ -5,6 +5,7 @@ import { setUserEmail, setLoggedIn } from '../state';
 import { useDispatch } from 'react-redux';
 import logo from '../Images/logo.png';
 import '../css/Header.css';
+import swal from 'sweetalert';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -22,12 +23,21 @@ const Header = () => {
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem('userEmail');
-    dispatch(setUserEmail(null));
-    dispatch(setLoggedIn(false));
-    alert('로그아웃 되었습니다.');
-    navigate('/');
-    window.location.reload(); // 페이지를 새로고침합니다.
+    swal({
+      title: '로그아웃',
+      text: '로그아웃 하시겠습니까?',
+      icon: 'warning',
+      buttons: ['취소', '확인'],
+      dangerMode: true,
+    }).then((willSubmit) => {
+      if (willSubmit) {
+        localStorage.removeItem('userEmail');
+        dispatch(setUserEmail(null));
+        dispatch(setLoggedIn(false));
+        navigate('/');
+        window.location.reload(); // 페이지를 새로고침합니다.
+      }
+    });
   };
 
   const handleLinkClick = (path) => (e) => {

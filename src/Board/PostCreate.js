@@ -17,10 +17,23 @@ const Container = styled.div`
   width: 60%;
   min-width: 800px;
   background-color: #bbd2ec;
-  padding: 2em;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
   margin: auto;
   position: relative;
+`;
+
+const Title = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: 1.4em;
+  width: 300px;
+  padding: 10px;
+  margin: 10px calc((100% - 300px) / 2);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 `;
 
 const SubmitButton = styled(Button)`
@@ -28,8 +41,9 @@ const SubmitButton = styled(Button)`
     display: flex;
     right: 0px;
     justify-content: center;
-    margin-top: 30px;
     margin-left: auto;
+    margin-right: 2.5%;
+    margin-top: 20px;
     min-width: 100px;
     height: 50px;
     cursor: pointer;
@@ -51,21 +65,6 @@ const SubmitButton = styled(Button)`
   }
 `;
 
-const Title = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 1em;
-  background-color: white;
-  border-radius: 5px;
-  font-weight: 600;
-  font-size: 1.4em;
-  width: 300px;
-  padding: 10px;
-  margin: 20px calc((100% - 300px) / 2);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-`;
-
 // 게시판 글 생성 화면
 const PostCreate = () => {
   const location = useLocation();
@@ -80,6 +79,20 @@ const PostCreate = () => {
   //const serverPath = 'http://223.194.133.15:8080/';
   //const serverPath = 'http://192.168.0.3:8080/';
   const serverPath = 'http://192.168.181.1:8080/';
+
+  const getBoardDisplayName = (boardName) => {
+    switch (boardName) {
+      case 'questionBoard':
+        return '질문';
+      case 'tipBoard':
+        return '팁';
+      case 'reviewBoard':
+        return '시험 후기';
+      default:
+        return '';
+    }
+  };
+  const boardDisplayName = getBoardDisplayName(boardName);
 
   // 작성한 글을 db에 반영
   const handleSubmit = () => {
@@ -130,20 +143,6 @@ const PostCreate = () => {
     });
   };
 
-  const getBoardDisplayName = (boardName) => {
-    switch (boardName) {
-      case 'questionBoard':
-        return '질문';
-      case 'tipBoard':
-        return '팁';
-      case 'reviewBoard':
-        return '시험 후기';
-      default:
-        return '';
-    }
-  };
-  const boardDisplayName = getBoardDisplayName(boardName);
-
   const quillModules = {
     toolbar: {
       container: [
@@ -174,10 +173,12 @@ const PostCreate = () => {
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         style={{
-          margin: '1em 0',
-          backgroundColor: '#ffffff',
+          display: 'flex',
+          width: '95%',
+          margin: '40px 2.5%',
+          marginBottom: '10px',
           borderRadius: '5px',
-          backgroundColor: '#e6e6fa',
+          backgroundColor: 'white',
         }}
         variant="outlined"
         placeholder="제목을 입력하세요..."
@@ -188,6 +189,7 @@ const PostCreate = () => {
         value={body}
         onChange={setBody}
         modules={quillModules}
+        style={{ margin: '0px 2.5%' }}
       />
 
       <SubmitButton onClick={handleSubmitButtonClick}>등록하기</SubmitButton>

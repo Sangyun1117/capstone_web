@@ -28,7 +28,8 @@ const ContentContainer = styled.div`
 const TitleArea = styled.div`
   font-size: 30px;
   font-weight: 500;
-  margin-bottom: 20px;
+  margin-top: 20px;
+  margin-bottom: 5px;
   padding: 10px;
   border-radius: 10px;
   background-color: #e6e6fa;
@@ -36,6 +37,7 @@ const TitleArea = styled.div`
 
 const TopUIContainer = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   position: relative;
   padding: 5px;
@@ -44,9 +46,11 @@ const TopUIContainer = styled.div`
 `;
 
 const ButtonContainer = styled.div`
+  display: flex;
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
+  margin-top: 10px;
 `;
 
 const StyledButton = styled.button`
@@ -143,6 +147,26 @@ const CommentInput = styled.input`
   padding-left: 5px;
 `;
 
+const Title = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1em;
+  background-color: white;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: 1.4em;
+  width: 300px;
+  padding: 10px;
+  margin: 0px calc((100% - 300px) / 2);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+`;
+
+const CreateInfo = styled.div`
+  display: flex;
+  justify-content: space-between;
+`
+
 // 게시판 글 클릭했을 때 내용 보이는 화면
 const PostDetail = () => {
   const navigate = useNavigate();
@@ -154,11 +178,41 @@ const PostDetail = () => {
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
   const userEmail = useSelector((state) => state.userEmail);
   const { boardName, post } = location.state;
+  const postCreatingTime = formatDate(post.postId.split('_')[1]);
 
   //const serverPath = 'http://223.194.133.15:8080/';
   //const serverPath = 'http://192.168.0.3:8080/';
   const serverPath = 'http://192.168.181.1:8080/';
   //const serverPath = 'http://localhost:8080/';
+
+  // 작성 시각 변환기
+  function formatDate(date) {
+    const options = {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false,
+    };
+    const formattedDate = new Intl.DateTimeFormat('ko-KR', options).format(date);
+    return formattedDate.replace(/\. /g, '-').replace(/\./g, '').replace(/, /g, ' ');
+  }
+
+  const getBoardDisplayName = (boardName) => {
+    switch (boardName) {
+      case 'questionBoard':
+        return '질문';
+      case 'tipBoard':
+        return '팁';
+      case 'reviewBoard':
+        return '시험 후기';
+      default:
+        return '';
+    }
+  };
+  const boardDisplayName = getBoardDisplayName(boardName);
 
   useEffect(() => {
     if (userEmail) {
@@ -283,7 +337,6 @@ const PostDetail = () => {
 
   // 글 삭제
   const handleDelete = () => {
-    console.log('id = ' + post.postId);
     const url = 'posts/' + post.postId;
     handleDeleteButtonClick(url);
   };
@@ -297,9 +350,13 @@ const PostDetail = () => {
   return (
     <Container>
       <ContentContainer>
+        <Title>{boardDisplayName} 게시판</Title>
         <TitleArea>{post.title}</TitleArea>
         <TopUIContainer>
-          <div style={{ fontSize: 15 }}>작성자: {userName}</div>
+          <CreateInfo>
+            <div style={{ fontSize: 15 }}>작성자: {userName}</div>
+            <div style={{ fontSize: 15 }}>작성일: {postCreatingTime}</div>
+          </CreateInfo>
 
           <ButtonContainer>
             {userEmail === post.userEmail ? (

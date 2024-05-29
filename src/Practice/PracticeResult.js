@@ -20,11 +20,12 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 60%;
+  height: calc(100vh - 5em);
+  width: 60vw;
   min-width: 800px;
+  right: 5vw;
   height: ${({ isLoading }) => (isLoading ? 'calc(100vh - 5em)' : '5000px')};
   background-color: #bbd2ec;
-  margin-right: 15%;
   position: relative;
 `;
 const Title = styled.div`

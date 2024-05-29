@@ -10,12 +10,11 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
-  min-height: calc(100% - 5em);
-  width: 60%;
+  height: calc(100vh - 5em);
+  width: 60vw;
   min-width: 800px;
+  right: 5vw;
   background-color: #bbd2ec;
-  margin-right: 15%;
   position: relative;
 `;
 

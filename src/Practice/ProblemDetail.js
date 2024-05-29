@@ -4,7 +4,6 @@ import {
   getDocs,
   doc,
   setDoc,
-  writeBatch,
 } from 'firebase/firestore';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar as BoldStar } from '@fortawesome/free-solid-svg-icons'; // 굵은 별
@@ -24,10 +23,10 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   height: calc(100vh - 5em);
-  width: 60%;
+  width: 60vw;
   min-width: 800px;
+  right: 5vw;
   background-color: #bbd2ec;
-  margin-right: 15%;
   position: relative;
 `;
 const TopContainer = styled.div`
@@ -133,7 +132,7 @@ const ArrowButton = styled(MoveButton)`
   margin: 20px;
   &:hover {
     box-shadow: ${(props) =>
-      props.disabled ? '0px 0px 0px 0px white' : '0px 0px 0px 5px white'};
+    props.disabled ? '0px 0px 0px 0px white' : '0px 0px 0px 5px white'};
   }
 `;
 const SubmitButton = styled(MoveButton)`
@@ -210,11 +209,6 @@ const ProblemDetail = () => {
 
     fetchData();
   }, [examDocId]);
-
-  useEffect(() => {
-    console.log('useEffect: problems: ');
-    console.log(problems);
-  }, [problems]);
 
   // 북마크 가져오기
   const fetchBookmarks = async () => {
