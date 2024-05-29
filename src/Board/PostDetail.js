@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import swal from 'sweetalert';
+import parse from 'html-react-parser';
 
 const Container = styled.div`
   display: flex;
@@ -229,6 +230,7 @@ const PostDetail = () => {
         const data = response.data;
         if (data) {
           const comments = Object.keys(data).map((key) => ({
+            id: data[key].id,
             commentId: data[key].commentId,
             userEmail: data[key].userEmail,
             comment: data[key].comment,
@@ -338,13 +340,13 @@ const PostDetail = () => {
 
   // 글 삭제
   const handleDelete = () => {
-    const url = 'posts/' + post.postId;
+    const url = 'posts/' + post.id;
     handleDeleteButtonClick(url);
   };
 
   // 댓글 삭제
-  const handleCommentDelete = (commentId) => {
-    const url = 'comments/' + commentId;
+  const handleCommentDelete = (id) => {
+    const url = 'comments/' + id;
     handleDeleteButtonClick(url);
   };
 
@@ -380,7 +382,7 @@ const PostDetail = () => {
             ) : null}
           </ButtonContainer>
         </TopUIContainer>
-        <PostBody dangerouslySetInnerHTML={{ __html: post.body }} />
+        <PostBody>{parse(post.body)}</PostBody>
       </ContentContainer>
 
       <Line />
@@ -415,7 +417,7 @@ const PostDetail = () => {
                     <StyledButton
                       shadowcolor="#FA7CD7"
                       backgroundcolor="#DF243B"
-                      onClick={() => handleCommentDelete(item.commentId)}
+                      onClick={() => handleCommentDelete(item.id)}
                     >
                       <div>삭제</div>
                     </StyledButton>

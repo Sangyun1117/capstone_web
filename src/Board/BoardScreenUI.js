@@ -157,7 +157,7 @@ const BoardScreenUI = ({ boardName, search }) => {
 
         if (posts) {
           const postList = Object.keys(posts).map((key) => ({
-            id: key,
+            id: posts[key].id,
             postId: posts[key].postId,
             userEmail: posts[key].userEmail,
             title: posts[key].title,
