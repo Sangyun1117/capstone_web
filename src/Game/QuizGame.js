@@ -22,7 +22,7 @@ const Container = styled.div`
   width: 60vw;
   min-width: 800px;
   right: 5vw;
-  background-color: #bbd2ec;
+  background-color: ${props => (props.isIncorrect ? '#db4455' : '#bbd2ec')};
   position: relative;
 `;
 
@@ -138,6 +138,7 @@ const QuizGame = () => {
   const [unsolved, setUnsolved] = useState([]); // 넘긴 문제 저장
   const [solveCount, setSolveCount] = useState(0); // 문제 수 카운트
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 오픈 여부
+  const [isIncorrect, setIsIncorrect] = useState(false); // 오답 시 깜빡거리는 효과에 사용
 
   // 키워드 가져오기
   useEffect(() => {
@@ -233,6 +234,13 @@ const QuizGame = () => {
         setCurrentIndex(currentIndex + 1);
         setScore(score + 1); // 스코어 추가
         setSolveCount(solveCount + 1); // 문제 수 카운트
+      } else {
+        console.log('test');
+        // 정답이 아닌 경우
+        setIsIncorrect(true);
+        setTimeout(() => setIsIncorrect(false), 100); // 첫 번째 깜빡임
+        setTimeout(() => setIsIncorrect(true), 200); // 두 번째 깜빡임
+        setTimeout(() => setIsIncorrect(false), 300); // 원래 색으로 돌아오기
       }
       // guess 초기화
       setGuess(
@@ -398,7 +406,7 @@ const QuizGame = () => {
   return (
     <Box style={{ display: 'flex', flexDirection: 'row' }}>
       <MediaSideBar />
-      <Container>
+      <Container isIncorrect={isIncorrect}>
         {isLoading ? (
           <HashLoader />
         ) : (

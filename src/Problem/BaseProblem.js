@@ -247,6 +247,7 @@ export default function BaseProblem({ param, detail }) {
           style={{
             width: '60%',
             minWidth: '700px',
+
           }}
         >
           <Box style={{ paddingTop: '8%' }}>
