@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import swal from 'sweetalert';
 import parse from 'html-react-parser';
 import 'react-quill/dist/quill.snow.css';
+import HashLoader from 'react-spinners/HashLoader';
 
 const Container = styled.div`
   display: flex;
@@ -56,6 +57,7 @@ const ButtonContainer = styled.div`
 `;
 
 const StyledButton = styled.button`
+  min-width: 60px;
   margin: 5px;
   padding: 10px;
   border-radius: 5px;
@@ -176,11 +178,14 @@ const PostDetail = () => {
   const [comment, setComment] = useState('');
   const [commentList, setCommentList] = useState([]);
   const [userName, setUserName] = useState();
+  const [post, setPost] = useState();
+  const [isLoading, setIsLoading] = useState(true); // 로딩 상태
 
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
   const userEmail = useSelector((state) => state.userEmail);
-  const { boardName, post } = location.state;
-  const postCreatingTime = formatDate(post.postId.split('_')[1]);
+  const { boardName, selectedItem } = location.state;
+  const selectedItemId = selectedItem.id;
+  let postCreatingTime = '';
   const serverPath = 'http://localhost:8080/';
 
   // 작성 시각 변환기
@@ -223,6 +228,35 @@ const PostDetail = () => {
     }
   }, [userEmail]);
 
+  // 글 정보 가져오기
+  // id를 이용해서 글의 모든 정보를 가져온다.
+  useEffect(() => {
+    setIsLoading(true);
+    axios
+      .get(serverPath + 'posts', {
+        params: { id: selectedItemId },
+      })
+      .then((response) => {
+        const fetchedData = response.data;
+
+        if (fetchedData) {
+          const fetchedPost = {
+            id: fetchedData.id,
+            postId: fetchedData.postId,
+            userEmail: fetchedData.userEmail,
+            title: fetchedData.title,
+            body: fetchedData.body,
+          };
+          setPost(fetchedPost);
+        }
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error('Error: ' + error);
+        setIsLoading(false);
+      });
+  }, []);
+
   // 댓글 가져오기
   const fetchComments = () => {
     axios
@@ -245,9 +279,11 @@ const PostDetail = () => {
   };
 
   useEffect(() => {
-    // 댓글 가져오기
-    fetchComments();
-  }, []);
+    if (post) {
+      postCreatingTime = formatDate(post.postId.split('_')[1]);
+      fetchComments(); // 댓글 가져오기
+    }
+  }, [post]);
 
   const handleSubmit = () => {
     // 댓글 저장
@@ -362,83 +398,93 @@ const PostDetail = () => {
 
   return (
     <Container>
-      <ContentContainer>
-        <Title>{boardDisplayName} 게시판</Title>
-        <TitleArea>{post.title}</TitleArea>
-        <TopUIContainer>
-          <CreateInfo>
-            <div style={{ fontSize: 15 }}>작성자: {userName}</div>
-            <div style={{ fontSize: 15 }}>작성일: {postCreatingTime}</div>
-          </CreateInfo>
+      {isLoading || !post ? (
+        <div style={{ marginTop: '30%' }}>
+          <HashLoader loading={isLoading} size={50} />
+        </div>
+      ) : (
+        <>
+          <ContentContainer>
+            <Title>{boardDisplayName} 게시판</Title>
+            <TitleArea>{post.title}</TitleArea>
+            <TopUIContainer>
+              <CreateInfo>
+                <div style={{ fontSize: 15 }}>작성자: {userName}</div>
+                <div style={{ fontSize: 15 }}>작성일: {postCreatingTime}</div>
+              </CreateInfo>
 
-          <ButtonContainer>
-            {userEmail === post.userEmail ? (
-              <>
-                <StyledButton
-                  shadowcolor="#7bb4e3"
-                  backgroundcolor="#004EA2"
-                  onClick={handleUpdateButtonClick}
-                >
-                  <div>수정</div>
-                </StyledButton>
-                <StyledButton
-                  shadowcolor="#FA7CD7"
-                  backgroundcolor="#DF243B"
-                  onClick={handleDelete}
-                >
-                  <div>삭제</div>
-                </StyledButton>
-              </>
-            ) : null}
-          </ButtonContainer>
-        </TopUIContainer>
-        <PostBody>
-          <div style={{ paddingLeft: '20px' }}>{parse(post.body)}</div>
-        </PostBody>
-      </ContentContainer>
-
-      <Line />
-
-      <InputRow>
-        <CommentInput // 댓글 입력창
-          placeholder={
-            isLoggedIn ? '댓글 작성하기' : '로그인하고 댓글을 작성해보세요!'
-          }
-          onChange={(e) => setComment(e.target.value)}
-          value={comment}
-          readOnly={!isLoggedIn}
-        />
-        <SubmitButton onClick={handleSubmit}>전송</SubmitButton>
-      </InputRow>
-
-      {commentList.length > 0 && <Line />}
-
-      <BottomContainer>
-        {commentList.length > 0 &&
-          commentList.map((item, index) => (
-            <Card key={index}>
-              <div>
-                <CommentRow>
-                  <div style={{ width: '95%' }}>
-                    <div style={{ fontSize: 12 }}>
-                      {item.userEmail.split('@')[0]}
-                    </div>
-                    <div style={{ fontSize: 16 }}>{item.comment}</div>
-                  </div>
-                  {userEmail === item.userEmail ? (
+              <ButtonContainer>
+                {userEmail === post.userEmail ? (
+                  <>
+                    <StyledButton
+                      shadowcolor="#7bb4e3"
+                      backgroundcolor="#004EA2"
+                      onClick={handleUpdateButtonClick}
+                    >
+                      <div>수정</div>
+                    </StyledButton>
                     <StyledButton
                       shadowcolor="#FA7CD7"
                       backgroundcolor="#DF243B"
-                      onClick={() => handleCommentDelete(item.id)}
+                      onClick={handleDelete}
                     >
                       <div>삭제</div>
                     </StyledButton>
-                  ) : null}
-                </CommentRow>
+                  </>
+                ) : null}
+              </ButtonContainer>
+            </TopUIContainer>
+            <PostBody>
+              <div style={{ paddingLeft: '20px' }}>
+                {parse(String(post.body))}
               </div>
-            </Card>
-          ))}
-      </BottomContainer>
+            </PostBody>
+          </ContentContainer>
+
+          <Line />
+
+          <InputRow>
+            <CommentInput // 댓글 입력창
+              placeholder={
+                isLoggedIn ? '댓글 작성하기' : '로그인하고 댓글을 작성해보세요!'
+              }
+              onChange={(e) => setComment(e.target.value)}
+              value={comment}
+              readOnly={!isLoggedIn}
+            />
+            <SubmitButton onClick={handleSubmit}>전송</SubmitButton>
+          </InputRow>
+
+          {commentList.length > 0 && <Line />}
+
+          <BottomContainer>
+            {commentList.length > 0 &&
+              commentList.map((item, index) => (
+                <Card key={index}>
+                  <div>
+                    <CommentRow>
+                      <div style={{ width: '95%' }}>
+                        <div style={{ fontSize: 12 }}>
+                          {item.userEmail.split('@')[0]}
+                        </div>
+                        <div style={{ fontSize: 16 }}>{item.comment}</div>
+                      </div>
+                      {userEmail === item.userEmail ? (
+                        <StyledButton
+                          shadowcolor="#FA7CD7"
+                          backgroundcolor="#DF243B"
+                          onClick={() => handleCommentDelete(item.id)}
+                        >
+                          <div>삭제</div>
+                        </StyledButton>
+                      ) : null}
+                    </CommentRow>
+                  </div>
+                </Card>
+              ))}
+          </BottomContainer>
+        </>
+      )}
     </Container>
   );
 };

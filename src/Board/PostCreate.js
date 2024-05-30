@@ -13,13 +13,13 @@ import swal from 'sweetalert';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  height: auto;
+  min-height: 100%;
   width: 60%;
   min-width: 800px;
   background-color: #bbd2ec;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-  margin: auto;
-  position: relative;
+  left: 20%;
+  position: fixed;
 `;
 
 const Title = styled.div`

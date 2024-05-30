@@ -147,21 +147,22 @@ const BoardScreenUI = ({ boardName, search }) => {
     setFilteredPosts(posts.filter((post) => post.title.includes(search)));
   }, [search, posts]);
 
-  // 글 가져오기
+  // 글 리스트 가져오기
+  // id, 작성자 정보, 제목만 간략하게 가져온다.
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get(serverPath + 'posts', { params: { boardName: boardName } })
+      .get(serverPath + 'posts', {
+        params: { boardName: boardName },
+      })
       .then((response) => {
         const posts = response.data;
 
         if (posts) {
           const postList = Object.keys(posts).map((key) => ({
             id: posts[key].id,
-            postId: posts[key].postId,
             userEmail: posts[key].userEmail,
             title: posts[key].title,
-            body: posts[key].body,
           }));
           setPosts(postList);
         }
@@ -203,7 +204,7 @@ const BoardScreenUI = ({ boardName, search }) => {
                     navigate('/postDetail', {
                       state: {
                         boardName: boardName,
-                        post: item,
+                        selectedItem: item,
                       },
                     })
                   }

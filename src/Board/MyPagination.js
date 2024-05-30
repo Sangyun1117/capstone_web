@@ -21,8 +21,7 @@ const MyPagination = ({
         count={count}
         page={currentPage}
         onChange={handleChange}
-        variant="outlined"
-        color="primary"
+        color="secondary"
         style={{ display: 'flex', height: '30%', width: '100%' }}
       />
     </Stack>
