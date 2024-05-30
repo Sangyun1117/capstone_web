@@ -13,7 +13,7 @@ import swal from 'sweetalert';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 5em);
+  height: auto;
   width: 60%;
   min-width: 800px;
   background-color: #bbd2ec;
@@ -41,9 +41,7 @@ const SubmitButton = styled(Button)`
     display: flex;
     right: 0px;
     justify-content: center;
-    margin-left: auto;
-    margin-right: 2.5%;
-    margin-top: 20px;
+    margin: 20px 2.5% 10px auto;
     min-width: 100px;
     height: 50px;
     cursor: pointer;
@@ -92,6 +90,8 @@ const PostCreate = () => {
 
   // 작성한 글을 db에 반영
   const handleSubmit = () => {
+    console.log('body:');
+    console.log(body);
     if (body.length > 5000) {
       swal({
         title: '경고',
