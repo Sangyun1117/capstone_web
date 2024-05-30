@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -186,6 +186,7 @@ const PostDetail = () => {
   const { boardName, selectedItem } = location.state;
   const selectedItemId = selectedItem.id;
   let postCreatingTime = '';
+  const scrolldivRef = useRef(null);
   const serverPath = 'http://localhost:8080/';
 
   // 작성 시각 변환기
@@ -320,7 +321,12 @@ const PostDetail = () => {
       .then((response) => {
         console.log('Comments data updated successfully.');
         fetchComments(); // 댓글 새로고침
-        //scrolldivRef.current.scrollToEnd({ animated: true }); // 화면 최하단으로 스크롤 이동
+        // 댓글을 새로고침한 후 화면을 최하단으로 스크롤
+        setTimeout(() => {
+          if (scrolldivRef.current) {
+            scrolldivRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+          }
+        }, 100); // fetchComments 함수가 완료된 후 스크롤이 작동하도록 약간의 지연시간 추가
       })
       .catch((error) => {
         console.error('Comments data could not be saved.' + error);
@@ -397,7 +403,7 @@ const PostDetail = () => {
   };
 
   return (
-    <Container>
+    <Container ref={scrolldivRef}>
       {isLoading || !post ? (
         <div style={{ marginTop: '30%' }}>
           <HashLoader loading={isLoading} size={50} />
