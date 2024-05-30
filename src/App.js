@@ -2,7 +2,6 @@ import { Route, Routes } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './state';
 import Home from './Main/Home';
-import About from './Main/About';
 import Login from './Main/Login';
 import CreateId from './Main/CreateId';
 import Header from './Main/Header';
@@ -68,7 +67,6 @@ const App = () => (
 
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/about" element={<About />} />
       <Route path="/login" element={<Login />} />
       <Route path="/createId" element={<CreateId />} />
       <Route path="/statistics" element={<Statistics />} />
