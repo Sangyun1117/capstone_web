@@ -187,8 +187,8 @@ const PostDetail = () => {
   const selectedItemId = selectedItem.id;
   let postCreatingTime = '';
   const scrolldivRef = useRef(null);
-  const serverPath = useSelector((state) => state.serverPath);
-
+  //const serverPath = useSelector((state) => state.serverPath);
+  const serverPath = 'http://localhost:8080/';
   // 작성 시각 변환기
   function formatDate(date) {
     const options = {
