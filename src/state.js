@@ -5,11 +5,14 @@ import { createStore } from 'redux';
 const initialState = {
   isLoggedIn: false,
   userEmail: null,
+  //serverPath: 'http://localhost:8080/',
+  serverPath: 'http://52.79.56.22:8080/',
 };
 
 // 액션 타입 정의
 const SET_LOGGED_IN = 'SET_LOGGED_IN';
 const SET_USER_EMAIL = 'SET_USER_EMAIL';
+const SET_SERVER_PATH = 'SET_SERVER_PATH';
 
 // 액션 생성 함수 정의
 export const setLoggedIn = (isLoggedIn) => ({
@@ -20,6 +23,10 @@ export const setUserEmail = (userEmail) => ({
   type: SET_USER_EMAIL,
   userEmail,
 });
+export const setServerPath = (serverPath) => ({
+  type: SET_SERVER_PATH,
+  serverPath,
+});
 
 // 리듀서 정의
 const reducer = (state = initialState, action) => {
@@ -28,6 +35,8 @@ const reducer = (state = initialState, action) => {
       return { ...state, isLoggedIn: action.isLoggedIn };
     case SET_USER_EMAIL:
       return { ...state, userEmail: action.userEmail };
+    case SET_SERVER_PATH:
+      return { ...state, serverPath: action.serverPath };
     default:
       return state;
   }

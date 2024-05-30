@@ -1,6 +1,7 @@
 //import { ENCY_KOREA_KEY } from '../config/encyKoreaKey';
 import React, { useState, useEffect } from 'react';
-import { Box, Typography, Button } from '@mui/material';
+import { useSelector } from 'react-redux';
+import { Box } from '@mui/material';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import { useLocation } from 'react-router-dom';
@@ -12,9 +13,10 @@ export default function Dictionary() {
   const { id } = location.state;
   const aleradyContent = location.state.content;
   const [content, setContent] = useState(null);
+  const serverPath = useSelector((state) => state.serverPath);
 
   const getContent = () => {
-    fetch('http://localhost:8080/character/' + id) //E0030144
+    fetch(serverPath + 'character/' + id) //E0030144
       .then((response) => response.json())
       .then((data) => {
         setContent(data.article);

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import HashLoader from 'react-spinners/HashLoader';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import MyPagination from './MyPagination';
@@ -138,7 +139,7 @@ const BoardScreenUI = ({ boardName, search }) => {
 
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
   const itemsPerPage = 9; // 페이지당 글 수
-  const serverPath = 'http://localhost:8080/';
+  const serverPath = useSelector((state) => state.serverPath);
 
   const navigate = useNavigate();
 

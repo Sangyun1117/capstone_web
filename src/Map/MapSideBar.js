@@ -6,14 +6,17 @@ import { IconButton, Box } from '@mui/material';
 import InputIcon from '@mui/icons-material/Input';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import rehypeRaw from 'rehype-raw';
+import { useSelector } from 'react-redux';
 
 const MapSideBar = ({ isOpen, onClose, eid }) => {
   const [content, setContent] = useState(null);
   const [contentBody, setContentBody] = useState('');
   const sidebarRef = useRef();
   const navigate = useNavigate();
+  const serverPath = useSelector((state) => state.serverPath);
+
   useEffect(() => {
-    fetch('http://localhost:8080/character/' + eid) //
+    fetch(serverPath + 'character/' + eid)
       .then((response) => response.json())
       .then((data) => {
         setContent(data.article);
