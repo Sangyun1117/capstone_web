@@ -305,7 +305,7 @@ const HistoryTalesScreen = () => {
               component="div"
               sx={{ fontWeight: 'bold', fontSize: 20 }}
             >
-              <AccessTime /> 시대 별
+              <AccessTime /> 시대별
             </Typography>
 
             <FormControl fullWidth>
@@ -327,7 +327,7 @@ const HistoryTalesScreen = () => {
               component="div"
               sx={{ fontWeight: 'bold', fontSize: 20, mb: 2 }}
             >
-              <FormatListBulleted /> 유형 별
+              <FormatListBulleted /> 유형별
             </Typography>
             <MultipleSelect
               options={options}
