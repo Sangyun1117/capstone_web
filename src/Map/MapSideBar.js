@@ -13,10 +13,10 @@ const MapSideBar = ({ isOpen, onClose, eid }) => {
   const [contentBody, setContentBody] = useState('');
   const sidebarRef = useRef();
   const navigate = useNavigate();
-  const serverPath = useSelector((state) => state.serverPath);
+  //const serverPath = useSelector((state) => state.serverPath);
 
   useEffect(() => {
-    fetch(serverPath + 'character/' + eid)
+    fetch('http://localhost:8080/' + 'character/' + eid)
       .then((response) => response.json())
       .then((data) => {
         setContent(data.article);
