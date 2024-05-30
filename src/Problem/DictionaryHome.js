@@ -102,9 +102,6 @@ export default function DictionaryHome() {
             flexDirection: 'row',
             alignItems: 'center',
             paddingTop: '8%',
-            // backgroundColor: 'red',
-            backgroundImage: "url('../Images/logo.png')",
-            backgroundSize: 'cover',
           }}
         >
           <Typography
@@ -189,7 +186,9 @@ export default function DictionaryHome() {
             </Box>
             <Box
               style={{
-                padding: '4px',
+                paddingTop: '4px',
+                paddintBottom: '4px',
+                marginRight: '7%',
                 width: '100%',
                 textAlign: 'center',
               }}
@@ -223,7 +222,16 @@ export default function DictionaryHome() {
                   >
                     {index + 1 + (currentPage - 1) * MAX_ITEM}
                   </span>
-                  <span style={{ paddingLeft: '40px' }}>{word.name}</span>
+                  <span
+                    style={{
+                      textAlign: 'center',
+                      display: 'inline-block',
+                      width: '90%',
+                      textAlign: 'center',
+                    }}
+                  >
+                    {word.name}
+                  </span>
                 </ListItemText>
               </ListItem>
             ))
@@ -238,7 +246,7 @@ export default function DictionaryHome() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            marginBottom: '7%',
+            marginBottom: '10%',
           }}
         >
           <Button onClick={handlePrevBtn} disabled={currentPage === 1}>
