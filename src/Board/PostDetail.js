@@ -7,6 +7,7 @@ import swal from 'sweetalert';
 import parse from 'html-react-parser';
 import 'react-quill/dist/quill.snow.css';
 import HashLoader from 'react-spinners/HashLoader';
+import TextareaAutosize from 'react-textarea-autosize';
 
 const Container = styled.div`
   display: flex;
@@ -142,13 +143,16 @@ const InputRow = styled.div`
   padding: 10px;
 `;
 
-const CommentInput = styled.input`
-  height: 50px;
+const CommentInput = styled(TextareaAutosize)`
+  min-height: 50px;
   width: 100%;
   border: 1px solid gray;
   border-radius: 5px;
   margin-right: 10px;
-  padding-left: 5px;
+  padding: 5px 10px;
+  resize: none; /* 사용자가 직접 크기 조절하지 못하도록 함 */
+  box-sizing: border-box;
+  font-size: 16px;
 `;
 
 const Title = styled.div`
@@ -326,7 +330,10 @@ const PostDetail = () => {
         // 댓글을 새로고침한 후 화면을 최하단으로 스크롤
         setTimeout(() => {
           if (scrolldivRef.current) {
-            scrolldivRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+            scrolldivRef.current.scrollIntoView({
+              behavior: 'smooth',
+              block: 'end',
+            });
           }
         }, 100); // fetchComments 함수가 완료된 후 스크롤이 작동하도록 약간의 지연시간 추가
       })
@@ -417,7 +424,9 @@ const PostDetail = () => {
             <TitleArea>{post.title}</TitleArea>
             <TopUIContainer>
               <CreateInfo>
-                <div style={{ fontSize: 15 }}>작성자: {post.postId.split('@')[0]}</div>
+                <div style={{ fontSize: 15 }}>
+                  작성자: {post.postId.split('@')[0]}
+                </div>
                 <div style={{ fontSize: 15 }}>작성일: {postCreatingTime}</div>
               </CreateInfo>
 
@@ -452,13 +461,11 @@ const PostDetail = () => {
           <Line />
 
           <InputRow>
-            <CommentInput // 댓글 입력창
-              placeholder={
-                isLoggedIn ? '댓글 작성하기' : '로그인하고 댓글을 작성해보세요!'
-              }
+            <CommentInput
               onChange={(e) => setComment(e.target.value)}
               value={comment}
               readOnly={!isLoggedIn}
+              placeholder={isLoggedIn ? '' : '로그인하고 댓글을 작성해보세요!'}
             />
             <SubmitButton onClick={handleSubmit}>전송</SubmitButton>
           </InputRow>
@@ -493,7 +500,7 @@ const PostDetail = () => {
           </BottomContainer>
         </>
       )}
-    </Container >
+    </Container>
   );
 };
 
