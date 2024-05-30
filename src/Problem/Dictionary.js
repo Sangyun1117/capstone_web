@@ -152,8 +152,8 @@ export default function Dictionary() {
                   width: '30%',
                   paddingLeft: '10%',
                   paddingRight: '5%',
-                  maxHeight: '300px', // 예를 들어 최대 높이를 200px로 설정
-                  maxWidth: '300px', // 최대 너비도 200px로 설정
+                  maxHeight: '300px',
+                  maxWidth: '300px',
                   textAlign: 'center',
                 }}
               >
@@ -162,8 +162,8 @@ export default function Dictionary() {
                     src={content.headMedia.url}
                     alt=""
                     style={{
-                      width: '100%', // 이미지의 너비를 부모 요소에 맞춤
-                      height: '100%', // 높이도 부모 요소에 맞춤
+                      width: '100%',
+                      height: '100%',
                       objectFit: 'contain', // 이미지 비율을 유지하면서 전체 내용이 보이도록 조정
                     }}
                   />
