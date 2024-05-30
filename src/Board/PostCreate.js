@@ -19,7 +19,7 @@ const Container = styled.div`
   background-color: #bbd2ec;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
   left: 20%;
-  position: fixed;
+  position: absolute;
 `;
 
 const Title = styled.div`
