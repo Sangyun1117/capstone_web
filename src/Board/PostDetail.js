@@ -470,7 +470,7 @@ const PostDetail = () => {
                   <div>
                     <CommentRow>
                       <div style={{ width: '95%' }}>
-                        <div style={{ fontSize: 12 }}>
+                        <div style={{ fontSize: 12, paddingBottom: '10px' }}>
                           {item.userEmail.split('@')[0]}
                         </div>
                         <div style={{ fontSize: 16 }}>{item.comment}</div>
@@ -491,7 +491,7 @@ const PostDetail = () => {
           </BottomContainer>
         </>
       )}
-    </Container>
+    </Container >
   );
 };
 

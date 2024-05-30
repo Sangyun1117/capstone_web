@@ -133,7 +133,7 @@ const PostCreate = () => {
           navigate('/postDetail', {
             state: {
               boardName: boardName,
-              post: newPost,
+              selectedItem: newPost,
             },
           });
         } else navigate('/boardScreen');
