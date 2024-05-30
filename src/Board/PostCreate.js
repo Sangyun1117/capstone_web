@@ -90,8 +90,16 @@ const PostCreate = () => {
 
   // 작성한 글을 db에 반영
   const handleSubmit = () => {
-    console.log('body:');
-    console.log(body);
+    if (title.length > 100) {
+      swal({
+        title: '경고',
+        text: '제목은 최대 100자 입니다.',
+        icon: 'warning',
+        dangerMode: true,
+      });
+      return; // 함수 실행 중단
+    }
+
     if (body.length > 5000) {
       swal({
         title: '경고',
@@ -99,7 +107,7 @@ const PostCreate = () => {
         icon: 'warning',
         dangerMode: true,
       });
-      return; // 함수 실행을 여기서 중단
+      return; // 함수 실행 중단
     }
 
     const id = post ? post.id : null;
