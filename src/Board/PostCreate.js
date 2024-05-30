@@ -72,8 +72,8 @@ const PostCreate = () => {
   const navigate = useNavigate();
 
   const userEmail = useSelector((state) => state.userEmail);
-  const serverPath = useSelector((state) => state.serverPath);
-
+  //const serverPath = useSelector((state) => state.serverPath);
+  const serverPath = 'http://localhost:8080/';
   const getBoardDisplayName = (boardName) => {
     switch (boardName) {
       case 'questionBoard':
