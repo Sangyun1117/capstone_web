@@ -8,7 +8,7 @@ const EventMap = () => {
       <MediaSideBar />
 
       <div className="event-map-container">
-        <h1>사건지도</h1>
+        <h1>역사지도</h1>
         <Map />
       </div>
     </div>
