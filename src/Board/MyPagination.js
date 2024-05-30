@@ -22,7 +22,7 @@ const MyPagination = ({
         page={currentPage}
         onChange={handleChange}
         color="secondary"
-        style={{ display: 'flex', height: '30%', width: '100%' }}
+        style={{ display: 'flex', height: '30%', width: '100%', marginBottom: '20px' }}
       />
     </Stack>
   );

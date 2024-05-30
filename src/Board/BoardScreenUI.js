@@ -9,13 +9,13 @@ const BodyContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100%;
+  height: calc(100vh - 5em);
   width: 60%;
   min-width: 800px;
   background-color: #bbd2ec;
   top: 10em;
   left: 20%;
-  position: fixed;
+  position: absolute;
   overflow-y: auto;
 `;
 
@@ -24,7 +24,7 @@ const PostList = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 75%;
+  min-height: 650px;
 `;
 
 const ListItem = styled.button`

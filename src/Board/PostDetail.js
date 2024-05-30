@@ -261,7 +261,7 @@ const PostDetail = () => {
   // 댓글 가져오기
   const fetchComments = () => {
     axios
-      .get(serverPath + 'comments', { params: { postId: post.postId } })
+      .get(serverPath + 'comments', { params: { postId: post.id } })
       .then((response) => {
         const data = response.data;
         if (data) {
@@ -313,7 +313,7 @@ const PostDetail = () => {
       commentId: commentId,
       userEmail: userEmail,
       comment: comment,
-      postId: post.postId,
+      postId: post.id,
     };
 
     axios
