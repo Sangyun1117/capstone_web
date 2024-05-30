@@ -90,7 +90,7 @@ const Header = () => {
               <Link to="bookmarkProblem">북마크</Link>
             </div>
             <div className="sub-item">
-              <Link to="statistics">통계</Link>
+              <Link to="statistics">오답통계</Link>
             </div>
           </div>
         </div>
