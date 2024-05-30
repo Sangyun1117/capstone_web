@@ -15,14 +15,6 @@ const Statistics = () => {
   const [total, setTotal] = useState(0);
   const [wrongProblemsCount, setWrongProblemsCount] = useState(0);
 
-  const moveera = () => {
-    navigate('/eraProblem/era1'); // navigate 함수를 호출하여 경로를 변경합니다.
-  };
-
-  const movetype = () => {
-    navigate('/eraProblem/era1'); // navigate 함수를 호출하여 경로를 변경합니다.
-  };
-
   //로그인 관리
   useEffect(() => {
     const userEmail = localStorage.getItem('userEmail'); // 로컬 스토리지에서 userEmail을 가져옴
@@ -238,15 +230,30 @@ const Statistics = () => {
       },
     },
   };
+  //최소값 인덱스 구하는 변수
+  // let minValueIndex =
+  //   eraData.length > 0 ? eraData.indexOf(Math.min(...eraData)) : -1;
+  // let minTypeIndex =
+  //   typeData.length > 0 ? typeData.indexOf(Math.min(...typeData)) : -1;
 
-  let minValueIndex =
-    eraData.length > 0 ? eraData.indexOf(Math.min(...eraData)) : -1;
-  let minEraLabel =
-    minValueIndex >= 0 ? eradata.labels[minValueIndex] : '데이터 없음';
-  let minTypeIndex =
-    typeData.length > 0 ? typeData.indexOf(Math.min(...typeData)) : -1;
-  let minTypeLabel =
-    minTypeIndex >= 0 ? dataType.labels[minTypeIndex] : '데이터 없음';
+  //   let minEraLabel =
+  //   minValueIndex >= 0 ? eradata.labels[minValueIndex] : '데이터 없음';
+  // let minTypeLabel =
+  //   minTypeIndex >= 0 ? dataType.labels[minTypeIndex] : '데이터 없음';
+  let maxValueIndex =
+    eraData.length > 0 ? eraData.indexOf(Math.max(...eraData)) : -1;
+    let maxTypeIndex =
+    typeData.length > 0 ? typeData.indexOf(Math.max(...typeData)) : -1;
+
+  let maxEraLabel =
+    maxValueIndex >= 0 ? eradata.labels[maxValueIndex] : '데이터 없음';
+  let maxTypeLabel =
+    maxTypeIndex >= 0 ? dataType.labels[maxTypeIndex] : '데이터 없음';
+
+  console.log(eraData);
+  console.log(typeData);
+
+
 
   return (
     <div style={{ display: 'flex', flexDirection: 'row' }}>
@@ -259,41 +266,39 @@ const Statistics = () => {
           <div style={{ flex: 1 }}>
             {/* 통계 정보 섹션 */}
             <div className="statistics-info-container">
-              <h2>통계 정보</h2>
-              <p>지금까지 푼 문제 수: {total}</p>
-              <p>틀린 문제의 수: {wrongProblemsCount}</p>
-              <p>정답율: {accuracyRate}%</p>
+              <h2>오답 통계 정보</h2>
+              <p style={{marginTop: 30}}>틀린 문제의 수: {wrongProblemsCount}</p>
               <p>
                 <strong style={{ fontWeight: 'bold', fontSize: '17px' }}>
-                  {minEraLabel}
+                  {maxEraLabel}
                 </strong>
                 시대와
                 <strong style={{ fontWeight: 'bold', fontSize: '17px' }}>
                   {' '}
-                  {minTypeLabel}
+                  {maxTypeLabel}
                 </strong>
                 유형의 학습이 부족합니다.
               </p>
               <button
                 className="statistics-button"
-                onClick={() => navigate(`/eraProblem/era${minValueIndex + 1}`)}
-              >{`${minEraLabel} 공부하러 가기`}</button>
+                onClick={() => navigate(`/eraProblem/era${maxValueIndex + 1}`)}
+              >{`${maxEraLabel} 공부하러 가기`}</button>
               <button
                 className="statistics-button"
-                onClick={() => navigate(`/typeProblem/type${minTypeIndex + 1}`)}
-              >{`${minTypeLabel} 공부하러 가기`}</button>
+                onClick={() => navigate(`/typeProblem/type${maxTypeIndex + 1}`)}
+              >{`${maxTypeLabel} 공부하러 가기`}</button>
             </div>
 
             {/* 시대별 통계 섹션 */}
             <div className="statistics-era-section">
-              <h2>시대별 통계</h2>
+              <h2>시대별 오답 통계</h2>
               <div className="statistics-chart-container">
                 <div className="statistics-chart">
-                  <h3>시대별 막대 그래프</h3>
+                  <h3>시대별 오답 막대 그래프</h3>
                   <Bar data={eradata} options={options} />
                 </div>
                 <div className="statistics-chart">
-                  <h3>시대별 원 그래프</h3>
+                  <h3>시대별 오답 원 그래프</h3>
                   <Doughnut data={eradataCiecle} />
                 </div>
               </div>
@@ -301,14 +306,14 @@ const Statistics = () => {
 
             {/* 유형별 통계 섹션 */}
             <div className="statistics-type-section">
-              <h2>유형별 통계</h2>
+              <h2>유형별 오답 통계</h2>
               <div className="statistics-chart-container">
                 <div className="statistics-chart">
-                  <h3>유형별 막대 그래프</h3>
+                  <h3>유형별 오답 막대 그래프</h3>
                   <Bar data={dataType} options={options} />
                 </div>
                 <div className="statistics-chart">
-                  <h3>유형별 원 그래프</h3>
+                  <h3>유형별 오답 원 그래프</h3>
                   <Doughnut data={dataTypeCiecle} />
                 </div>
               </div>
@@ -318,9 +323,9 @@ const Statistics = () => {
 
         {total === 0 && (
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-            <h1 style={{marginTop:100}}>문제풀이 데이터가 없습니다.</h1>
-            <div style={{marginTop: '10%'}}>
-            <button
+            <h1 style={{ marginTop: 100 }}>문제풀이 데이터가 없습니다.</h1>
+            <div style={{ marginTop: '10%' }}>
+              <button
                 className="statistics-button"
                 onClick={() => navigate(`/practiceRoundSelect`)}
               >{`기출문제 공부하러 가기`}
