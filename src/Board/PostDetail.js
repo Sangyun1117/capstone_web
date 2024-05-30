@@ -183,13 +183,14 @@ const PostDetail = () => {
 
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
   const userEmail = useSelector((state) => state.userEmail);
+  const [postCreatingTime, setPostCreatingTime] = useState();
   const { boardName, selectedItem } = location.state;
   const selectedItemId = selectedItem.id;
-  let postCreatingTime = '';
   const scrolldivRef = useRef(null);
 
   const serverPath = useSelector((state) => state.serverPath);
   //const serverPath = 'http://localhost:8080/';
+
   // 작성 시각 변환기
   function formatDate(date) {
     const options = {
@@ -282,7 +283,7 @@ const PostDetail = () => {
 
   useEffect(() => {
     if (post) {
-      postCreatingTime = formatDate(post.postId.split('_')[1]);
+      setPostCreatingTime(formatDate(post.postId.split('_')[1]));
       fetchComments(); // 댓글 가져오기
     }
   }, [post]);
@@ -416,7 +417,7 @@ const PostDetail = () => {
             <TitleArea>{post.title}</TitleArea>
             <TopUIContainer>
               <CreateInfo>
-                <div style={{ fontSize: 15 }}>작성자: {userName}</div>
+                <div style={{ fontSize: 15 }}>작성자: {post.postId.split('@')[0]}</div>
                 <div style={{ fontSize: 15 }}>작성일: {postCreatingTime}</div>
               </CreateInfo>
 
