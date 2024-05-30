@@ -5,8 +5,8 @@ import { createStore } from 'redux';
 const initialState = {
   isLoggedIn: false,
   userEmail: null,
-  //serverPath: 'http://localhost:8080/',
-  serverPath: 'http://52.79.56.22:8080/',
+  serverPath: 'http://localhost:8080/',
+  //serverPath: 'http://52.79.56.22:8080/',
 };
 
 // 액션 타입 정의
