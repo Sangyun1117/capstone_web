@@ -135,8 +135,6 @@ const LikedVideosScreen = () => {
                 <Grid item xs={8} key={video.videoId}>
                   <Card
                     sx={{
-                      p: 3,
-                      m: 3,
                       display: 'flex',
                       flexDirection: 'column',
                       alignItems: 'center',
@@ -145,6 +143,7 @@ const LikedVideosScreen = () => {
                     <iframe
                       width="560"
                       height="315"
+                      style={{transform: 'scale( 0.8)'}}
                       src={'https://www.youtube.com/embed/' + video.videoId}
                       title={'video-' + index}
                       frameBorder="0"
