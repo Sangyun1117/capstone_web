@@ -17,6 +17,7 @@ export default function Dictionary() {
 
   const getContent = () => {
     fetch(serverPath + 'character/' + id) //E0030144
+      //fetch('http://localhost:8080/character/' + id) //E0030144
       .then((response) => response.json())
       .then((data) => {
         setContent(data.article);
