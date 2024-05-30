@@ -26,7 +26,7 @@
     flex-direction: column;
     align-items: center; /* 내용 중앙 정렬 */
     width: 100%; /* 모바일 반응형을 고려한 경우 */
-    max-width: 500px; /* 최대 너비 제한 */
+    max-width: 400px; /* 최대 너비 제한 */
     
     padding: 20px; /* 패딩 설정 */
     background-color: #ffffff; /* 배경색 설정 */

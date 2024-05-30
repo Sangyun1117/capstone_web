@@ -110,7 +110,7 @@ export default function BasicProblemList({ param }) {
       <Box
         style={{
           width: '60%',
-          minWidth: '600px',
+          minWidth: '750px',
         }}
       >
         <Typography
@@ -133,6 +133,49 @@ export default function BasicProblemList({ param }) {
             paddingBottom: '5%',
           }}
         >
+          <Box
+            style={{
+              backgroundColor: '#01204E',
+              color: 'white',
+              height: '30px',
+              display: 'flex',
+              flexDirection: 'row',
+            }}
+          >
+            <Box
+              style={{
+                padding: '4px',
+                paddingLeft: '10px',
+                paddingRight: '10px',
+                width: '40px',
+                textAlign: 'center',
+                borderRight: 'solid 1px',
+              }}
+            >
+              번호
+            </Box>
+            <Box
+              style={{
+                padding: '4px',
+                width: '100%',
+                textAlign: 'center',
+              }}
+            >
+              문제 번호
+            </Box>
+            <Box
+              style={{
+                padding: '4px',
+                paddingLeft: '10px',
+                paddingRight: '10px',
+                width: '40px',
+                textAlign: 'center',
+                borderLeft: 'solid 1px',
+              }}
+            >
+              삭제
+            </Box>
+          </Box>
           {currentItems.length > 0 ? (
             currentItems.map((problem, index) => (
               <ListItem
@@ -148,9 +191,9 @@ export default function BasicProblemList({ param }) {
                   </IconButton>
                 }
               >
-                <ListItemText style={{ width: '20px' }}>
+                {/* <ListItemText style={{ width: '20px' }}>
                   {index + 1 + (currentPage - 1) * MAX_ITEM}
-                </ListItemText>
+                </ListItemText> */}
                 <ListItemText
                   onClick={() =>
                     navigate('/sample', {
@@ -163,8 +206,20 @@ export default function BasicProblemList({ param }) {
                   }
                   style={{ cursor: 'pointer' }}
                 >
-                  한국사 능력 검정 시험 {Math.floor(parseInt(problem) / 100)}회{' '}
-                  {parseInt(problem) % 100}번
+                  <span
+                    style={{
+                      display: 'inline-block',
+                      width: '30px',
+                      textAlign: 'center',
+                      border: '1px solid',
+                    }}
+                  >
+                    {index + 1 + (currentPage - 1) * MAX_ITEM}
+                  </span>
+                  <span style={{ paddingLeft: '30%' }}>
+                    한국사 능력 검정 시험 {Math.floor(parseInt(problem) / 100)}
+                    회 {parseInt(problem) % 100}번
+                  </span>
                 </ListItemText>
               </ListItem>
             ))

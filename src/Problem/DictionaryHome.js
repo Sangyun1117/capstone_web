@@ -16,6 +16,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import { MediaSideBar } from '../Problem/SideBar';
 import '../css/Problem.css';
+import { Margin } from '@mui/icons-material';
 
 export default function DictionaryHome() {
   const navigate = useNavigate();
@@ -92,7 +93,7 @@ export default function DictionaryHome() {
       <Box
         style={{
           width: '60%',
-          minWidth: '600px',
+          minWidth: '750px',
         }}
       >
         <Box
@@ -101,6 +102,9 @@ export default function DictionaryHome() {
             flexDirection: 'row',
             alignItems: 'center',
             paddingTop: '8%',
+            // backgroundColor: 'red',
+            backgroundImage: "url('../Images/logo.png')",
+            backgroundSize: 'cover',
           }}
         >
           <Typography
@@ -115,7 +119,7 @@ export default function DictionaryHome() {
             용어사전
           </Typography>
           <FormControl style={{ width: '20%', paddingRight: '2%' }}>
-            <InputLabel id="era-select-label">Type</InputLabel>
+            <InputLabel id="era-select-label">시대</InputLabel>
             <Select
               labelId="era-select-label"
               id="era-select"
@@ -136,7 +140,7 @@ export default function DictionaryHome() {
             </Select>
           </FormControl>
           <FormControl style={{ width: '20%' }}>
-            <InputLabel id="type-select-label">Type</InputLabel>
+            <InputLabel id="type-select-label">유형</InputLabel>
             <Select
               labelId="type-select-label"
               id="type-select"
@@ -162,6 +166,37 @@ export default function DictionaryHome() {
             paddingBottom: '5%',
           }}
         >
+          <Box
+            style={{
+              backgroundColor: '#01204E',
+              color: 'white',
+              height: '30px',
+              display: 'flex',
+              flexDirection: 'row',
+            }}
+          >
+            <Box
+              style={{
+                padding: '4px',
+                paddingLeft: '10px',
+                paddingRight: '10px',
+                width: '40px',
+                textAlign: 'center',
+                borderRight: 'solid 1px',
+              }}
+            >
+              번호
+            </Box>
+            <Box
+              style={{
+                padding: '4px',
+                width: '100%',
+                textAlign: 'center',
+              }}
+            >
+              이름
+            </Box>
+          </Box>
           {currentItems.length > 0 ? (
             currentItems.map((word, index) => (
               <ListItem
@@ -183,6 +218,7 @@ export default function DictionaryHome() {
                       display: 'inline-block',
                       width: '30px',
                       textAlign: 'center',
+                      border: '1px solid',
                     }}
                   >
                     {index + 1 + (currentPage - 1) * MAX_ITEM}
@@ -202,6 +238,7 @@ export default function DictionaryHome() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
+            marginBottom: '7%',
           }}
         >
           <Button onClick={handlePrevBtn} disabled={currentPage === 1}>

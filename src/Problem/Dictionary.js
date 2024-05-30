@@ -74,8 +74,8 @@ export default function Dictionary() {
     ),
 
     figcaption: ({ children, ...props }) => (
-      <div style={{ color: 'blue', textAlign: 'center', marginBottom: '15px' }}>
-        ▲ {children}
+      <div style={{ textAlign: 'center', marginBottom: '15px' }}>
+        △ {children}
       </div>
     ),
     table: ({ children, caption, ...props }) => (

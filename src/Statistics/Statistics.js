@@ -242,7 +242,7 @@ const Statistics = () => {
   //   minTypeIndex >= 0 ? dataType.labels[minTypeIndex] : '데이터 없음';
   let maxValueIndex =
     eraData.length > 0 ? eraData.indexOf(Math.max(...eraData)) : -1;
-    let maxTypeIndex =
+  let maxTypeIndex =
     typeData.length > 0 ? typeData.indexOf(Math.max(...typeData)) : -1;
 
   let maxEraLabel =
@@ -253,21 +253,26 @@ const Statistics = () => {
   console.log(eraData);
   console.log(typeData);
 
-
-
   return (
     <div style={{ display: 'flex', flexDirection: 'row' }}>
       <MyPageSideBar />
 
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-
-
+      <div
+        style={{
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          maxWidth: '60%',
+        }}
+      >
         {total !== 0 && (
           <div style={{ flex: 1 }}>
             {/* 통계 정보 섹션 */}
             <div className="statistics-info-container">
               <h2>오답 통계 정보</h2>
-              <p style={{marginTop: 30}}>틀린 문제의 수: {wrongProblemsCount}</p>
+              <p style={{ marginTop: 30 }}>
+                틀린 문제의 수: {wrongProblemsCount}
+              </p>
               <p>
                 <strong style={{ fontWeight: 'bold', fontSize: '17px' }}>
                   {maxEraLabel}
@@ -322,23 +327,34 @@ const Statistics = () => {
         )}
 
         {total === 0 && (
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+          <div
+            style={{
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
             <h1 style={{ marginTop: 100 }}>문제풀이 데이터가 없습니다.</h1>
             <div style={{ marginTop: '10%' }}>
               <button
                 className="statistics-button"
                 onClick={() => navigate(`/practiceRoundSelect`)}
-              >{`기출문제 공부하러 가기`}
+              >
+                {`기출문제 공부하러 가기`}
               </button>
               <button
                 className="statistics-button"
                 onClick={() => navigate(`/eraProblem/era1`)}
-              >{`시대별 공부하러 가기`}
+              >
+                {`시대별 공부하러 가기`}
               </button>
               <button
                 className="statistics-button"
                 onClick={() => navigate(`/typeProblem/type1`)}
-              >{`유형별 공부하러 가기`}
+              >
+                {`유형별 공부하러 가기`}
               </button>
             </div>
           </div>
