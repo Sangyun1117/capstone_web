@@ -127,7 +127,7 @@ const QuizGame = () => {
   const [guessCount, setGuessCount] = useState(0); // guess의 글자 수
   const [currentIndex, setCurrentIndex] = useState(0); // 랜덤 문제 인덱스 리스트의 현재 인덱스
   const [randomIndexList, setRandomIndexList] = useState([]); // 랜덤 문제 인덱스 리스트
-  const [timer, setTimer] = useState(120); // 타이머. 2분 제한
+  const [timer, setTimer] = useState(5); // 타이머. 2분 제한
   const countdownRef = useRef(null); // 타이머 id를 저장할 ref
   const [score, setScore] = useState(0); // 스코어
   const navigate = useNavigate();
@@ -292,7 +292,7 @@ const QuizGame = () => {
 
   // 타이머 시작
   useEffect(() => {
-    setTimer(120); // 타이머 초기화
+    setTimer(5); // 타이머 초기화
 
     // 타이머 시작
     countdownRef.current = setInterval(() => {
@@ -323,6 +323,7 @@ const QuizGame = () => {
         icon: 'warning',
         buttons: true,
         dangerMode: true,
+        closeOnClickOutside: false,
       }).then((willContinue) => {
         if (willContinue) {
           // 넘긴 문제가 있을 경우, 넘긴 문제 목록 페이지로 이동
@@ -396,6 +397,7 @@ const QuizGame = () => {
       icon: 'warning',
       buttons: true,
       dangerMode: true,
+      closeOnClickOutside: false,
     }).then((willContinue) => {
       if (willContinue) {
         navigate('/');
