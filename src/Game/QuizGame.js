@@ -22,7 +22,7 @@ const Container = styled.div`
   width: 60vw;
   min-width: 800px;
   right: 5vw;
-  background-color: ${props => (props.isIncorrect ? '#db4455' : '#bbd2ec')};
+  background-color: ${(props) => (props.isIncorrect ? '#db4455' : '#bbd2ec')};
   position: relative;
 `;
 
@@ -42,7 +42,6 @@ const Timer = styled.div`
   border-radius: 1em;
   background-color: white;
   font-weight: 600;
-  
 `;
 
 const Score = styled.div`
@@ -60,7 +59,6 @@ const BodyContainer = styled.div`
   position: absolute;
   top: 5em;
   min-width: 800px;
-  
 `;
 
 const Guess = styled.div`
@@ -317,22 +315,35 @@ const QuizGame = () => {
     if (timer === 0) {
       stopTimer();
       // 타임 오버 및 점수 알림
+
+      const buttons = {
+        // '나가기' 버튼은 항상 표시되도록 수정
+        cancel: '나가기',
+      };
+
+      // '넘긴 문제 보기' 버튼은 unsolved.length > 0인 경우에만 추가
+      if (unsolved.length > 0) {
+        buttons.catch = {
+          text: '넘긴 문제 보기',
+          value: 'catch',
+        };
+      }
+
       swal({
         title: '타임 오버!',
         text: '최종 점수: ' + score,
-        icon: 'warning',
-        buttons: true,
+        icon: 'info',
+        buttons: buttons,
         dangerMode: true,
         closeOnClickOutside: false,
-      }).then((willContinue) => {
-        if (willContinue) {
-          // 넘긴 문제가 있을 경우, 넘긴 문제 목록 페이지로 이동
-          if (unsolved.length > 0) {
-            setIsModalOpen(true);
-          } else {
-            // 그렇지 않으면 홈으로 이동
+      }).then((value) => {
+        switch (value) {
+          case 'catch':
+            setIsModalOpen(true); // 모달창 열기
+            break;
+
+          default:
             navigate('/');
-          }
         }
       });
     }
